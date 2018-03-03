@@ -1,39 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.github.funthomas424242</groupId>
-  <artifactId>rades-annotations</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
-  <description>Rades Annotationen zur Automatisierung</description>
-  <licenses>
-    <license>
-      <url>./LICENSE</url>
-    </license>
-  </licenses>
-  <scm>
-    <connection>scm:git:https://github.com/FunThomas424242/rades-annotations.git</connection>
-    <developerConnection>scm:git:git@github.com:FunThomas424242/rades-annotations.git</developerConnection>
-    <url>https://github.com/FunThomas424242/rades-annotations</url>
-  </scm>
-  <issueManagement>
-    <system>GitHub</system>
-    <url>https://github.com/FunThomas424242/rades-annotations/issues/new</url>
-  </issueManagement>
-  <ciManagement>
-    <system>Travis</system>
-    <url>https://travis-ci.org/FunThomas424242/rades-annotations</url>
-  </ciManagement>
-  <distributionManagement>
-    <repository>
-      <id>bintray-funthomas424242-funthomas424242-lib</id>
-      <name>funthomas424242-funthomas424242-lib</name>
-      <url>https://api.bintray.com/maven/funthomas424242/funthomas424242-lib/rades-annotations/;publish=1</url>
-    </repository>
-  </distributionManagement>
-  <properties>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.target>1.8</maven.compiler.target>
-  </properties>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.github.funthomas424242</groupId>
+    <artifactId>rades-annotations</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <description>Rades Annotationen zur Automatisierung</description>
+    <licenses>
+        <license>
+            <url>./LICENSE</url>
+        </license>
+    </licenses>
+    <scm>
+        <connection>scm:git:https://github.com/FunThomas424242/rades-annotations.git</connection>
+        <developerConnection>scm:git:git@github.com:FunThomas424242/rades-annotations.git</developerConnection>
+        <url>https://github.com/FunThomas424242/rades-annotations</url>
+    </scm>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/FunThomas424242/rades-annotations/issues/new</url>
+    </issueManagement>
+    <ciManagement>
+        <system>Travis</system>
+        <url>https://travis-ci.org/FunThomas424242/rades-annotations</url>
+    </ciManagement>
+    <distributionManagement>
+        <repository>
+            <id>bintray-funthomas424242-funthomas424242-lib</id>
+            <name>funthomas424242-funthomas424242-lib</name>
+            <url>https://api.bintray.com/maven/funthomas424242/funthomas424242-lib/rades-annotations/;publish=1</url>
+        </repository>
+    </distributionManagement>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <auto-service.version>1.0-rc2</auto-service.version>
+        <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.google.auto.service</groupId>
+            <artifactId>auto-service</artifactId>
+            <version>${auto-service.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
 </project>
