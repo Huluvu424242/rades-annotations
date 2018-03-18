@@ -34,10 +34,12 @@
     </distributionManagement>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <auto-service.version>1.0-rc2</auto-service.version>
         <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+        <auto-service.version>1.0-rc2</auto-service.version>
     </properties>
 
     <dependencies>
@@ -61,8 +63,16 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
+                    <encoding>UTF-8</encoding>
+                    <generatedSourcesDirectory>${project.build.directory}/generated-sources/</generatedSourcesDirectory>
+                    <!--<annotationProcessors>-->
+                        <!--<annotationProcessor>-->
+                            <!--com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor-->
+                        <!--</annotationProcessor>-->
+                    <!--</annotationProcessors>-->
                 </configuration>
             </plugin>
+
 
         </plugins>
     </build>
