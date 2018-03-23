@@ -71,14 +71,43 @@
                     <encoding>UTF-8</encoding>
                     <generatedSourcesDirectory>${project.build.directory}/generated-sources/</generatedSourcesDirectory>
                     <!--<annotationProcessors>-->
-                        <!--<annotationProcessor>-->
-                            <!--com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor-->
-                        <!--</annotationProcessor>-->
+                    <!--<annotationProcessor>-->
+                    <!--com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor-->
+                    <!--</annotationProcessor>-->
                     <!--</annotationProcessors>-->
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
 
         </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.7.9</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 </project>
