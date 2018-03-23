@@ -37,7 +37,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
             otherMethods.forEach(element ->
                     processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR,
-                            "@BuilderProperty must be applied to a setXxx method "
+                            "@RadesBuilder must be applied to a setXxx method "
                                     + "with a single argument", element));
             if (setters.isEmpty()) {
                 continue;
