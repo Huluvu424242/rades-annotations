@@ -61,43 +61,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
                     e.printStackTrace();
                 }
             }
-
-
-//            final Map<Boolean, List<Element>> annotatedClasses = annotatedElements.stream().collect(
-//                    Collectors.partitioningBy(element ->
-//                            ((ExecutableType) element.asType()).getParameterTypes().size() == 1
-//                                    && element.getSimpleName().toString().startsWith("set")));
-//
-//            final List<Element> setters = annotatedClasses.get(true);
-//            final List<Element> otherMethods = annotatedClasses.get(false);
-//
-//
-//            otherMethods.forEach(element ->
-//                    processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR,
-//                            "@RadesBuilder must be applied to a setXxx method "
-//                                    + "with a single argument", element));
-//            if (setters.isEmpty()) {
-//                continue;
-//            }
-//
-//            final String className = ((TypeElement) setters.get(0)
-//                    .getEnclosingElement()).getQualifiedName().toString();
-//
-//
-//            final Map<String, String> setterMap = setters.stream().collect(Collectors.toMap(
-//                    setter -> setter.getSimpleName().toString(),
-//                    setter -> ((ExecutableType) setter.asType())
-//                            .getParameterTypes().get(0).toString()
-//            ));
-//            try {
-//                writeBuilderFile(className,setterMap);
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-
-
         }
-
         return true;
     }
 
@@ -113,6 +77,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         }
 
         String simpleClassName = className.substring(lastDot + 1);
+        final String objectName = simpleClassName.substring(0, 1).toLowerCase() + simpleClassName.substring(1);
         String builderClassName = className + "Builder";
         String builderSimpleClassName = builderClassName
                 .substring(lastDot + 1);
@@ -136,7 +101,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
             out.print("    private ");
             out.print(simpleClassName);
-            out.print(" object = new ");
+            out.print(" "+objectName+" = new ");
             out.print(simpleClassName);
             out.println("();");
             out.println();
@@ -144,7 +109,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
             out.print("    public ");
             out.print(simpleClassName);
             out.println(" build() {");
-            out.println("        return object;");
+            out.println("        return "+objectName+";");
             out.println("    }");
             out.println();
 
@@ -162,7 +127,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
                 out.print(argumentType);
                 out.println(" value) {");
-                out.print("        object.");
+                out.print("        "+objectName+".");
                 out.print(methodName);
                 out.println("(value);");
                 out.println("        return this;");
