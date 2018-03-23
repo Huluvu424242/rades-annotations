@@ -101,7 +101,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
             out.print("    private ");
             out.print(simpleClassName);
-            out.print(" "+objectName+" = new ");
+            out.print(" " + objectName + " = new ");
             out.print(simpleClassName);
             out.println("();");
             out.println();
@@ -109,27 +109,30 @@ public class RadesBuilderProcessor extends AbstractProcessor {
             out.print("    public ");
             out.print(simpleClassName);
             out.println(" build() {");
-            out.println("        return "+objectName+";");
+            out.println("        final " + simpleClassName + " value = this." + objectName + ";");
+            out.println("        this." + objectName + " = null;");
+            out.println("        return value;");
             out.println("    }");
             out.println();
 
             mapFieldName2Type.entrySet().forEach(fields -> {
-                String fieldName = fields.getKey().toString();
-                String methodName = "set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-                String argumentType = fields.getValue().toString();
+                final String fieldName = fields.getKey().toString();
+                final String attributName = fieldName.toString();
+                final String setterName = "with" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+                final String argumentType = fields.getValue().toString();
 
                 out.print("    public ");
                 out.print(builderSimpleClassName);
                 out.print(" ");
-                out.print(methodName);
+                out.print(setterName);
 
-                out.print("(");
+                out.print("( final ");
 
                 out.print(argumentType);
-                out.println(" value) {");
-                out.print("        "+objectName+".");
-                out.print(methodName);
-                out.println("(value);");
+                out.println(" " + attributName + " ) {");
+                out.print("        this." + objectName + ".");
+                out.print(attributName);
+                out.println(" = " + attributName + ";");
                 out.println("        return this;");
                 out.println("    }");
                 out.println();

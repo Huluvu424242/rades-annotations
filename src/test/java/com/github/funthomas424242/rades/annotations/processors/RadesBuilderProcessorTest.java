@@ -11,9 +11,10 @@ import static org.junit.Assert.*;
 public class RadesBuilderProcessorTest {
 
     @Test
-    public void testBuilderMethods(){
+    public void testAlleFelderBefuellt(){
         final Person person = new PersonBuilder()
-                .setName("Nachname")
+                .withVorname("Max")
+                .withName("Mustermann")
                 .build();
         assertNotNull(person);
     }

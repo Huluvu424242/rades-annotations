@@ -2,6 +2,8 @@ package com.github.funthomas424242.domain;
 
 import com.github.funthomas424242.rades.annotations.RadesBuilder;
 
+import java.util.Date;
+
 @RadesBuilder
 public class Person {
 
@@ -9,9 +11,9 @@ public class Person {
 
     protected String name;
 
-    public void setName(final String name){
-        this.name = name;
-    }
+    protected String vorname;
+
+//    protected Date birthday;
 
 
 }
