@@ -4,10 +4,7 @@ import com.google.auto.service.AutoService;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
-import javax.lang.model.element.Element;
-import javax.lang.model.element.Modifier;
-import javax.lang.model.element.Name;
-import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.*;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Types;
 import javax.tools.JavaFileObject;
@@ -38,6 +35,10 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         for (TypeElement annotation : annotations) {
             final Set<? extends Element> annotatedElements = roundEnv.getElementsAnnotatedWith(annotation);
             for (final Element annotatedElement : annotatedElements) {
+                // TODO compute ANNOTATION_TYPE additional to CLASS
+                if( !annotatedElement.getKind().isClass()){
+                    continue;
+                }
                 final TypeElement typeElement = (TypeElement) annotatedElement;
                 final Map<Name, Name> mapName2Type = new HashMap<>();
                 final List<? extends Element> classMembers = annotatedElement.getEnclosedElements();
