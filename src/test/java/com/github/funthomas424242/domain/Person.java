@@ -13,5 +13,8 @@ public class Person {
 
 //    protected Date birthday;
 
+    public int getId(){
+        return id;
+    }
 
 }
