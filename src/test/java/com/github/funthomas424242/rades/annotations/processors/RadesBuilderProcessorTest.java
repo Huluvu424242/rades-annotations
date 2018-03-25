@@ -31,6 +31,13 @@ import static org.truth0.Truth.ASSERT;
 
 public class RadesBuilderProcessorTest {
 
+    protected URL getResourceURL(String projectSrcRoot, String resourcePath) throws MalformedURLException {
+        final Path tmpPath = Paths.get(projectSrcRoot + resourcePath);
+        final URL resourceURL = tmpPath.toAbsolutePath().toUri().toURL();
+        System.out.println("Resource:" + resourceURL);
+        return resourceURL;
+    }
+
     @Test
     public void initTest() {
     }
@@ -87,12 +94,7 @@ public class RadesBuilderProcessorTest {
                 .compilesWithoutError();
     }
 
-    protected URL getResourceURL(String projectSrcRoot, String resourcePath) throws MalformedURLException {
-        final Path tmpPath = Paths.get(projectSrcRoot + resourcePath);
-        final URL resourceURL = tmpPath.toAbsolutePath().toUri().toURL();
-        System.out.println("Resource:" + resourceURL);
-        return resourceURL;
-    }
+
 
 
 }
