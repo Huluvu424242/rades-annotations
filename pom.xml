@@ -50,12 +50,12 @@
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>16.0.1</version>
-            <type>jar</type>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.google.guava</groupId>-->
+            <!--<artifactId>guava</artifactId>-->
+            <!--<version>16.0.1</version>-->
+            <!--<type>jar</type>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -91,7 +91,7 @@
                     <!--<compilerArgument>-Xlint:unchecked</compilerArgument>-->
                     <!--<proc>none</proc>-->
                     <!-- replaced by google auto-service -->
-                    <generatedSourcesDirectory>${project.build.directory}/generated-sources/</generatedSourcesDirectory>
+                    <!--<generatedSourcesDirectory>${project.build.directory}/generated-sources/</generatedSourcesDirectory>-->
                     <!--<annotationProcessors>-->
                     <!--<annotationProcessor>-->
                     <!--com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor-->
