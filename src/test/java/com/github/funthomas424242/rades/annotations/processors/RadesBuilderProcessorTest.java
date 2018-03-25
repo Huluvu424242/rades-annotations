@@ -76,40 +76,22 @@ public class RadesBuilderProcessorTest {
     @Test
     public void shouldCompileClassWithoutIgnoreAnnotationWithoutErrors() throws MalformedURLException {
 
-        ClassLoader cl = ClassLoader.getSystemClassLoader();
-
-        URL[] urls = ((URLClassLoader)cl).getURLs();
-
-        for(URL url: urls){
-            System.out.println(url.getFile());
-        }
-
-        final Path tmpPath=Paths.get("src/test/java/com/github/funthomas424242/domain/Person.java");
-        final FileObject resource=JavaFileObjects.forResource(tmpPath.toAbsolutePath().toUri().toURL());
-        assertNotNull(resource);
-
-
-        final FileSystem defaultFileSystem=FileSystems.getDefault();
-        assertNotNull(defaultFileSystem);
-        final Path baseDir = defaultFileSystem.getPath(".");
-        System.out.println("DIR:"+baseDir.toAbsolutePath().toString());
-
-        final Path path=Paths.get("src/test/java/com/github/funthomas424242/domain/Person.java");
-        assertNotNull(path);
-        final Path absolutePath=path.toAbsolutePath();
-        assertNotNull(absolutePath);
-        final URI uri = absolutePath.toUri();
-        System.out.println("Path:"+absolutePath);
-        assertNotNull(uri);
-        final URL url=uri.toURL();
-        assertNotNull(url);
-        System.out.println("URL:"+url);
+        final String projectSubfolder = "src/test/java/";
+        final String resourcePath = "com/github/funthomas424242/domain/Person.java";
+        final URL resourceURL = getResourceURL(projectSubfolder, resourcePath);
 
 
         ASSERT.about(javaSource())
-                .that(JavaFileObjects.forResource(url))
+                .that(JavaFileObjects.forResource(resourceURL))
                 .processedWith(new RadesBuilderProcessor())
                 .compilesWithoutError();
+    }
+
+    protected URL getResourceURL(String projectSrcRoot, String resourcePath) throws MalformedURLException {
+        final Path tmpPath = Paths.get(projectSrcRoot + resourcePath);
+        final URL resourceURL = tmpPath.toAbsolutePath().toUri().toURL();
+        System.out.println("Resource:" + resourceURL);
+        return resourceURL;
     }
 
 
