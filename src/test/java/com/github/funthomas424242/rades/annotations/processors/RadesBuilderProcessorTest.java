@@ -6,7 +6,6 @@ import com.google.testing.compile.Compilation;
 import com.google.testing.compile.JavaFileObjects;
 import org.junit.Test;
 
-import javax.tools.JavaFileManager;
 import javax.tools.StandardLocation;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,10 +16,6 @@ import static com.google.testing.compile.CompilationSubject.assertThat;
 import static com.google.testing.compile.Compiler.javac;
 import static com.google.testing.compile.JavaSourceSubjectFactory.javaSource;
 
-//import com.google.common.truth.Truth;
-//import com.google.testing.compile.Compilation;
-// import org.junit.jupiter.api.Test;
-
 public class RadesBuilderProcessorTest {
 
     protected URL getResourceURL(String projectSrcRoot, String resourcePath) throws MalformedURLException {
@@ -30,9 +25,6 @@ public class RadesBuilderProcessorTest {
         return resourceURL;
     }
 
-    @Test
-    public void initTest() {
-    }
 
     @Test
     public void processTest() throws MalformedURLException {
