@@ -121,7 +121,6 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
             mapFieldName2Type.entrySet().forEach(fields -> {
                 final String fieldName = fields.getKey().toString();
-                final String attributName = fieldName.toString();
                 final String setterName = "with" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
                 final String argumentType = fields.getValue().toString();
 
@@ -133,10 +132,10 @@ public class RadesBuilderProcessor extends AbstractProcessor {
                 out.print("( final ");
 
                 out.print(argumentType);
-                out.println(" " + attributName + " ) {");
+                out.println(" " + fieldName + " ) {");
                 out.print("        this." + objectName + ".");
-                out.print(attributName);
-                out.println(" = " + attributName + ";");
+                out.print(fieldName);
+                out.println(" = " + fieldName + ";");
                 out.println("        return this;");
                 out.println("    }");
                 out.println();
