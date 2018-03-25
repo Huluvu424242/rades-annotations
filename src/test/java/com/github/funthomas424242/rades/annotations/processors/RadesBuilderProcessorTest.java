@@ -1,33 +1,20 @@
 //TODO Vorbereitung für Unit Test mit compile-testing
 package com.github.funthomas424242.rades.annotations.processors;
 
-import com.github.funthomas424242.TestMetaAnnotation;
-import com.github.funthomas424242.domain.Person;
-import com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor;
-//import com.google.common.truth.Truth;
-//import com.google.testing.compile.Compilation;
-import com.google.testing.compile.JavaFileObjects;
-import org.junit.Test;
-// import org.junit.jupiter.api.Test;
-
+import com.google.common.truth.Truth;
 import com.google.testing.compile.JavaFileObjects;
 import org.junit.Test;
 
-import javax.tools.FileObject;
-import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
-import java.net.URLClassLoader;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static com.google.testing.compile.JavaSourceSubjectFactory.javaSource;
-import static org.junit.Assert.assertNotNull;
-import static org.truth0.Truth.ASSERT;
-//import static org.truth0.Truth.ASSERT;
+
+//import com.google.common.truth.Truth;
+//import com.google.testing.compile.Compilation;
+// import org.junit.jupiter.api.Test;
 
 public class RadesBuilderProcessorTest {
 
@@ -88,13 +75,11 @@ public class RadesBuilderProcessorTest {
         final URL resourceURL = getResourceURL(projectSubfolder, resourcePath);
 
 
-        ASSERT.about(javaSource())
+        Truth.assert_().about(javaSource())
                 .that(JavaFileObjects.forResource(resourceURL))
                 .processedWith(new RadesBuilderProcessor())
                 .compilesWithoutError();
     }
-
-
 
 
 }
