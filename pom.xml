@@ -43,13 +43,13 @@
 
     <dependencies>
 
-        <!--<dependency>-->
-            <!--<groupId>com.google.auto.service</groupId>-->
-            <!--<artifactId>auto-service</artifactId>-->
-            <!--<version>${auto-service.version}</version>-->
-            <!--<scope>provided</scope>-->
-            <!--<optional>true</optional>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.google.auto.service</groupId>
+            <artifactId>auto-service</artifactId>
+            <version>${auto-service.version}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -97,10 +97,10 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
-                    <!--<encoding>UTF-8</encoding>-->
+                    <encoding>UTF-8</encoding>
                     <!-- Disable annotation processing -->
-                    <compilerArgument>-Xlint:unchecked</compilerArgument>
-                    <proc>none</proc>
+                    <!--<compilerArgument>-Xlint:unchecked</compilerArgument>-->
+                    <!--<proc>none</proc>-->
                     <!-- replaced by google auto-service -->
                     <!--<generatedSourcesDirectory>${project.build.directory}/generated-sources/</generatedSourcesDirectory>-->
                     <!--<annotationProcessors>-->
