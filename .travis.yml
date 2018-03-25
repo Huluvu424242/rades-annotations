@@ -3,7 +3,6 @@ language: java
 env:
   global:
 
-
 jdk:
   - oraclejdk8
 

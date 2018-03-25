@@ -12,5 +12,12 @@ image:https://badge.waffle.io/FunThomas424242/rades-annotations.svg?columns=all[
 Rades Annotationen zur Automatisierung
 
 
+[#quellen]
+= Quellen im Internet
+
+* Reference Projek: https://github.com/tommy-bo/junit-ignore-processor
+* Artikel: https://www.visma.com/blog/java-annotation-processing-tool-tips-writing-testing/
+
+
 
 

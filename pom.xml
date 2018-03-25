@@ -37,9 +37,8 @@
         <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <auto-service.version>1.0-rc2</auto-service.version>
-        <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
-        <auto-service.version>1.0-rc2</auto-service.version>
+        <auto-service.version>1.0-rc4</auto-service.version>
+        <guava-version>23.5-jre</guava-version>
     </properties>
 
     <dependencies>
@@ -51,27 +50,30 @@
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.google.guava</groupId>-->
+            <!--<artifactId>guava</artifactId>-->
+            <!--<version>${guava-version}</version>-->
+            <!--<type>jar</type>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.1.0</version>
             <scope>test</scope>
         </dependency>
-        <!---->
-        <!--Vorbereitung für Unit Test mit compile-testing-->
-        <!---->
-        <!--<dependency>-->
-            <!--<groupId>org.junit.vintage</groupId>-->
-            <!--<artifactId>junit-vintage-engine</artifactId>-->
-            <!--<version>5.1.0</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>com.google.testing.compile</groupId>-->
-            <!--<artifactId>compile-testing</artifactId>-->
-            <!--<version>0.15</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <version>5.1.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.testing.compile</groupId>
+            <artifactId>compile-testing</artifactId>
+            <version>0.15</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -85,6 +87,9 @@
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
                     <encoding>UTF-8</encoding>
+                    <!-- Disable annotation processing -->
+                    <!--<compilerArgument>-Xlint:unchecked</compilerArgument>-->
+                    <!--<proc>none</proc>-->
                     <!-- replaced by google auto-service -->
                     <!--<generatedSourcesDirectory>${project.build.directory}/generated-sources/</generatedSourcesDirectory>-->
                     <!--<annotationProcessors>-->
