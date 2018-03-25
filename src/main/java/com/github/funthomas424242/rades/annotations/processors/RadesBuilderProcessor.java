@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 @SupportedAnnotationTypes("com.github.funthomas424242.rades.annotations.RadesBuilder")
-@SupportedSourceVersion(SourceVersion.RELEASE_6)
+@SupportedSourceVersion(SourceVersion.RELEASE_8)
 //@AutoService(Processor.class)
 public class RadesBuilderProcessor extends AbstractProcessor {
 

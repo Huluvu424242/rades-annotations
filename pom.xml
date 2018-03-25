@@ -35,8 +35,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
-        <maven.compiler.source>1.6</maven.compiler.source>
-        <maven.compiler.target>1.6</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <auto-service.version>1.0-rc2</auto-service.version>
         <auto-service.version>1.0-rc2</auto-service.version>
     </properties>
@@ -68,8 +68,8 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>compile</scope>
+            <version>4.12</version>
+            <scope>test</scope>
             <type>jar</type>
             <optional>true</optional>
         </dependency>
@@ -95,8 +95,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <!--<source>${maven.compiler.source}</source>-->
-                    <!--<target>${maven.compiler.target}</target>-->
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                     <!--<encoding>UTF-8</encoding>-->
                     <!-- Disable annotation processing -->
                     <compilerArgument>-Xlint:unchecked</compilerArgument>
