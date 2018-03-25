@@ -15,6 +15,7 @@ import java.nio.file.Paths;
 import static com.google.testing.compile.CompilationSubject.assertThat;
 import static com.google.testing.compile.Compiler.javac;
 import static com.google.testing.compile.JavaSourceSubjectFactory.javaSource;
+import static org.junit.Assert.fail;
 
 public class RadesBuilderProcessorTest {
 
@@ -66,17 +67,21 @@ public class RadesBuilderProcessorTest {
     }
 
     @Test
-    public void shouldCompileClassWithoutIgnoreAnnotationWithoutErrors() throws MalformedURLException {
+    public void shouldCompileClassWithoutIgnoreAnnotationWithoutErrors() {
 
         final String projectSubfolder = "src/test/java/";
         final String resourcePath = "com/github/funthomas424242/domain/Person.java";
-        final URL resourceURL = getResourceURL(projectSubfolder, resourcePath);
+        try {
+            final URL resourceURL = getResourceURL(projectSubfolder, resourcePath);
 
 
-        Truth.assert_().about(javaSource())
-                .that(JavaFileObjects.forResource(resourceURL))
-                .processedWith(new RadesBuilderProcessor())
-                .compilesWithoutError();
+            Truth.assert_().about(javaSource())
+                    .that(JavaFileObjects.forResource(resourceURL))
+                    .processedWith(new RadesBuilderProcessor())
+                    .compilesWithoutError();
+        } catch (MalformedURLException ex) {
+            fail();
+        }
     }
 
 
