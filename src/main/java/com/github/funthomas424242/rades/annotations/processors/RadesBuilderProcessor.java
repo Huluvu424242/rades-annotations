@@ -1,6 +1,6 @@
 package com.github.funthomas424242.rades.annotations.processors;
 
-import com.google.auto.service.AutoService;
+//import com.google.auto.service.AutoService;
 
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
@@ -16,8 +16,8 @@ import java.util.Map;
 import java.util.Set;
 
 @SupportedAnnotationTypes("com.github.funthomas424242.rades.annotations.RadesBuilder")
-@SupportedSourceVersion(SourceVersion.RELEASE_8)
-@AutoService(Processor.class)
+@SupportedSourceVersion(SourceVersion.RELEASE_6)
+//@AutoService(Processor.class)
 public class RadesBuilderProcessor extends AbstractProcessor {
 
     protected ProcessingEnvironment processingEnvironment;
@@ -40,7 +40,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
                     continue;
                 }
                 final TypeElement typeElement = (TypeElement) annotatedElement;
-                final Map<Name, Name> mapName2Type = new HashMap<>();
+                final Map<Name, Name> mapName2Type = new HashMap<Name, Name>();
                 final List<? extends Element> classMembers = annotatedElement.getEnclosedElements();
                 for (final Element classMember : classMembers) {
                     if (classMember.getKind().isField()) {
@@ -86,7 +86,8 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         JavaFileObject builderFile = processingEnv.getFiler()
                 .createSourceFile(builderClassName);
 
-        try (PrintWriter out = new PrintWriter(builderFile.openWriter())) {
+        try {
+            final PrintWriter  out = new PrintWriter(builderFile.openWriter());
 
             if (packageName != null) {
                 out.print("package ");
@@ -116,7 +117,8 @@ public class RadesBuilderProcessor extends AbstractProcessor {
             out.println("    }");
             out.println();
 
-            mapFieldName2Type.entrySet().forEach(fields -> {
+            final Set<Map.Entry<Name,Name>> entries= mapFieldName2Type.entrySet();
+            for(final Map.Entry fields : entries){
                 final String fieldName = fields.getKey().toString();
                 final String attributName = fieldName.toString();
                 final String setterName = "with" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
@@ -137,9 +139,34 @@ public class RadesBuilderProcessor extends AbstractProcessor {
                 out.println("        return this;");
                 out.println("    }");
                 out.println();
-            });
+            }
+
+//            forEach(fields -> {
+//                final String fieldName = fields.getKey().toString();
+//                final String attributName = fieldName.toString();
+//                final String setterName = "with" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+//                final String argumentType = fields.getValue().toString();
+//
+//                out.print("    public ");
+//                out.print(builderSimpleClassName);
+//                out.print(" ");
+//                out.print(setterName);
+//
+//                out.print("( final ");
+//
+//                out.print(argumentType);
+//                out.println(" " + attributName + " ) {");
+//                out.print("        this." + objectName + ".");
+//                out.print(attributName);
+//                out.println(" = " + attributName + ";");
+//                out.println("        return this;");
+//                out.println("    }");
+//                out.println();
+//            });
 
             out.println("}");
+        }finally {
+            System.out.println("Finnally");
         }
     }
 

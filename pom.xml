@@ -34,29 +34,28 @@
     </distributionManagement>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
+        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.6</maven.compiler.target>
         <auto-service.version>1.0-rc2</auto-service.version>
-        <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
         <auto-service.version>1.0-rc2</auto-service.version>
     </properties>
 
     <dependencies>
 
-        <dependency>
-            <groupId>com.google.auto.service</groupId>
-            <artifactId>auto-service</artifactId>
-            <version>${auto-service.version}</version>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.1.0</version>
-            <scope>test</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.google.auto.service</groupId>-->
+            <!--<artifactId>auto-service</artifactId>-->
+            <!--<version>${auto-service.version}</version>-->
+            <!--<scope>provided</scope>-->
+            <!--<optional>true</optional>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.junit.jupiter</groupId>-->
+            <!--<artifactId>junit-jupiter-engine</artifactId>-->
+            <!--<version>5.1.0</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
         <!---->
         <!--Vorbereitung für Unit Test mit compile-testing-->
         <!---->
@@ -66,12 +65,26 @@
             <!--<version>5.1.0</version>-->
             <!--<scope>test</scope>-->
         <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>com.google.testing.compile</groupId>-->
-            <!--<artifactId>compile-testing</artifactId>-->
-            <!--<version>0.15</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>compile</scope>
+            <type>jar</type>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.google.testing.compile</groupId>
+            <artifactId>compile-testing</artifactId>
+            <version>0.5</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>16.0.1</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>
@@ -82,9 +95,12 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                    <encoding>UTF-8</encoding>
+                    <!--<source>${maven.compiler.source}</source>-->
+                    <!--<target>${maven.compiler.target}</target>-->
+                    <!--<encoding>UTF-8</encoding>-->
+                    <!-- Disable annotation processing -->
+                    <compilerArgument>-Xlint:unchecked</compilerArgument>
+                    <proc>none</proc>
                     <!-- replaced by google auto-service -->
                     <!--<generatedSourcesDirectory>${project.build.directory}/generated-sources/</generatedSourcesDirectory>-->
                     <!--<annotationProcessors>-->
@@ -95,23 +111,23 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.junit.platform</groupId>
-                        <artifactId>junit-platform-surefire-provider</artifactId>
-                        <version>1.0.1</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.junit.jupiter</groupId>
-                        <artifactId>junit-jupiter-engine</artifactId>
-                        <version>5.0.1</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-surefire-plugin</artifactId>-->
+                <!--<version>2.19.1</version>-->
+                <!--<dependencies>-->
+                    <!--<dependency>-->
+                        <!--<groupId>org.junit.platform</groupId>-->
+                        <!--<artifactId>junit-platform-surefire-provider</artifactId>-->
+                        <!--<version>1.0.1</version>-->
+                    <!--</dependency>-->
+                    <!--<dependency>-->
+                        <!--<groupId>org.junit.jupiter</groupId>-->
+                        <!--<artifactId>junit-jupiter-engine</artifactId>-->
+                        <!--<version>5.0.1</version>-->
+                    <!--</dependency>-->
+                <!--</dependencies>-->
+            <!--</plugin>-->
 
             <plugin>
                 <groupId>org.jacoco</groupId>
