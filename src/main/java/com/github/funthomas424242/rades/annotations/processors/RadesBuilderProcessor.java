@@ -71,10 +71,10 @@ public class RadesBuilderProcessor extends AbstractProcessor {
     }
 
     protected String getFullQualifiedClassName(final TypeMirror typeMirror){
-        String typeName=null;
-        if(typeMirror instanceof DeclaredType){
-            final DeclaredType type = (DeclaredType) typeMirror;
-        }
+//        String typeName=null;
+//        if(typeMirror instanceof DeclaredType){
+//            final DeclaredType type = (DeclaredType) typeMirror;
+//        }
         return typeMirror.toString();
     }
 
