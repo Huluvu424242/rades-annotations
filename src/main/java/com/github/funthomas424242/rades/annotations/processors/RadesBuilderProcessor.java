@@ -8,9 +8,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
-import javax.lang.model.util.Types;
 import javax.tools.JavaFileObject;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,7 +32,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(final Set<? extends TypeElement> annotations, final RoundEnvironment roundEnv) {
-        final Types types = this.processingEnvironment.getTypeUtils();
+//        final Types types = this.processingEnvironment.getTypeUtils();
 
         for (TypeElement annotation : annotations) {
             final Set<? extends Element> annotatedElements = roundEnv.getElementsAnnotatedWith(annotation);
@@ -52,8 +50,6 @@ public class RadesBuilderProcessor extends AbstractProcessor {
                         if (fieldModifiers.contains(Modifier.PUBLIC) || fieldModifiers.contains(Modifier.PROTECTED)) {
                             final Name fieldName = classMember.getSimpleName();
                             final TypeMirror fieldTypeMirror = classMember.asType();
-//                            final Element fieldTypeElement = types.asElement(fieldTypeMirror);
-//                            System.out.println("TYPE: "+getFullQualifiedClassName(fieldTypeMirror));
                             mapName2Type.put(fieldName, fieldTypeMirror);
                         }
                     }
@@ -70,7 +66,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         return true;
     }
 
-    protected String getFullQualifiedClassName(final TypeMirror typeMirror){
+    protected String getFullQualifiedClassName(final TypeMirror typeMirror) {
 //        String typeName=null;
 //        if(typeMirror instanceof DeclaredType){
 //            final DeclaredType type = (DeclaredType) typeMirror;
