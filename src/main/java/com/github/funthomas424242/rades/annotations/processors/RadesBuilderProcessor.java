@@ -128,7 +128,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
             mapFieldName2Type.entrySet().forEach(fields -> {
                 final String fieldName = fields.getKey().toString();
                 final String setterName = "with" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-                final String argumentType = fields.getValue().toString();
+                final String argumentType = getFullQualifiedClassName(fields.getValue());
 
                 out.print("    public ");
                 out.print(builderSimpleClassName);
