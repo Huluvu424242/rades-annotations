@@ -40,29 +40,7 @@ public class RadesBuilderProcessorTest {
         assertThat(compilation).succeeded();
         assertThat(compilation)
                 .generatedFile(StandardLocation.SOURCE_OUTPUT, "com.github.funthomas424242.domain", "PersonBuilder.java")
-                .hasSourceEquivalentTo(JavaFileObjects.forSourceString("com.github.funthomas424242.domain.PersonBuilder", "package com.github.funthomas424242.domain;\n" +
-                        "\n" +
-                        "public class PersonBuilder {\n" +
-                        "\n" +
-                        "    private Person person = new Person();\n" +
-                        "\n" +
-                        "    public Person build() {\n" +
-                        "        final Person value = this.person;\n" +
-                        "        this.person = null;\n" +
-                        "        return value;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    public PersonBuilder withVorname( final String vorname ) {\n" +
-                        "        this.person.vorname = vorname;\n" +
-                        "        return this;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "    public PersonBuilder withName( final String name ) {\n" +
-                        "        this.person.name = name;\n" +
-                        "        return this;\n" +
-                        "    }\n" +
-                        "\n" +
-                        "}\n")
+                .hasSourceEquivalentTo(JavaFileObjects.forResource("expectations/PersonBuilder.java")
                 );
     }
 
