@@ -15,8 +15,15 @@ public class Person {
 
     protected Date birthday;
 
+    public int groesse;
+
+
     public int getId() {
         return id;
+    }
+
+    public void setId(final int id){
+        this.id=id;
     }
 
 }
