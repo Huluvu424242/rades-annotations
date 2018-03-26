@@ -8,6 +8,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Types;
 import javax.tools.JavaFileObject;
@@ -43,7 +44,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
                     continue;
                 }
                 final TypeElement typeElement = (TypeElement) annotatedElement;
-                final Map<Name, Name> mapName2Type = new HashMap<>();
+                final Map<Name, TypeMirror> mapName2Type = new HashMap<>();
                 final List<? extends Element> classMembers = annotatedElement.getEnclosedElements();
                 for (final Element classMember : classMembers) {
                     if (classMember.getKind().isField()) {
@@ -51,9 +52,9 @@ public class RadesBuilderProcessor extends AbstractProcessor {
                         if (fieldModifiers.contains(Modifier.PUBLIC) || fieldModifiers.contains(Modifier.PROTECTED)) {
                             final Name fieldName = classMember.getSimpleName();
                             final TypeMirror fieldTypeMirror = classMember.asType();
-                            final Element fieldTypeElement = types.asElement(fieldTypeMirror);
-
-                            mapName2Type.put(fieldName, fieldTypeElement.getSimpleName());
+//                            final Element fieldTypeElement = types.asElement(fieldTypeMirror);
+//                            System.out.println("TYPE: "+getFullQualifiedClassName(fieldTypeMirror));
+                            mapName2Type.put(fieldName, fieldTypeMirror);
                         }
                     }
                 }
@@ -69,7 +70,16 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         return true;
     }
 
-    private void writeBuilderFile(final Name typeName, Map<Name, Name> mapFieldName2Type)
+    protected String getFullQualifiedClassName(final TypeMirror typeMirror){
+        String typeName=null;
+        if(typeMirror instanceof DeclaredType){
+            final DeclaredType type = (DeclaredType) typeMirror;
+        }
+        return typeMirror.toString();
+    }
+
+
+    private void writeBuilderFile(final Name typeName, Map<Name, TypeMirror> mapFieldName2Type)
             throws IOException {
 
         final String className = typeName.toString();

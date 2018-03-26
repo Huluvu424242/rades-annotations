@@ -10,12 +10,17 @@ public class PersonBuilder {
         return value;
     }
 
-    public PersonBuilder withVorname( final String vorname ) {
+    public PersonBuilder withVorname( final java.lang.String vorname ) {
         this.person.vorname = vorname;
         return this;
     }
 
-    public PersonBuilder withName( final String name ) {
+    public PersonBuilder withBirthday( final java.util.Date birthday ) {
+        this.person.birthday = birthday;
+        return this;
+    }
+
+    public PersonBuilder withName( final java.lang.String name ) {
         this.person.name = name;
         return this;
     }
