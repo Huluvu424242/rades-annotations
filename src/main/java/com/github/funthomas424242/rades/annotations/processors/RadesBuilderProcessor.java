@@ -111,9 +111,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
                         "import javax.validation.ConstraintViolation;\n" +
                         "import javax.validation.Validation;\n" +
                         "import javax.validation.ValidationException;\n" +
-                        "import javax.validation.Validator;\n" +
-                        "import java.util.HashSet;\n" +
-                        "import java.util.Set;"
+                        "import javax.validation.Validator;\n"
                 );
                 out.println();
             }
@@ -134,10 +132,10 @@ public class RadesBuilderProcessor extends AbstractProcessor {
             out.print(simpleClassName);
             out.println(" build() {\n" +
                     "        final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();\n" +
-                    "        final Set<ConstraintViolation<" + simpleClassName + ">> constraintViolations = validator.validate(this." + objectName + ");\n" +
+                    "        final java.util.Set<ConstraintViolation<" + simpleClassName + ">> constraintViolations = validator.validate(this." + objectName + ");\n" +
                     "\n" +
                     "        if (constraintViolations.size() > 0) {\n" +
-                    "            Set<String> violationMessages = new HashSet<String>();\n" +
+                    "            java.util.Set<String> violationMessages = new java.util.HashSet<String>();\n" +
                     "\n" +
                     "            for (ConstraintViolation<?> constraintViolation : constraintViolations) {\n" +
                     "                violationMessages.add(constraintViolation.getPropertyPath() + \": \" + constraintViolation.getMessage());\n" +
