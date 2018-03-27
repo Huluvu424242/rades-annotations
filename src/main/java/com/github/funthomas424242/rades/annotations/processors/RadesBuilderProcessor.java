@@ -123,9 +123,14 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
             out.print("    private ");
             out.print(simpleClassName);
-            out.print(" " + objectName + " = new ");
-            out.print(simpleClassName);
-            out.println("();");
+            out.print(" " + objectName + ";\n\n" +
+                    "    public "+builderSimpleClassName+"(){\n" +
+                    "        this(new "+simpleClassName+"());\n" +
+                    "    }\n" +
+                    "\n" +
+                    "    public "+builderSimpleClassName+"( final "+simpleClassName+" "+objectName+" ){\n" +
+                    "        this."+objectName+" = "+objectName+";\n" +
+                    "    }\n");
             out.println();
 
             out.print("    public ");
