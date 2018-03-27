@@ -55,7 +55,7 @@ public class RadesBuilderProcessorTest {
     }
 
     @Test
-    public void shouldCompileClassWithoutIgnoreAnnotationWithoutErrors() {
+    public void shouldCompilePersonJavaWithoutErrors() {
 
         Truth.assert_().about(javaSource())
                 .that(JavaFileObjects.forResource(urlPersonJava))
