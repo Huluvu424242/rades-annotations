@@ -23,6 +23,7 @@ public class RadesBuilderProcessorTest {
 
     protected static URL urlPersonJava;
     protected static URL urlPersonBuilderJava;
+    protected static URL urlMetaAnnotationJava;
 
 
     protected static URL getResourceURL(String projectSrcRoot, String resourcePath) throws MalformedURLException {
@@ -35,6 +36,7 @@ public class RadesBuilderProcessorTest {
     @BeforeClass
     public static void setUp() throws MalformedURLException {
         urlPersonJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/domain/Person.java");
+        urlMetaAnnotationJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/MetaAnnotation.java");
         urlPersonBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "PersonBuilder.java");
     }
 
@@ -59,6 +61,16 @@ public class RadesBuilderProcessorTest {
 
         Truth.assert_().about(javaSource())
                 .that(JavaFileObjects.forResource(urlPersonJava))
+                .processedWith(new RadesBuilderProcessor())
+                .compilesWithoutError();
+
+    }
+
+    @Test
+    public void shouldCompileMetaAnnotationJavaWithoutErrors() {
+
+        Truth.assert_().about(javaSource())
+                .that(JavaFileObjects.forResource(urlMetaAnnotationJava))
                 .processedWith(new RadesBuilderProcessor())
                 .compilesWithoutError();
 

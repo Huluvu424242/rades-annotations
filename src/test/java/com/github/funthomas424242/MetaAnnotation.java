@@ -11,5 +11,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @RadesBuilder
 @Retention(RetentionPolicy.SOURCE)
-public @interface TestMetaAnnotation {
+public @interface MetaAnnotation {
 }
