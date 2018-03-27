@@ -8,6 +8,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
 import javax.tools.JavaFileObject;
 import java.io.IOException;
@@ -67,11 +68,14 @@ public class RadesBuilderProcessor extends AbstractProcessor {
     }
 
     protected String getFullQualifiedClassName(final TypeMirror typeMirror) {
-//        String typeName=null;
-//        if(typeMirror instanceof DeclaredType){
-//            final DeclaredType type = (DeclaredType) typeMirror;
-//        }
-        return typeMirror.toString();
+        final String typeName;
+        if(typeMirror instanceof DeclaredType){
+            final DeclaredType type = (DeclaredType) typeMirror;
+            typeName = type.asElement().toString();
+        }else{
+            typeName= typeMirror.toString();
+        }
+        return typeName;
     }
 
 
@@ -101,6 +105,14 @@ public class RadesBuilderProcessor extends AbstractProcessor {
                 out.print("package ");
                 out.print(packageName);
                 out.println(";");
+                out.println("\n" +
+                        "import org.apache.commons.lang3.StringUtils;\n" +
+                        "\n" +
+                        "import javax.validation.ConstraintViolation;\n" +
+                        "import javax.validation.Validation;\n" +
+                        "import javax.validation.ValidationException;\n" +
+                        "import javax.validation.Validator;\n"
+                );
                 out.println();
             }
 
@@ -118,7 +130,19 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
             out.print("    public ");
             out.print(simpleClassName);
-            out.println(" build() {");
+            out.println(" build() {\n" +
+                    "        final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();\n" +
+                    "        final java.util.Set<ConstraintViolation<" + simpleClassName + ">> constraintViolations = validator.validate(this." + objectName + ");\n" +
+                    "\n" +
+                    "        if (constraintViolations.size() > 0) {\n" +
+                    "            java.util.Set<String> violationMessages = new java.util.HashSet<String>();\n" +
+                    "\n" +
+                    "            for (ConstraintViolation<?> constraintViolation : constraintViolations) {\n" +
+                    "                violationMessages.add(constraintViolation.getPropertyPath() + \": \" + constraintViolation.getMessage());\n" +
+                    "            }\n" +
+                    "\n" +
+                    "            throw new ValidationException(\""+simpleClassName+" is not valid:\\n\" + StringUtils.join(violationMessages, \"\\n\"));\n" +
+                    "        }");
             out.println("        final " + simpleClassName + " value = this." + objectName + ";");
             out.println("        this." + objectName + " = null;");
             out.println("        return value;");
