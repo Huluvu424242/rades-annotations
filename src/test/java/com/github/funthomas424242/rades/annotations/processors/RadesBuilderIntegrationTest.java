@@ -5,19 +5,23 @@ import com.github.funthomas424242.domain.AbteilungBuilder;
 import com.github.funthomas424242.domain.Person;
 import com.github.funthomas424242.domain.PersonBuilder;
 import com.google.common.collect.Sets;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import javax.validation.ValidationException;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
 public class RadesBuilderIntegrationTest {
+
+    @BeforeAll
+    public static void setUp(){
+        // needed for Travis CI wich has en
+        Locale.setDefault(new Locale("de", "DE"));
+    }
 
     @Test
     @DisplayName("Alle Felder von Abteilung gültig befüllen.")
@@ -52,7 +56,7 @@ public class RadesBuilderIntegrationTest {
         Throwable exception = assertThrows(ValidationException.class, () -> {
             new PersonBuilder().build();
         });
-        assertEquals("Person is not valid:\nname: darf nicht \"null\" sein", exception.getMessage());
+        assertEquals("Person is not valid:\nname: darf nicht \"null\" sein", exception.getLocalizedMessage());
     }
 
 }
