@@ -8,6 +8,7 @@ import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
 import javax.tools.JavaFileObject;
 import java.io.IOException;
@@ -67,11 +68,14 @@ public class RadesBuilderProcessor extends AbstractProcessor {
     }
 
     protected String getFullQualifiedClassName(final TypeMirror typeMirror) {
-//        String typeName=null;
-//        if(typeMirror instanceof DeclaredType){
-//            final DeclaredType type = (DeclaredType) typeMirror;
-//        }
-        return typeMirror.toString();
+        final String typeName;
+        if(typeMirror instanceof DeclaredType){
+            final DeclaredType type = (DeclaredType) typeMirror;
+            typeName = type.asElement().toString();
+        }else{
+            typeName= typeMirror.toString();
+        }
+        return typeName;
     }
 
 

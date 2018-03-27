@@ -2,6 +2,7 @@ package com.github.funthomas424242.domain;
 
 import com.github.funthomas424242.rades.annotations.RadesBuilder;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Set;
 
@@ -22,6 +23,7 @@ public class Person {
 
     private int id;
 
+    @NotNull
     protected String name;
 
     protected String vorname;
