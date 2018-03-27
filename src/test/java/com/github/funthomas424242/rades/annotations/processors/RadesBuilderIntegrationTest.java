@@ -56,4 +56,21 @@ public class RadesBuilderIntegrationTest {
         assertEquals("Person is not valid:\nname: darf nicht \"null\" sein", exception.getMessage());
     }
 
+    @Test
+    @DisplayName("Optionale Felder von Person später befüllen.")
+    @Tags({@Tag("integration"), @Tag("builder")})
+    public void testPersonOptionaleFelderSpaeterBefuellt() {
+        final Person person1 = new PersonBuilder()
+                .withName("Mustermann")
+                .build();
+        assertNotNull(person1);
+        final Person person = new PersonBuilder(person1)
+                .withVorname("Max")
+                .withBirthday(new Date(1968, 12, 25))
+                .withGroesse(175)
+                .withLieblingsfarben((HashSet<Person.Farbe>) Sets.newHashSet(Person.Farbe.BLAU))
+                .build();
+        assertNotNull(person);
+    }
+
 }
