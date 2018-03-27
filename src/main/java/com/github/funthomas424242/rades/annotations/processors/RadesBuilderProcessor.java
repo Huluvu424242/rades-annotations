@@ -101,6 +101,16 @@ public class RadesBuilderProcessor extends AbstractProcessor {
                 out.print("package ");
                 out.print(packageName);
                 out.println(";");
+                out.println("\n" +
+                        "import org.apache.commons.lang3.StringUtils;\n" +
+                        "\n" +
+                        "import javax.validation.ConstraintViolation;\n" +
+                        "import javax.validation.Validation;\n" +
+                        "import javax.validation.ValidationException;\n" +
+                        "import javax.validation.Validator;\n" +
+                        "import java.util.HashSet;\n" +
+                        "import java.util.Set;"
+                );
                 out.println();
             }
 
@@ -118,7 +128,19 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
             out.print("    public ");
             out.print(simpleClassName);
-            out.println(" build() {");
+            out.println(" build() {\n" +
+                    "        final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();\n" +
+                    "        final Set<ConstraintViolation<" + simpleClassName + ">> constraintViolations = validator.validate(this." + objectName + ");\n" +
+                    "\n" +
+                    "        if (constraintViolations.size() > 0) {\n" +
+                    "            Set<String> violationMessages = new HashSet<String>();\n" +
+                    "\n" +
+                    "            for (ConstraintViolation<?> constraintViolation : constraintViolations) {\n" +
+                    "                violationMessages.add(constraintViolation.getPropertyPath() + \": \" + constraintViolation.getMessage());\n" +
+                    "            }\n" +
+                    "\n" +
+                    "            throw new ValidationException(\""+simpleClassName+" is not valid:\\n\" + StringUtils.join(violationMessages, \"\\n\"));\n" +
+                    "        }");
             out.println("        final " + simpleClassName + " value = this." + objectName + ";");
             out.println("        this." + objectName + " = null;");
             out.println("        return value;");

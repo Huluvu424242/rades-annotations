@@ -1,10 +1,31 @@
 package com.github.funthomas424242.domain;
 
+import org.apache.commons.lang3.StringUtils;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.ValidationException;
+import javax.validation.Validator;
+import java.util.HashSet;
+import java.util.Set;
+
 public class PersonBuilder {
 
     private Person person = new Person();
 
     public Person build() {
+        final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+        final Set<ConstraintViolation<Person>> constraintViolations = validator.validate(this.person);
+
+        if (constraintViolations.size() > 0) {
+            Set<String> violationMessages = new HashSet<String>();
+
+            for (ConstraintViolation<?> constraintViolation : constraintViolations) {
+                violationMessages.add(constraintViolation.getPropertyPath() + ": " + constraintViolation.getMessage());
+            }
+
+            throw new ValidationException("Person is not valid:\n" + StringUtils.join(violationMessages, "\n"));
+        }
         final Person value = this.person;
         this.person = null;
         return value;
