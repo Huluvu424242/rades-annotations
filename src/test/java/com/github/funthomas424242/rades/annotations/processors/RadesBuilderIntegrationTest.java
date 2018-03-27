@@ -10,10 +10,11 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
+import javax.validation.ValidationException;
 import java.util.Date;
 import java.util.HashSet;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class RadesBuilderIntegrationTest {
@@ -36,11 +37,23 @@ public class RadesBuilderIntegrationTest {
         final Person person = new PersonBuilder()
                 .withName("Mustermann")
                 .withVorname("Max")
-                .withBirthday(new Date(1968,12,25))
+                .withBirthday(new Date(1968, 12, 25))
                 .withGroesse(175)
-                .withLieblingsfarben((HashSet<Person.Farbe>)Sets.newHashSet(Person.Farbe.BLAU))
+                .withLieblingsfarben((HashSet<Person.Farbe>) Sets.newHashSet(Person.Farbe.BLAU))
                 .build();
         assertNotNull(person);
+    }
+
+    @Test
+    @DisplayName("Pflichtfelder von Person nicht befüllt.")
+    @Tags({@Tag("integration"), @Tag("builder")})
+    public void testPersonPflichtfeldFehler() {
+
+        Throwable exception = assertThrows(ValidationException.class, () -> {
+            final Person person = new PersonBuilder()
+                    .build();
+        });
+        assertEquals("Person is not valid:\nname: darf nicht \"null\" sein", exception.getMessage());
     }
 
 }
