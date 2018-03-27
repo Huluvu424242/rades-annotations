@@ -6,8 +6,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
-import java.util.HashSet;
-import java.util.Set;
+
 
 public class PersonBuilder {
 
@@ -23,10 +22,10 @@ public class PersonBuilder {
 
     public Person build() {
         final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-        final Set<ConstraintViolation<Person>> constraintViolations = validator.validate(this.person);
+        final java.util.Set<ConstraintViolation<Person>> constraintViolations = validator.validate(this.person);
 
         if (constraintViolations.size() > 0) {
-            Set<String> violationMessages = new HashSet<String>();
+            java.util.Set<String> violationMessages = new java.util.HashSet<String>();
 
             for (ConstraintViolation<?> constraintViolation : constraintViolations) {
                 violationMessages.add(constraintViolation.getPropertyPath() + ": " + constraintViolation.getMessage());
