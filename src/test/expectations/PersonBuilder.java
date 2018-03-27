@@ -11,7 +11,15 @@ import java.util.Set;
 
 public class PersonBuilder {
 
-    private Person person = new Person();
+    private Person person;
+
+    public PersonBuilder(){
+        this(new Person());
+    }
+
+    public PersonBuilder( final Person person ){
+        this.person = person;
+    }
 
     public Person build() {
         final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
