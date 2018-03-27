@@ -50,8 +50,7 @@ public class RadesBuilderIntegrationTest {
     public void testPersonPflichtfeldFehler() {
 
         Throwable exception = assertThrows(ValidationException.class, () -> {
-            final Person person = new PersonBuilder()
-                    .build();
+            new PersonBuilder().build();
         });
         assertEquals("Person is not valid:\nname: darf nicht \"null\" sein", exception.getMessage());
     }
