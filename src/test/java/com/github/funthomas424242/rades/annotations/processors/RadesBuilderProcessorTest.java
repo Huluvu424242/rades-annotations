@@ -24,6 +24,7 @@ public class RadesBuilderProcessorTest {
     protected static URL urlPersonJava;
     protected static URL urlPersonBuilderJava;
     protected static URL urlMetaAnnotationJava;
+    protected static URL urlNonePackageClassJava;
 
 
     protected static URL getResourceURL(String projectSrcRoot, String resourcePath) throws MalformedURLException {
@@ -38,6 +39,7 @@ public class RadesBuilderProcessorTest {
         urlPersonJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/domain/Person.java");
         urlMetaAnnotationJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/MetaAnnotation.java");
         urlPersonBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "PersonBuilder.java");
+        urlNonePackageClassJava = getResourceURL(TEST_EXPECTATION_FOLDER, "NonePackageClass.java");
     }
 
 
@@ -76,5 +78,15 @@ public class RadesBuilderProcessorTest {
 
     }
 
+
+    @Test
+    public void shouldCompileNonPackageClassWithoutErrors() {
+
+        Truth.assert_().about(javaSource())
+                .that(JavaFileObjects.forResource(urlNonePackageClassJava))
+                .processedWith(new RadesBuilderProcessor())
+                .compilesWithoutError();
+
+    }
 
 }
