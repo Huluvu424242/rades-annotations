@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 
 import javax.validation.ValidationException;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Locale;
 
