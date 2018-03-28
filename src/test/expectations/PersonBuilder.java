@@ -1,7 +1,5 @@
 package com.github.funthomas424242.domain;
-
 import javax.annotation.Generated;
-
 import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.ConstraintViolation;
@@ -9,9 +7,8 @@ import javax.validation.Validation;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
 
-
 @Generated(value="com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor"
-        , comments="com.github.funthomas424242.domain.Person")
+, comments="com.github.funthomas424242.domain.Person")
 public class PersonBuilder {
 
     private Person person;
@@ -42,18 +39,18 @@ public class PersonBuilder {
         return value;
     }
 
-    public PersonBuilder withVorname( final java.lang.String vorname ) {
-        this.person.vorname = vorname;
-        return this;
-    }
-
     public PersonBuilder withLieblingsfarben( final java.util.Set lieblingsfarben ) {
         this.person.lieblingsfarben = lieblingsfarben;
         return this;
     }
 
-    public PersonBuilder withBirthday( final java.util.Date birthday ) {
+    public PersonBuilder withBirthday( final java.time.LocalDate birthday ) {
         this.person.birthday = birthday;
+        return this;
+    }
+
+    public PersonBuilder withGroesse( final int groesse ) {
+        this.person.groesse = groesse;
         return this;
     }
 
@@ -62,8 +59,8 @@ public class PersonBuilder {
         return this;
     }
 
-    public PersonBuilder withGroesse( final int groesse ) {
-        this.person.groesse = groesse;
+    public PersonBuilder withVorname( final java.lang.String vorname ) {
+        this.person.vorname = vorname;
         return this;
     }
 
