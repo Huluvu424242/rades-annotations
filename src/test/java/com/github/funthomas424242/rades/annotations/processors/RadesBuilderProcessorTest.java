@@ -62,7 +62,7 @@ public class RadesBuilderProcessorTest {
     @Test
     public void shouldCompilePersonJavaWithoutErrors() {
 
-        Truth.assert_().about(javaSource())
+        assertAbout(javaSource())
                 .that(JavaFileObjects.forResource(urlPersonJava))
                 .processedWith(new RadesBuilderProcessor())
                 .compilesWithoutError();
@@ -72,7 +72,7 @@ public class RadesBuilderProcessorTest {
     @Test
     public void shouldCompileMetaAnnotationJavaWithoutErrors() {
 
-        Truth.assert_().about(javaSource())
+        assertAbout(javaSource())
                 .that(JavaFileObjects.forResource(urlMetaAnnotationJava))
                 .processedWith(new RadesBuilderProcessor())
                 .compilesWithoutError();
