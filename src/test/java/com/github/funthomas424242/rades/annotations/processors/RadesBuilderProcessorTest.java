@@ -83,7 +83,10 @@ public class RadesBuilderProcessorTest {
     public void shouldCompileNonPackageClassWithoutErrors() {
 
         Truth.assert_().about(javaSource())
-                .that(JavaFileObjects.forResource(urlNonePackageClassJava))
+                .that(JavaFileObjects.forSourceString("NonePackageClass","\n" +
+                        "@com.github.funthomas424242.rades.annotations.RadesBuilder\n" +
+                        "public class NonePackageClass {\n" +
+                        "}\n"))
                 .processedWith(new RadesBuilderProcessor())
                 .compilesWithoutError();
 
