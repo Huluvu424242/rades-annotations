@@ -1,7 +1,6 @@
 //TODO Vorbereitung für Unit Test mit compile-testing
 package com.github.funthomas424242.rades.annotations.processors;
 
-import com.google.common.truth.Truth;
 import com.google.testing.compile.Compilation;
 import com.google.testing.compile.JavaFileObjects;
 import org.junit.BeforeClass;
@@ -84,7 +83,7 @@ public class RadesBuilderProcessorTest {
     public void shouldCompileNonPackageClassWithoutErrors() {
 
         assertAbout(javaSource())
-                .that(JavaFileObjects.forSourceString("NonePackageClass","\n" +
+                .that(JavaFileObjects.forSourceString("NonePackageClass", "\n" +
                         "@com.github.funthomas424242.rades.annotations.RadesBuilder\n" +
                         "public class NonePackageClass {\n" +
                         "}\n"))
