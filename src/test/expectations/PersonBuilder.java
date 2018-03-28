@@ -1,5 +1,7 @@
 package com.github.funthomas424242.domain;
 
+import javax.annotation.Generated;
+
 import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.ConstraintViolation;
@@ -8,6 +10,8 @@ import javax.validation.ValidationException;
 import javax.validation.Validator;
 
 
+@Generated(value="com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor"
+        , comments="com.github.funthomas424242.domain.Person")
 public class PersonBuilder {
 
     private Person person;

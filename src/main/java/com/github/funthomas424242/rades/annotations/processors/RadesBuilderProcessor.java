@@ -13,6 +13,8 @@ import javax.lang.model.type.TypeMirror;
 import javax.tools.JavaFileObject;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,9 +58,8 @@ public class RadesBuilderProcessor extends AbstractProcessor {
                     }
                 }
 
-                final Name className = typeElement.getQualifiedName();
                 try {
-                    writeBuilderFile(className, mapName2Type);
+                    writeBuilderFile(typeElement, mapName2Type);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -69,20 +70,20 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
     protected String getFullQualifiedClassName(final TypeMirror typeMirror) {
         final String typeName;
-        if(typeMirror instanceof DeclaredType){
+        if (typeMirror instanceof DeclaredType) {
             final DeclaredType type = (DeclaredType) typeMirror;
             typeName = type.asElement().toString();
-        }else{
-            typeName= typeMirror.toString();
+        } else {
+            typeName = typeMirror.toString();
         }
         return typeName;
     }
 
 
-    private void writeBuilderFile(final Name typeName, Map<Name, TypeMirror> mapFieldName2Type)
+    private void writeBuilderFile(final TypeElement typeElement, Map<Name, TypeMirror> mapFieldName2Type)
             throws IOException {
 
-        final String className = typeName.toString();
+        final String className = typeElement.getQualifiedName().toString();
 
         String packageName = null;
         int lastDot = className.lastIndexOf('.');
@@ -100,23 +101,27 @@ public class RadesBuilderProcessor extends AbstractProcessor {
                 .createSourceFile(builderClassName);
 
         try (PrintWriter out = new PrintWriter(builderFile.openWriter())) {
+            final LocalDateTime now = LocalDateTime.now();
+            final String nowString = now.format(DateTimeFormatter.ISO_DATE_TIME);
 
             if (packageName != null) {
                 out.print("package ");
                 out.print(packageName);
-                out.println(";");
-                out.println("\n" +
-                        "import org.apache.commons.lang3.StringUtils;\n" +
-                        "\n" +
-                        "import javax.validation.ConstraintViolation;\n" +
-                        "import javax.validation.Validation;\n" +
-                        "import javax.validation.ValidationException;\n" +
-                        "import javax.validation.Validator;\n"
-                );
+                out.println(";\n");
+                out.println("import javax.annotation.Generated;");
+                out.println("import org.apache.commons.lang3.StringUtils;\n");
+                out.println("import javax.validation.ConstraintViolation;");
+                out.println("import javax.validation.Validation;");
+                out.println("import javax.validation.ValidationException;");
+                out.println("import javax.validation.Validator;");
                 out.println();
             }
 
-            out.print("public class ");
+            out.print("@Generated(value=\"com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor\"\n" +
+                    //TODO Zeiterzeugung in Utilklasse auslagern und im Test mocken
+                    //", date=\"" + nowString + "\"\n" +
+                    ", comments=\"" + className + "\")\n" +
+                    "public class ");
             out.print(builderSimpleClassName);
             out.println(" {");
             out.println();
@@ -124,30 +129,30 @@ public class RadesBuilderProcessor extends AbstractProcessor {
             out.print("    private ");
             out.print(simpleClassName);
             out.print(" " + objectName + ";\n\n" +
-                    "    public "+builderSimpleClassName+"(){\n" +
-                    "        this(new "+simpleClassName+"());\n" +
+                    "    public " + builderSimpleClassName + "(){\n" +
+                    "        this(new " + simpleClassName + "());\n" +
                     "    }\n" +
                     "\n" +
-                    "    public "+builderSimpleClassName+"( final "+simpleClassName+" "+objectName+" ){\n" +
-                    "        this."+objectName+" = "+objectName+";\n" +
+                    "    public " + builderSimpleClassName + "( final " + simpleClassName + " " + objectName + " ){\n" +
+                    "        this." + objectName + " = " + objectName + ";\n" +
                     "    }\n");
             out.println();
 
             out.print("    public ");
             out.print(simpleClassName);
-            out.println(" build() {\n" +
-                    "        final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();\n" +
-                    "        final java.util.Set<ConstraintViolation<" + simpleClassName + ">> constraintViolations = validator.validate(this." + objectName + ");\n" +
-                    "\n" +
-                    "        if (constraintViolations.size() > 0) {\n" +
-                    "            java.util.Set<String> violationMessages = new java.util.HashSet<String>();\n" +
-                    "\n" +
-                    "            for (ConstraintViolation<?> constraintViolation : constraintViolations) {\n" +
-                    "                violationMessages.add(constraintViolation.getPropertyPath() + \": \" + constraintViolation.getMessage());\n" +
-                    "            }\n" +
-                    "\n" +
-                    "            throw new ValidationException(\""+simpleClassName+" is not valid:\\n\" + StringUtils.join(violationMessages, \"\\n\"));\n" +
-                    "        }");
+            out.println(" build() {");
+            out.println("        final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();");
+            out.println("        final java.util.Set<ConstraintViolation<" + simpleClassName + ">> constraintViolations = validator.validate(this." + objectName + ");");
+            out.println();
+            out.println("        if (constraintViolations.size() > 0) {");
+            out.println("            java.util.Set<String> violationMessages = new java.util.HashSet<String>();");
+            out.println();
+            out.println("            for (ConstraintViolation<?> constraintViolation : constraintViolations) {");
+            out.println("                violationMessages.add(constraintViolation.getPropertyPath() + \": \" + constraintViolation.getMessage());");
+            out.println("            }");
+            out.println();
+            out.println("            throw new ValidationException(\"" + simpleClassName + " is not valid:\\n\" + StringUtils.join(violationMessages, \"\\n\"));");
+            out.println("        }");
             out.println("        final " + simpleClassName + " value = this." + objectName + ";");
             out.println("        this." + objectName + " = null;");
             out.println("        return value;");
