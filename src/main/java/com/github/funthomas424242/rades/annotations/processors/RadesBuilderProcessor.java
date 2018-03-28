@@ -1,5 +1,6 @@
 package com.github.funthomas424242.rades.annotations.processors;
 
+import com.github.funthomas424242.rades.annotations.lang.java.JavaModelHelper;
 import com.github.funthomas424242.rades.annotations.lang.java.JavaSrcFileCreator;
 import com.google.auto.service.AutoService;
 
@@ -82,7 +83,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
         final String className = typeElement.getQualifiedName().toString();
         final String simpleClassName = typeElement.getSimpleName().toString();
-        final String packageName = computePackageName(className);
+        final String packageName = JavaModelHelper.computePackageName(className);
 
         final String newInstanceName = simpleClassName.substring(0, 1).toLowerCase() + simpleClassName.substring(1);
         final String builderClassName = className + "Builder";
@@ -122,13 +123,6 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         }
     }
 
-    protected String computePackageName(final String fullQualifiedClassName){
-        String packageName=null;
-        int lastDot = fullQualifiedClassName.lastIndexOf('.');
-        if (lastDot > 0) {
-            packageName = fullQualifiedClassName.substring(0, lastDot);
-        }
-        return packageName;
-    }
+
 
 }
