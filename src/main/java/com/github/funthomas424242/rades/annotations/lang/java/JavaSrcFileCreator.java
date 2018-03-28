@@ -1,7 +1,6 @@
 package com.github.funthomas424242.rades.annotations.lang.java;
 
 import javax.annotation.processing.Filer;
-import javax.lang.model.element.Element;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
