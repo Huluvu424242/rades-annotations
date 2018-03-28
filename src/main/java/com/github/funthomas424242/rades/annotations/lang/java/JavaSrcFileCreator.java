@@ -15,9 +15,10 @@ public class JavaSrcFileCreator implements AutoCloseable {
         this.writer = new PrintWriter(filer.createSourceFile(className).openWriter());
     }
 
-    public JavaSrcFileCreator(final Filer filer, final Element packageElement, final CharSequence className) throws IOException {
-        this.writer = new PrintWriter(filer.createSourceFile(className, packageElement).openWriter());
-    }
+// Add if needed
+//    public JavaSrcFileCreator(final Filer filer, final Element packageElement, final CharSequence className) throws IOException {
+//        this.writer = new PrintWriter(filer.createSourceFile(className, packageElement).openWriter());
+//    }
 
 
     public void writeSetterMethod(String objectName, String builderSimpleClassName, String fieldName, String setterName, String argumentType) {
