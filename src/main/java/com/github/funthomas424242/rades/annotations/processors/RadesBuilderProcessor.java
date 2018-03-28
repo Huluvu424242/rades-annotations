@@ -3,7 +3,13 @@ package com.github.funthomas424242.rades.annotations.processors;
 import com.github.funthomas424242.rades.annotations.lang.java.JavaSrcFileCreator;
 import com.google.auto.service.AutoService;
 
-import javax.annotation.processing.*;
+import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.Filer;
+import javax.annotation.processing.ProcessingEnvironment;
+import javax.annotation.processing.Processor;
+import javax.annotation.processing.RoundEnvironment;
+import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Modifier;
@@ -11,11 +17,7 @@ import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
-import javax.tools.JavaFileObject;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,131 +100,39 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         String builderSimpleClassName = builderClassName
                 .substring(lastDot + 1);
 
-        final JavaFileObject builderFile = processingEnv.getFiler()
-                .createSourceFile(builderClassName);
-//
-//        final Filer filer = processingEnv.getFiler();
-//        final JavaSrcFileCreator javaFileCreator = new JavaSrcFileCreator(filer,builderClassName);
+        final Filer filer = processingEnv.getFiler();
+        try (final JavaSrcFileCreator javaSrcFileCreator = new JavaSrcFileCreator(filer, builderClassName)) {
 
-        try (PrintWriter out = new PrintWriter(builderFile.openWriter())) {
-            getNowAsISOString();
+            javaSrcFileCreator.getNowAsISOString();
 
             if (packageName != null) {
-                writePackage(out, packageName);
-                writeImports(out);
+                javaSrcFileCreator.writePackage(packageName);
+                javaSrcFileCreator.writeImports();
             }
 
-            writeClassAnnotations(out, className);
-            writeClassDeclaration(out, builderSimpleClassName);
+            javaSrcFileCreator.writeClassAnnotations(className);
+            javaSrcFileCreator.writeClassDeclaration(builderSimpleClassName);
 
-            writeFieldDefinition(out, simpleClassName, objectName);
+            javaSrcFileCreator.writeFieldDefinition(simpleClassName, objectName);
 
-            writeConstructors(simpleClassName, objectName, builderSimpleClassName, out);
+            javaSrcFileCreator.writeConstructors(simpleClassName, objectName, builderSimpleClassName);
 
 
-            writeBuildMethod(out, simpleClassName, objectName);
+            javaSrcFileCreator.writeBuildMethod(simpleClassName, objectName);
 
             mapFieldName2Type.entrySet().forEach(fields -> {
                 final String fieldName = fields.getKey().toString();
                 final String setterName = "with" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
                 final String argumentType = getFullQualifiedClassName(fields.getValue());
 
-                writeSetterMethod(out, objectName, builderSimpleClassName, fieldName, setterName, argumentType);
+                javaSrcFileCreator.writeSetterMethod(objectName, builderSimpleClassName, fieldName, setterName, argumentType);
             });
 
-            out.println("}");
+            javaSrcFileCreator.writeClassFinal();
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
         }
     }
 
-    private void writeSetterMethod(PrintWriter out, String objectName, String builderSimpleClassName, String fieldName, String setterName, String argumentType) {
-        out.print("    public ");
-        out.print(builderSimpleClassName);
-        out.print(" ");
-        out.print(setterName);
-
-        out.print("( final ");
-
-        out.print(argumentType);
-        out.println(" " + fieldName + " ) {");
-        out.print("        this." + objectName + ".");
-        out.print(fieldName);
-        out.println(" = " + fieldName + ";");
-        out.println("        return this;");
-        out.println("    }");
-        out.println();
-    }
-
-    private void writeConstructors(String simpleClassName, String objectName, String builderSimpleClassName, PrintWriter out) {
-        out.print("    public " + builderSimpleClassName + "(){\n");
-        out.print("        this(new " + simpleClassName + "());\n");
-        out.print("    }\n");
-        out.print("\n");
-        out.print("    public " + builderSimpleClassName + "( final " + simpleClassName + " " + objectName + " ){\n");
-        out.print("        this." + objectName + " = " + objectName + ";\n");
-        out.print("    }\n");
-        out.println();
-    }
-
-    private void writeFieldDefinition(PrintWriter out, String simpleClassName, String objectName) {
-        out.print("    private ");
-        out.print(simpleClassName);
-        out.print(" " + objectName + ";\n\n");
-    }
-
-    private void writeClassDeclaration(PrintWriter out, String builderSimpleClassName) {
-        out.println("public class " + builderSimpleClassName + " {");
-        out.println();
-    }
-
-    private String getNowAsISOString() {
-        final LocalDateTime now = LocalDateTime.now();
-        return now.format(DateTimeFormatter.ISO_DATE_TIME);
-    }
-
-    private void writeBuildMethod(PrintWriter out, String simpleClassName, String objectName) {
-        out.print("    public ");
-        out.print(simpleClassName);
-        out.println(" build() {");
-        out.println("        final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();");
-        out.println("        final java.util.Set<ConstraintViolation<" + simpleClassName + ">> constraintViolations = validator.validate(this." + objectName + ");");
-        out.println();
-        out.println("        if (constraintViolations.size() > 0) {");
-        out.println("            java.util.Set<String> violationMessages = new java.util.HashSet<String>();");
-        out.println();
-        out.println("            for (ConstraintViolation<?> constraintViolation : constraintViolations) {");
-        out.println("                violationMessages.add(constraintViolation.getPropertyPath() + \": \" + constraintViolation.getMessage());");
-        out.println("            }");
-        out.println();
-        out.println("            throw new ValidationException(\"" + simpleClassName + " is not valid:\\n\" + StringUtils.join(violationMessages, \"\\n\"));");
-        out.println("        }");
-        out.println("        final " + simpleClassName + " value = this." + objectName + ";");
-        out.println("        this." + objectName + " = null;");
-        out.println("        return value;");
-        out.println("    }");
-        out.println();
-    }
-
-    private void writeClassAnnotations(PrintWriter out, String className) {
-        out.print("@Generated(value=\"com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor\"\n" +
-                //TODO Zeiterzeugung in Utilklasse auslagern und im Test mocken
-                //", date=\"" + nowString + "\"\n" +
-                ", comments=\"" + className + "\")\n"
-        );
-    }
-
-    private void writePackage(final PrintWriter out, final String packageName) {
-        out.print("package ");
-        out.println(packageName + ";");
-    }
-
-    private void writeImports(final PrintWriter out) {
-        out.println("import javax.annotation.Generated;");
-        out.println("import org.apache.commons.lang3.StringUtils;\n");
-        out.println("import javax.validation.ConstraintViolation;");
-        out.println("import javax.validation.Validation;");
-        out.println("import javax.validation.ValidationException;");
-        out.println("import javax.validation.Validator;");
-        out.println();
-    }
 
 }
