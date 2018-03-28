@@ -87,17 +87,12 @@ public class RadesBuilderProcessor extends AbstractProcessor {
             throws IOException {
 
         final String className = typeElement.getQualifiedName().toString();
+        final String simpleClassName = typeElement.getSimpleName().toString();
+        final String packageName = computePackageName(className);
 
-        String packageName = null;
-        int lastDot = className.lastIndexOf('.');
-        if (lastDot > 0) {
-            packageName = className.substring(0, lastDot);
-        }
-
-        String simpleClassName = className.substring(lastDot + 1);
         final String newInstanceName = simpleClassName.substring(0, 1).toLowerCase() + simpleClassName.substring(1);
-        String builderClassName = className + "Builder";
-        String builderSimpleClassName = builderClassName.substring(lastDot + 1);
+        final String builderClassName = className + "Builder";
+        final String builderSimpleClassName = simpleClassName+"Builder";
 
         final Filer filer = processingEnv.getFiler();
         try (final JavaSrcFileCreator javaSrcFileCreator = new JavaSrcFileCreator(filer, builderClassName)) {
@@ -133,5 +128,13 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         }
     }
 
+    protected String computePackageName(final String fullQualifiedClassName){
+        String packageName=null;
+        int lastDot = fullQualifiedClassName.lastIndexOf('.');
+        if (lastDot > 0) {
+            packageName = fullQualifiedClassName.substring(0, lastDot);
+        }
+        return packageName;
+    }
 
 }
