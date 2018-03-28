@@ -17,7 +17,6 @@ import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,16 +80,13 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
     private void writeBuilderFile(final TypeElement typeElement, Map<Name, TypeMirror> mapFieldName2Type) {
 
-        final TypeMirror typeMirror = typeElement.asType();
-        final DeclaredType declaredType=(DeclaredType) typeMirror;
-
-        final String packageName = declaredType.asElement().getEnclosingElement().toString();
         final String className = typeElement.getQualifiedName().toString();
         final String simpleClassName = typeElement.getSimpleName().toString();
+        final String packageName = computePackageName(className);
 
         final String newInstanceName = simpleClassName.substring(0, 1).toLowerCase() + simpleClassName.substring(1);
         final String builderClassName = className + "Builder";
-        final String builderSimpleClassName = simpleClassName+"Builder";
+        final String builderSimpleClassName = simpleClassName + "Builder";
 
         final Filer filer = processingEnv.getFiler();
         try (final JavaSrcFileCreator javaSrcFileCreator = new JavaSrcFileCreator(filer, builderClassName)) {
@@ -99,8 +95,8 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
             if (packageName != null) {
                 javaSrcFileCreator.writePackage(packageName);
-                javaSrcFileCreator.writeImports();
             }
+            javaSrcFileCreator.writeImports();
 
             javaSrcFileCreator.writeClassAnnotations(className);
             javaSrcFileCreator.writeClassDeclaration(builderSimpleClassName);
@@ -126,13 +122,13 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         }
     }
 
-//    protected String computePackageName(final String fullQualifiedClassName){
-//        String packageName=null;
-//        int lastDot = fullQualifiedClassName.lastIndexOf('.');
-//        if (lastDot > 0) {
-//            packageName = fullQualifiedClassName.substring(0, lastDot);
-//        }
-//        return packageName;
-//    }
+    protected String computePackageName(final String fullQualifiedClassName){
+        String packageName=null;
+        int lastDot = fullQualifiedClassName.lastIndexOf('.');
+        if (lastDot > 0) {
+            packageName = fullQualifiedClassName.substring(0, lastDot);
+        }
+        return packageName;
+    }
 
 }
