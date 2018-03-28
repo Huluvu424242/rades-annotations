@@ -61,11 +61,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
                     }
                 }
 
-                try {
-                    writeBuilderFile(typeElement, mapName2Type);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                writeBuilderFile(typeElement, mapName2Type);
             }
         }
         return true;
@@ -83,12 +79,14 @@ public class RadesBuilderProcessor extends AbstractProcessor {
     }
 
 
-    private void writeBuilderFile(final TypeElement typeElement, Map<Name, TypeMirror> mapFieldName2Type)
-            throws IOException {
+    private void writeBuilderFile(final TypeElement typeElement, Map<Name, TypeMirror> mapFieldName2Type) {
 
+        final TypeMirror typeMirror = typeElement.asType();
+        final DeclaredType declaredType=(DeclaredType) typeMirror;
+
+        final String packageName = declaredType.asElement().getEnclosingElement().toString();
         final String className = typeElement.getQualifiedName().toString();
         final String simpleClassName = typeElement.getSimpleName().toString();
-        final String packageName = computePackageName(className);
 
         final String newInstanceName = simpleClassName.substring(0, 1).toLowerCase() + simpleClassName.substring(1);
         final String builderClassName = className + "Builder";
@@ -128,13 +126,13 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         }
     }
 
-    protected String computePackageName(final String fullQualifiedClassName){
-        String packageName=null;
-        int lastDot = fullQualifiedClassName.lastIndexOf('.');
-        if (lastDot > 0) {
-            packageName = fullQualifiedClassName.substring(0, lastDot);
-        }
-        return packageName;
-    }
+//    protected String computePackageName(final String fullQualifiedClassName){
+//        String packageName=null;
+//        int lastDot = fullQualifiedClassName.lastIndexOf('.');
+//        if (lastDot > 0) {
+//            packageName = fullQualifiedClassName.substring(0, lastDot);
+//        }
+//        return packageName;
+//    }
 
 }
