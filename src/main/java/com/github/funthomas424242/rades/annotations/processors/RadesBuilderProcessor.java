@@ -95,10 +95,9 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         }
 
         String simpleClassName = className.substring(lastDot + 1);
-        final String objectName = simpleClassName.substring(0, 1).toLowerCase() + simpleClassName.substring(1);
+        final String newInstanceName = simpleClassName.substring(0, 1).toLowerCase() + simpleClassName.substring(1);
         String builderClassName = className + "Builder";
-        String builderSimpleClassName = builderClassName
-                .substring(lastDot + 1);
+        String builderSimpleClassName = builderClassName.substring(lastDot + 1);
 
         final Filer filer = processingEnv.getFiler();
         try (final JavaSrcFileCreator javaSrcFileCreator = new JavaSrcFileCreator(filer, builderClassName)) {
@@ -113,19 +112,19 @@ public class RadesBuilderProcessor extends AbstractProcessor {
             javaSrcFileCreator.writeClassAnnotations(className);
             javaSrcFileCreator.writeClassDeclaration(builderSimpleClassName);
 
-            javaSrcFileCreator.writeFieldDefinition(simpleClassName, objectName);
+            javaSrcFileCreator.writeFieldDefinition(simpleClassName, newInstanceName);
 
-            javaSrcFileCreator.writeConstructors(simpleClassName, objectName, builderSimpleClassName);
+            javaSrcFileCreator.writeConstructors(simpleClassName, newInstanceName, builderSimpleClassName);
 
 
-            javaSrcFileCreator.writeBuildMethod(simpleClassName, objectName);
+            javaSrcFileCreator.writeBuildMethod(simpleClassName, newInstanceName);
 
             mapFieldName2Type.entrySet().forEach(fields -> {
                 final String fieldName = fields.getKey().toString();
                 final String setterName = "with" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
                 final String argumentType = getFullQualifiedClassName(fields.getValue());
 
-                javaSrcFileCreator.writeSetterMethod(objectName, builderSimpleClassName, fieldName, setterName, argumentType);
+                javaSrcFileCreator.writeSetterMethod(newInstanceName, builderSimpleClassName, fieldName, setterName, argumentType);
             });
 
             javaSrcFileCreator.writeClassFinal();

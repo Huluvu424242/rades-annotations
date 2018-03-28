@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import javax.validation.ValidationException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Locale;
@@ -47,7 +48,7 @@ public class RadesBuilderIntegrationTest {
         final Person person = new PersonBuilder()
                 .withName("Mustermann")
                 .withVorname("Max")
-                .withBirthday(new Date(1968, 12, 25))
+                .withBirthday(LocalDate.of(1968, 12, 25))
                 .withGroesse(175)
                 .withLieblingsfarben((HashSet<Person.Farbe>) Sets.newHashSet(Person.Farbe.BLAU))
                 .build();
@@ -75,7 +76,7 @@ public class RadesBuilderIntegrationTest {
         assertNotNull(person1);
         final Person person = new PersonBuilder(person1)
                 .withVorname("Max")
-                .withBirthday(new Date(1968, 12, 25))
+                .withBirthday(LocalDate.of(1968, 12, 25))
                 .withGroesse(175)
                 .withLieblingsfarben((HashSet<Person.Farbe>) Sets.newHashSet(Person.Farbe.BLAU))
                 .build();

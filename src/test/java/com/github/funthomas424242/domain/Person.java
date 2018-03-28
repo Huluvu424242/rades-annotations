@@ -3,7 +3,8 @@ package com.github.funthomas424242.domain;
 import com.github.funthomas424242.rades.annotations.RadesBuilder;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Set;
 
 
@@ -28,7 +29,7 @@ public class Person {
 
     protected String vorname;
 
-    protected Date birthday;
+    protected LocalDate birthday;
 
     public int groesse;
 
@@ -41,6 +42,14 @@ public class Person {
 
     public void setId(final int id) {
         this.id = id;
+    }
+
+    public int computeAge(){
+        if( this.birthday == null){
+            throw new IllegalStateException("birthday is unknow because is jet not set");
+        }
+        final Period period=birthday.until(LocalDate.now());
+        return period.getYears();
     }
 
 }
