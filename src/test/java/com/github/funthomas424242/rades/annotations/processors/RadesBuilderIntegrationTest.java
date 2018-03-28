@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RadesBuilderIntegrationTest {
 
     @BeforeAll
-    public static void setUp(){
+    public static void setUp() {
         // needed for Travis CI wich has en
         Locale.setDefault(new Locale("de", "DE"));
     }

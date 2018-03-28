@@ -155,9 +155,9 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         }
     }
 
-    private void getNowAsISOString() {
+    private String getNowAsISOString() {
         final LocalDateTime now = LocalDateTime.now();
-        final String nowString = now.format(DateTimeFormatter.ISO_DATE_TIME);
+        return now.format(DateTimeFormatter.ISO_DATE_TIME);
     }
 
     private void writeBuildMethod(PrintWriter out, String simpleClassName, String objectName) {
