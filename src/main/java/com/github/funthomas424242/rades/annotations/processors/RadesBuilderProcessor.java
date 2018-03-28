@@ -1,5 +1,6 @@
 package com.github.funthomas424242.rades.annotations.processors;
 
+import com.github.funthomas424242.rades.annotations.lang.java.JavaSrcFileCreator;
 import com.google.auto.service.AutoService;
 
 import javax.annotation.processing.*;
@@ -97,36 +98,28 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         String builderSimpleClassName = builderClassName
                 .substring(lastDot + 1);
 
-        JavaFileObject builderFile = processingEnv.getFiler()
+        final JavaFileObject builderFile = processingEnv.getFiler()
                 .createSourceFile(builderClassName);
+//
+//        final Filer filer = processingEnv.getFiler();
+//        final JavaSrcFileCreator javaFileCreator = new JavaSrcFileCreator(filer,builderClassName);
 
         try (PrintWriter out = new PrintWriter(builderFile.openWriter())) {
             getNowAsISOString();
 
             if (packageName != null) {
-                writePackage(out,packageName);
+                writePackage(out, packageName);
                 writeImports(out);
             }
 
             writeClassAnnotations(out, className);
-            out.print(builderSimpleClassName);
-            out.println(" {");
-            out.println();
+            writeClassDeclaration(out, builderSimpleClassName);
 
-            out.print("    private ");
-            out.print(simpleClassName);
-            out.print(" " + objectName + ";\n\n" +
-                    "    public " + builderSimpleClassName + "(){\n" +
-                    "        this(new " + simpleClassName + "());\n" +
-                    "    }\n" +
-                    "\n" +
-                    "    public " + builderSimpleClassName + "( final " + simpleClassName + " " + objectName + " ){\n" +
-                    "        this." + objectName + " = " + objectName + ";\n" +
-                    "    }\n");
-            out.println();
+            writeFieldDefinition(out, simpleClassName, objectName);
 
-            out.print("    public ");
-            out.print(simpleClassName);
+            writeConstructors(simpleClassName, objectName, builderSimpleClassName, out);
+
+
             writeBuildMethod(out, simpleClassName, objectName);
 
             mapFieldName2Type.entrySet().forEach(fields -> {
@@ -134,25 +127,51 @@ public class RadesBuilderProcessor extends AbstractProcessor {
                 final String setterName = "with" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
                 final String argumentType = getFullQualifiedClassName(fields.getValue());
 
-                out.print("    public ");
-                out.print(builderSimpleClassName);
-                out.print(" ");
-                out.print(setterName);
-
-                out.print("( final ");
-
-                out.print(argumentType);
-                out.println(" " + fieldName + " ) {");
-                out.print("        this." + objectName + ".");
-                out.print(fieldName);
-                out.println(" = " + fieldName + ";");
-                out.println("        return this;");
-                out.println("    }");
-                out.println();
+                writeSetterMethod(out, objectName, builderSimpleClassName, fieldName, setterName, argumentType);
             });
 
             out.println("}");
         }
+    }
+
+    private void writeSetterMethod(PrintWriter out, String objectName, String builderSimpleClassName, String fieldName, String setterName, String argumentType) {
+        out.print("    public ");
+        out.print(builderSimpleClassName);
+        out.print(" ");
+        out.print(setterName);
+
+        out.print("( final ");
+
+        out.print(argumentType);
+        out.println(" " + fieldName + " ) {");
+        out.print("        this." + objectName + ".");
+        out.print(fieldName);
+        out.println(" = " + fieldName + ";");
+        out.println("        return this;");
+        out.println("    }");
+        out.println();
+    }
+
+    private void writeConstructors(String simpleClassName, String objectName, String builderSimpleClassName, PrintWriter out) {
+        out.print("    public " + builderSimpleClassName + "(){\n");
+        out.print("        this(new " + simpleClassName + "());\n");
+        out.print("    }\n");
+        out.print("\n");
+        out.print("    public " + builderSimpleClassName + "( final " + simpleClassName + " " + objectName + " ){\n");
+        out.print("        this." + objectName + " = " + objectName + ";\n");
+        out.print("    }\n");
+        out.println();
+    }
+
+    private void writeFieldDefinition(PrintWriter out, String simpleClassName, String objectName) {
+        out.print("    private ");
+        out.print(simpleClassName);
+        out.print(" " + objectName + ";\n\n");
+    }
+
+    private void writeClassDeclaration(PrintWriter out, String builderSimpleClassName) {
+        out.println("public class " + builderSimpleClassName + " {");
+        out.println();
     }
 
     private String getNowAsISOString() {
@@ -161,6 +180,8 @@ public class RadesBuilderProcessor extends AbstractProcessor {
     }
 
     private void writeBuildMethod(PrintWriter out, String simpleClassName, String objectName) {
+        out.print("    public ");
+        out.print(simpleClassName);
         out.println(" build() {");
         out.println("        final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();");
         out.println("        final java.util.Set<ConstraintViolation<" + simpleClassName + ">> constraintViolations = validator.validate(this." + objectName + ");");
@@ -185,13 +206,13 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         out.print("@Generated(value=\"com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor\"\n" +
                 //TODO Zeiterzeugung in Utilklasse auslagern und im Test mocken
                 //", date=\"" + nowString + "\"\n" +
-                ", comments=\"" + className + "\")\n" +
-                "public class ");
+                ", comments=\"" + className + "\")\n"
+        );
     }
 
-    private void writePackage(final PrintWriter out,final String packageName) {
+    private void writePackage(final PrintWriter out, final String packageName) {
         out.print("package ");
-        out.println(packageName+";");
+        out.println(packageName + ";");
     }
 
     private void writeImports(final PrintWriter out) {
