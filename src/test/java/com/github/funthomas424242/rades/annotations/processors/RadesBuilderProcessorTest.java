@@ -12,6 +12,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static com.google.common.truth.Truth.assertAbout;
 import static com.google.testing.compile.CompilationSubject.assertThat;
 import static com.google.testing.compile.Compiler.javac;
 import static com.google.testing.compile.JavaSourceSubjectFactory.javaSource;
@@ -82,7 +83,7 @@ public class RadesBuilderProcessorTest {
     @Test
     public void shouldCompileNonPackageClassWithoutErrors() {
 
-        Truth.assert_().about(javaSource())
+        assertAbout(javaSource())
                 .that(JavaFileObjects.forSourceString("NonePackageClass","\n" +
                         "@com.github.funthomas424242.rades.annotations.RadesBuilder\n" +
                         "public class NonePackageClass {\n" +
