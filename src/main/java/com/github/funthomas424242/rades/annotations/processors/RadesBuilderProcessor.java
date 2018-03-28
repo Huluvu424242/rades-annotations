@@ -101,27 +101,14 @@ public class RadesBuilderProcessor extends AbstractProcessor {
                 .createSourceFile(builderClassName);
 
         try (PrintWriter out = new PrintWriter(builderFile.openWriter())) {
-            final LocalDateTime now = LocalDateTime.now();
-            final String nowString = now.format(DateTimeFormatter.ISO_DATE_TIME);
+            getNowAsISOString();
 
             if (packageName != null) {
-                out.print("package ");
-                out.print(packageName);
-                out.println(";\n");
-                out.println("import javax.annotation.Generated;");
-                out.println("import org.apache.commons.lang3.StringUtils;\n");
-                out.println("import javax.validation.ConstraintViolation;");
-                out.println("import javax.validation.Validation;");
-                out.println("import javax.validation.ValidationException;");
-                out.println("import javax.validation.Validator;");
-                out.println();
+                writePackage(out,packageName);
+                writeImports(out);
             }
 
-            out.print("@Generated(value=\"com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor\"\n" +
-                    //TODO Zeiterzeugung in Utilklasse auslagern und im Test mocken
-                    //", date=\"" + nowString + "\"\n" +
-                    ", comments=\"" + className + "\")\n" +
-                    "public class ");
+            writeClassAnnotations(out, className);
             out.print(builderSimpleClassName);
             out.println(" {");
             out.println();
@@ -140,24 +127,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
             out.print("    public ");
             out.print(simpleClassName);
-            out.println(" build() {");
-            out.println("        final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();");
-            out.println("        final java.util.Set<ConstraintViolation<" + simpleClassName + ">> constraintViolations = validator.validate(this." + objectName + ");");
-            out.println();
-            out.println("        if (constraintViolations.size() > 0) {");
-            out.println("            java.util.Set<String> violationMessages = new java.util.HashSet<String>();");
-            out.println();
-            out.println("            for (ConstraintViolation<?> constraintViolation : constraintViolations) {");
-            out.println("                violationMessages.add(constraintViolation.getPropertyPath() + \": \" + constraintViolation.getMessage());");
-            out.println("            }");
-            out.println();
-            out.println("            throw new ValidationException(\"" + simpleClassName + " is not valid:\\n\" + StringUtils.join(violationMessages, \"\\n\"));");
-            out.println("        }");
-            out.println("        final " + simpleClassName + " value = this." + objectName + ";");
-            out.println("        this." + objectName + " = null;");
-            out.println("        return value;");
-            out.println("    }");
-            out.println();
+            writeBuildMethod(out, simpleClassName, objectName);
 
             mapFieldName2Type.entrySet().forEach(fields -> {
                 final String fieldName = fields.getKey().toString();
@@ -183,6 +153,55 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
             out.println("}");
         }
+    }
+
+    private void getNowAsISOString() {
+        final LocalDateTime now = LocalDateTime.now();
+        final String nowString = now.format(DateTimeFormatter.ISO_DATE_TIME);
+    }
+
+    private void writeBuildMethod(PrintWriter out, String simpleClassName, String objectName) {
+        out.println(" build() {");
+        out.println("        final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();");
+        out.println("        final java.util.Set<ConstraintViolation<" + simpleClassName + ">> constraintViolations = validator.validate(this." + objectName + ");");
+        out.println();
+        out.println("        if (constraintViolations.size() > 0) {");
+        out.println("            java.util.Set<String> violationMessages = new java.util.HashSet<String>();");
+        out.println();
+        out.println("            for (ConstraintViolation<?> constraintViolation : constraintViolations) {");
+        out.println("                violationMessages.add(constraintViolation.getPropertyPath() + \": \" + constraintViolation.getMessage());");
+        out.println("            }");
+        out.println();
+        out.println("            throw new ValidationException(\"" + simpleClassName + " is not valid:\\n\" + StringUtils.join(violationMessages, \"\\n\"));");
+        out.println("        }");
+        out.println("        final " + simpleClassName + " value = this." + objectName + ";");
+        out.println("        this." + objectName + " = null;");
+        out.println("        return value;");
+        out.println("    }");
+        out.println();
+    }
+
+    private void writeClassAnnotations(PrintWriter out, String className) {
+        out.print("@Generated(value=\"com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor\"\n" +
+                //TODO Zeiterzeugung in Utilklasse auslagern und im Test mocken
+                //", date=\"" + nowString + "\"\n" +
+                ", comments=\"" + className + "\")\n" +
+                "public class ");
+    }
+
+    private void writePackage(final PrintWriter out,final String packageName) {
+        out.print("package ");
+        out.println(packageName+";");
+    }
+
+    private void writeImports(final PrintWriter out) {
+        out.println("import javax.annotation.Generated;");
+        out.println("import org.apache.commons.lang3.StringUtils;\n");
+        out.println("import javax.validation.ConstraintViolation;");
+        out.println("import javax.validation.Validation;");
+        out.println("import javax.validation.ValidationException;");
+        out.println("import javax.validation.Validator;");
+        out.println();
     }
 
 }
