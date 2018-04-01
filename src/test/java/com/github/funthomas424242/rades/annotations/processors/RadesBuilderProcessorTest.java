@@ -85,10 +85,22 @@ public class RadesBuilderProcessorTest {
 
 
     static class NoWritableJavaModelProvider implements JavaModelService {
-
         @Override
         public JavaSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className) throws IOException {
             throw new IOException("Medium ist schreibgeschützt!");
+        }
+    }
+
+    static class NoClosebleJavaModelProvider implements JavaModelService {
+        @Override
+        public JavaSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className) throws IOException {
+            final JavaSrcFileCreator creator = new JavaSrcFileCreator(filer, className) {
+                @Override
+                public void close() throws Exception {
+                    throw new Exception("Kann Stream nicht schließen!");
+                }
+            };
+            return creator;
         }
     }
 
@@ -201,4 +213,17 @@ public class RadesBuilderProcessorTest {
     }
 
 
+    @Test(expected = NullPointerException.class)
+    public void shouldFailToCloseNoneCloseableBuilderClass() {
+
+        final RadesBuilderProcessor processor = new RadesBuilderProcessor();
+        processor.setJavaModelService(new NoClosebleJavaModelProvider());
+
+        assertAbout(javaSource())
+                .that(JavaFileObjects.forResource(urlPersonJava))
+                .processedWith(processor)
+                .compilesWithoutError()
+                .and()
+                .generatesSources(JavaFileObjects.forResource(urlPersonBuilderJava));
+    }
 }
