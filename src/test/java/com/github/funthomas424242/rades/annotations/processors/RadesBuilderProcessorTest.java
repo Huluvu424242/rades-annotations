@@ -22,6 +22,7 @@ import java.nio.file.Paths;
 
 import static com.google.testing.compile.Compiler.javac;
 import static com.google.testing.compile.JavaSourceSubjectFactory.javaSource;
+import static com.google.common.truth.Truth.assertAbout;
 
 public class RadesBuilderProcessorTest {
 
@@ -145,7 +146,7 @@ public class RadesBuilderProcessorTest {
     @Test
     public void shouldCompilePersonJavaWithoutErrors() {
 
-        com.google.common.truth.Truth.assertAbout(javaSource())
+        assertAbout(javaSource())
                 .that(JavaFileObjects.forResource(urlPersonJava))
                 .processedWith(new RadesBuilderProcessor())
                 .compilesWithoutError();
@@ -155,7 +156,7 @@ public class RadesBuilderProcessorTest {
     @Test
     public void shouldCompileMetaAnnotationJavaWithoutErrors() {
 
-        com.google.common.truth.Truth.assertAbout(javaSource())
+        assertAbout(javaSource())
                 .that(JavaFileObjects.forResource(urlMetaAnnotationJava))
                 .processedWith(new RadesBuilderProcessor())
                 .compilesWithoutError();
@@ -166,7 +167,7 @@ public class RadesBuilderProcessorTest {
     @Test
     public void shouldCompileNonPackageClassWithoutErrors() {
 
-        com.google.common.truth.Truth.assertAbout(javaSource())
+        assertAbout(javaSource())
                 .that(JavaFileObjects.forSourceString("NonePackageClass", "\n" +
                         "@com.github.funthomas424242.rades.annotations.RadesBuilder\n" +
                         "public class NonePackageClass {\n" +
