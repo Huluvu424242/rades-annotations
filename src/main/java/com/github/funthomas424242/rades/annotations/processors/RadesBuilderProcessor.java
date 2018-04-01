@@ -1,6 +1,8 @@
 package com.github.funthomas424242.rades.annotations.processors;
 
 import com.github.funthomas424242.rades.annotations.lang.java.JavaModelHelper;
+import com.github.funthomas424242.rades.annotations.lang.java.JavaModelService;
+import com.github.funthomas424242.rades.annotations.lang.java.JavaModelServiceProvider;
 import com.github.funthomas424242.rades.annotations.lang.java.JavaSrcFileCreator;
 import com.google.auto.service.AutoService;
 
@@ -21,6 +23,7 @@ import javax.lang.model.type.TypeMirror;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.Set;
 
 @SupportedAnnotationTypes("com.github.funthomas424242.rades.annotations.RadesBuilder")
@@ -28,7 +31,18 @@ import java.util.Set;
 @AutoService(Processor.class)
 public class RadesBuilderProcessor extends AbstractProcessor {
 
+    protected JavaModelService javaModelService  = new JavaModelServiceProvider();
+
     protected ProcessingEnvironment processingEnvironment;
+
+    /**
+     * Please only use this method for mocking in your test code!
+     *
+     * @param javaModelService mock to replace the default intern instance.
+     */
+    protected void setJavaModelService(final JavaModelService javaModelService){
+        this.javaModelService=javaModelService;
+    }
 
     @Override
     public synchronized void init(final ProcessingEnvironment processingEnv) {
@@ -90,7 +104,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         final String builderSimpleClassName = simpleClassName + "Builder";
 
         final Filer filer = processingEnv.getFiler();
-        try (final JavaSrcFileCreator javaSrcFileCreator = new JavaSrcFileCreator(filer, builderClassName)) {
+        try (final JavaSrcFileCreator javaSrcFileCreator = javaModelService.getJavaSrcFileCreator(filer, builderClassName)) {
 
             javaSrcFileCreator.getNowAsISOString();
 
@@ -122,7 +136,6 @@ public class RadesBuilderProcessor extends AbstractProcessor {
             System.out.println(e.getLocalizedMessage());
         }
     }
-
 
 
 }
