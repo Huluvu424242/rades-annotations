@@ -101,7 +101,7 @@ public class RadesBuilderProcessorTest {
     }
 
     protected CompilationSubject assertThat(final Compilation compilation ){
-        return com.google.testing.compile.CompilationSubject.assertThat(compilation);
+        return CompilationSubject.assertThat(compilation);
     }
 
     protected StringSubject assertThat(@Nullable String actual ){
