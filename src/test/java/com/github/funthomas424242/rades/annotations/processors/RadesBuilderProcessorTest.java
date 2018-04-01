@@ -1,4 +1,3 @@
-//TODO Vorbereitung für Unit Test mit compile-testing
 package com.github.funthomas424242.rades.annotations.processors;
 
 import com.github.funthomas424242.rades.annotations.lang.java.JavaModelService;
@@ -86,14 +85,20 @@ public class RadesBuilderProcessorTest {
 
     static class NoWritableJavaModelProvider implements JavaModelService {
         @Override
-        public JavaSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className) throws IOException {
-            throw new IOException("Medium ist schreibgeschützt!");
+        public JavaSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className) {
+            final JavaSrcFileCreator creator = new JavaSrcFileCreator(filer, className) {
+                @Override
+                public void init() throws IOException {
+                    throw new IOException("Medium ist schreibgeschützt!");
+                }
+            };
+            return creator;
         }
     }
 
     static class NoClosebleJavaModelProvider implements JavaModelService {
         @Override
-        public JavaSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className) throws IOException {
+        public JavaSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className) {
             final JavaSrcFileCreator creator = new JavaSrcFileCreator(filer, className) {
                 @Override
                 public void close() throws Exception {

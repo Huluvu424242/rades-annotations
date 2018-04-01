@@ -106,6 +106,8 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         final Filer filer = processingEnv.getFiler();
         try (final JavaSrcFileCreator javaSrcFileCreator = javaModelService.getJavaSrcFileCreator(filer, builderClassName)) {
 
+            javaSrcFileCreator.init();
+
             javaSrcFileCreator.getNowAsISOString();
 
             if (packageName != null) {
@@ -132,8 +134,8 @@ public class RadesBuilderProcessor extends AbstractProcessor {
             });
 
             javaSrcFileCreator.writeClassFinal();
-        } catch (IOException e) {
-            System.out.println(e.getLocalizedMessage());
+//        } catch (IOException e) {
+//            System.out.println(e.getLocalizedMessage());
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
         }

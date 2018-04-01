@@ -5,6 +5,6 @@ import java.io.IOException;
 
 public interface JavaModelService {
 
-    public JavaSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className) throws IOException;
+    public JavaSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className);
 
 }
