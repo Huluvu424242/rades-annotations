@@ -20,9 +20,9 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static com.google.common.truth.Truth.assertAbout;
 import static com.google.testing.compile.Compiler.javac;
 import static com.google.testing.compile.JavaSourceSubjectFactory.javaSource;
-import static com.google.common.truth.Truth.assertAbout;
 
 public class RadesBuilderProcessorTest {
 
@@ -70,7 +70,6 @@ public class RadesBuilderProcessorTest {
             "}\n";
 
 
-
     protected static final String TEST_SRC_FOLDER = "src/test/java/";
     protected static final String TEST_EXPECTATION_FOLDER = "src/test/expectations/";
 
@@ -101,11 +100,11 @@ public class RadesBuilderProcessorTest {
         return resourceURL;
     }
 
-    protected CompilationSubject assertThat(final Compilation compilation ){
+    protected CompilationSubject assertThat(final Compilation compilation) {
         return CompilationSubject.assertThat(compilation);
     }
 
-    protected StringSubject assertThat(@Nullable String actual ){
+    protected StringSubject assertThat(@Nullable String actual) {
         return com.google.common.truth.Truth.assertThat(actual);
     }
 
@@ -133,7 +132,7 @@ public class RadesBuilderProcessorTest {
                 );
 
         // equivalent mitl altem API
-        com.google.common.truth.Truth.assertAbout(javaSource())
+        assertAbout(javaSource())
                 .that(JavaFileObjects.forResource(urlPersonJava))
                 .processedWith(new RadesBuilderProcessor())
                 .compilesWithoutError()
@@ -200,8 +199,6 @@ public class RadesBuilderProcessorTest {
         final AssertionError expected = expectFailure.getFailure();
         assertThat(expected.getMessage()).contains("Did not find a generated file corresponding to com/github/funthomas424242/domain/NoneWriteableBuilder.java");
     }
-
-
 
 
 }
