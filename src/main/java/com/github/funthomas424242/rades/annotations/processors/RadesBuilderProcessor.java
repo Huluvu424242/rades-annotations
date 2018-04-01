@@ -23,7 +23,6 @@ import javax.lang.model.type.TypeMirror;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ServiceLoader;
 import java.util.Set;
 
 @SupportedAnnotationTypes("com.github.funthomas424242.rades.annotations.RadesBuilder")
@@ -31,7 +30,7 @@ import java.util.Set;
 @AutoService(Processor.class)
 public class RadesBuilderProcessor extends AbstractProcessor {
 
-    protected JavaModelService javaModelService  = new JavaModelServiceProvider();
+    protected JavaModelService javaModelService = new JavaModelServiceProvider();
 
     protected ProcessingEnvironment processingEnvironment;
 
@@ -40,8 +39,8 @@ public class RadesBuilderProcessor extends AbstractProcessor {
      *
      * @param javaModelService mock to replace the default intern instance.
      */
-    protected void setJavaModelService(final JavaModelService javaModelService){
-        this.javaModelService=javaModelService;
+    protected void setJavaModelService(final JavaModelService javaModelService) {
+        this.javaModelService = javaModelService;
     }
 
     @Override
