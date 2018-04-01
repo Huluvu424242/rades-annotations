@@ -8,16 +8,27 @@ import java.time.format.DateTimeFormatter;
 
 public class JavaSrcFileCreator implements AutoCloseable {
 
-    protected final PrintWriter writer;
+    protected final Filer filer;
 
-    public JavaSrcFileCreator(final Filer filer, final String className) throws IOException {
-        this.writer = new PrintWriter(filer.createSourceFile(className).openWriter());
+    protected final String className;
+
+    protected PrintWriter writer;
+
+    public JavaSrcFileCreator(final Filer filer, final String className) {
+        this.filer = filer;
+        this.className = className;
     }
+
 
 // Add if needed
 //    public JavaSrcFileCreator(final Filer filer, final Element packageElement, final CharSequence className) throws IOException {
 //        this.writer = new PrintWriter(filer.createSourceFile(className, packageElement).openWriter());
 //    }
+
+
+    public void init() throws IOException {
+        this.writer = new PrintWriter(filer.createSourceFile(className).openWriter());
+    }
 
 
     public void writeSetterMethod(String objectName, String builderSimpleClassName, String fieldName, String setterName, String argumentType) {

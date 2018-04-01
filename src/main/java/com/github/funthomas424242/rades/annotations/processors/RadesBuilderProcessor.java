@@ -20,6 +20,7 @@ import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,6 +106,8 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         final Filer filer = processingEnv.getFiler();
         try (final JavaSrcFileCreator javaSrcFileCreator = javaModelService.getJavaSrcFileCreator(filer, builderClassName)) {
 
+            javaSrcFileCreator.init();
+
             javaSrcFileCreator.getNowAsISOString();
 
             if (packageName != null) {
@@ -131,6 +134,8 @@ public class RadesBuilderProcessor extends AbstractProcessor {
             });
 
             javaSrcFileCreator.writeClassFinal();
+        } catch (IOException e) {
+            System.out.println(e.getLocalizedMessage());
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
         }
