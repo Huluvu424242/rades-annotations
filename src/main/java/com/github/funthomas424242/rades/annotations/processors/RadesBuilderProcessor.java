@@ -134,8 +134,8 @@ public class RadesBuilderProcessor extends AbstractProcessor {
             });
 
             javaSrcFileCreator.writeClassFinal();
-//        } catch (IOException e) {
-//            System.out.println(e.getLocalizedMessage());
+        } catch (IOException e) {
+            System.out.println(e.getLocalizedMessage());
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
         }
