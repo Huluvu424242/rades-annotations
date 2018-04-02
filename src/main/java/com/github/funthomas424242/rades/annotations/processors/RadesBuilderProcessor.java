@@ -70,7 +70,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
             final Set<? extends Element> annotatedElements = roundEnv.getElementsAnnotatedWith(annotation);
             for (final Element annotatedElement : annotatedElements) {
-                if (annotatedElement.getKind().isInterface() && annotatedElement.getKind() == ElementKind.ANNOTATION_TYPE) {
+                if (annotatedElement.getKind() == ElementKind.ANNOTATION_TYPE) {
                     final TypeElement typeElement = (TypeElement) annotatedElement;
                     System.out.println("###Annotation: " + typeElement);
                     if (!allAnnotations.contains(typeElement)) {
