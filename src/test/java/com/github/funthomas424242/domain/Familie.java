@@ -1,7 +1,7 @@
 package com.github.funthomas424242.domain;
 
-import com.github.funthomas424242.MetaAnnotation;
+import com.github.funthomas424242.MetaMetaAnnotation;
 
-@MetaAnnotation
+@MetaMetaAnnotation
 public class Familie {
 }
