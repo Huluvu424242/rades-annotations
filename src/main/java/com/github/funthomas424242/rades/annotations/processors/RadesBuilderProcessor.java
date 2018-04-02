@@ -15,6 +15,7 @@ import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
@@ -22,10 +23,13 @@ import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
+import java.util.stream.Collectors;
 
 @SupportedAnnotationTypes("com.github.funthomas424242.rades.annotations.RadesBuilder")
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
@@ -55,46 +59,62 @@ public class RadesBuilderProcessor extends AbstractProcessor {
     public boolean process(final Set<? extends TypeElement> annotations, final RoundEnvironment roundEnv) {
 //        final Types types = this.processingEnvironment.getTypeUtils();
 
-        for (TypeElement annotation : annotations) {
+        final Stack<TypeElement> allAnnotations = new Stack<>();
+        annotations.stream().collect(Collectors.toList()).forEach(annotation -> {
+            allAnnotations.push(annotation);
+        });
+
+        final Set<Element> processedAnnotations = new HashSet<>();
+        final Set<Element> annotatedClasses = new HashSet<>();
+        while (!allAnnotations.empty()) {
+            final TypeElement annotation = allAnnotations.pop();
+            processedAnnotations.add(annotation);
+
             final Set<? extends Element> annotatedElements = roundEnv.getElementsAnnotatedWith(annotation);
             for (final Element annotatedElement : annotatedElements) {
-                // TODO compute ANNOTATION_TYPE additional to CLASS
-                if (!annotatedElement.getKind().isClass()) {
+                if (annotatedElement.getKind() == ElementKind.ANNOTATION_TYPE) {
+                    final TypeElement typeElement = (TypeElement) annotatedElement;
+                    if (!processedAnnotations.contains(typeElement)) {
+                        System.out.println("###Annotation: " + typeElement);
+                        // als Annotation aufnehmen falls gerade nicht im Stack (Minioptimierung)
+                        allAnnotations.push(typeElement);
+                    }
                     continue;
                 }
-                final TypeElement typeElement = (TypeElement) annotatedElement;
-                final Map<Name, TypeMirror> mapName2Type = new HashMap<>();
-                final List<? extends Element> classMembers = annotatedElement.getEnclosedElements();
-                for (final Element classMember : classMembers) {
-                    if (classMember.getKind().isField()) {
-                        final Set<Modifier> fieldModifiers = classMember.getModifiers();
-                        if (fieldModifiers.contains(Modifier.PUBLIC) || fieldModifiers.contains(Modifier.PROTECTED)) {
-                            final Name fieldName = classMember.getSimpleName();
-                            final TypeMirror fieldTypeMirror = classMember.asType();
-                            mapName2Type.put(fieldName, fieldTypeMirror);
-                        }
-                    }
+                if (annotatedElement.getKind().isClass()) {
+                    System.out.println("###Class: " + annotatedElement);
+                    annotatedClasses.add(annotatedElement);
                 }
-
-                writeBuilderFile(typeElement, mapName2Type);
             }
         }
+
+        annotatedClasses.forEach(element -> {
+            createBuilderSrcFile(element);
+        });
+
         return true;
     }
 
-    protected String getFullQualifiedClassName(final TypeMirror typeMirror) {
-        final String typeName;
-        if (typeMirror instanceof DeclaredType) {
-            final DeclaredType type = (DeclaredType) typeMirror;
-            typeName = type.asElement().toString();
-        } else {
-            typeName = typeMirror.toString();
+    private void createBuilderSrcFile(final Element annotatedElement) {
+        System.out.println("###WRITE BUILDER for: " + annotatedElement);
+        final TypeElement typeElement = (TypeElement) annotatedElement;
+        final Map<Name, TypeMirror> mapName2Type = new HashMap<>();
+        final List<? extends Element> classMembers = annotatedElement.getEnclosedElements();
+        for (final Element classMember : classMembers) {
+            if (classMember.getKind().isField()) {
+                final Set<Modifier> fieldModifiers = classMember.getModifiers();
+                if (fieldModifiers.contains(Modifier.PUBLIC) || fieldModifiers.contains(Modifier.PROTECTED)) {
+                    final Name fieldName = classMember.getSimpleName();
+                    final TypeMirror fieldTypeMirror = classMember.asType();
+                    mapName2Type.put(fieldName, fieldTypeMirror);
+                }
+            }
         }
-        return typeName;
+
+        writeBuilderFile(typeElement, mapName2Type);
     }
 
-
-    private void writeBuilderFile(final TypeElement typeElement, Map<Name, TypeMirror> mapFieldName2Type) {
+    protected void writeBuilderFile(final TypeElement typeElement, Map<Name, TypeMirror> mapFieldName2Type) {
 
         final String className = typeElement.getQualifiedName().toString();
         final String simpleClassName = typeElement.getSimpleName().toString();
@@ -143,6 +163,23 @@ public class RadesBuilderProcessor extends AbstractProcessor {
     }
 
 
+    protected String getFullQualifiedClassName(final TypeMirror typeMirror) {
+        final String typeName;
+        if (typeMirror instanceof DeclaredType) {
+            final DeclaredType type = (DeclaredType) typeMirror;
+            typeName = type.asElement().toString();
+        } else {
+            typeName = typeMirror.toString();
+        }
+        return typeName;
+    }
+
+    /**
+     * Ermittelt die vollständige Typ Signatur - rekursiv!!!
+     *
+     * @param type TypeMirror des zu bestimmenden Datentypen
+     * @return String Signatur des zu bestimmenden Datentypen
+     */
     protected String getFullQualifiedTypeSignature(final TypeMirror type) {
 
         final StringBuffer typeSignature = new StringBuffer();
