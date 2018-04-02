@@ -64,16 +64,18 @@ public class RadesBuilderProcessor extends AbstractProcessor {
             allAnnotations.push(annotation);
         });
 
+        final Set<Element> processedAnnotations = new HashSet<>();
         final Set<Element> annotatedClasses = new HashSet<>();
         while (!allAnnotations.empty()) {
             final TypeElement annotation = allAnnotations.pop();
+            processedAnnotations.add(annotation);
 
             final Set<? extends Element> annotatedElements = roundEnv.getElementsAnnotatedWith(annotation);
             for (final Element annotatedElement : annotatedElements) {
                 if (annotatedElement.getKind() == ElementKind.ANNOTATION_TYPE) {
                     final TypeElement typeElement = (TypeElement) annotatedElement;
-                    System.out.println("###Annotation: " + typeElement);
-                    if (!allAnnotations.contains(typeElement)) {
+                    if (!processedAnnotations.contains(typeElement)) {
+                        System.out.println("###Annotation: " + typeElement);
                         // als Annotation aufnehmen falls gerade nicht im Stack (Minioptimierung)
                         allAnnotations.push(typeElement);
                     }

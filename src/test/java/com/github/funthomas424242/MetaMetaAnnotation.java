@@ -9,8 +9,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
-@MetaMetaAnnotation
 @RadesBuilder
+@MetaAnnotation
 @Retention(RetentionPolicy.SOURCE)
-public @interface MetaAnnotation {
+public @interface MetaMetaAnnotation {
 }
