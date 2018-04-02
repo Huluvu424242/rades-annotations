@@ -6,10 +6,10 @@ import com.google.testing.compile.CompilationSubject;
 
 import javax.annotation.Nullable;
 
-public  class RadesBuilderProcessorTestHelper {
+public class RadesBuilderProcessorTestHelper {
 
 
-    public static  CompilationSubject assertThat(final Compilation compilation) {
+    public static CompilationSubject assertThat(final Compilation compilation) {
         return CompilationSubject.assertThat(compilation);
     }
 
