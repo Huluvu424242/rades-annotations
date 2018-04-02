@@ -3,15 +3,12 @@ package com.github.funthomas424242.rades.annotations.processors;
 import com.github.funthomas424242.rades.annotations.lang.java.JavaModelService;
 import com.github.funthomas424242.rades.annotations.lang.java.JavaSrcFileCreator;
 import com.google.common.truth.ExpectFailure;
-import com.google.common.truth.StringSubject;
 import com.google.testing.compile.Compilation;
-import com.google.testing.compile.CompilationSubject;
 import com.google.testing.compile.JavaFileObjects;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 
-import javax.annotation.Nullable;
 import javax.annotation.processing.Filer;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -19,6 +16,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static com.github.funthomas424242.rades.annotations.processors.AssertionHelper.assertThat;
 import static com.google.common.truth.Truth.assertAbout;
 import static com.google.testing.compile.Compiler.javac;
 import static com.google.testing.compile.JavaSourceSubjectFactory.javaSource;
@@ -117,13 +115,6 @@ public class RadesBuilderProcessorTest {
         return resourceURL;
     }
 
-    protected CompilationSubject assertThat(final Compilation compilation) {
-        return CompilationSubject.assertThat(compilation);
-    }
-
-    protected StringSubject assertThat(@Nullable String actual) {
-        return com.google.common.truth.Truth.assertThat(actual);
-    }
 
     @BeforeClass
     public static void setUp() throws MalformedURLException {
