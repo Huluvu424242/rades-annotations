@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
 @AutoService(Processor.class)
 public class RadesBuilderProcessor extends AbstractProcessor {
 
-    final Logger logger = LoggerFactory.getLogger(RadesBuilderProcessor.class);
+    protected final Logger logger = LoggerFactory.getLogger(RadesBuilderProcessor.class);
 
 
     protected JavaModelService javaModelService = new JavaModelServiceProvider();
