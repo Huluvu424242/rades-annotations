@@ -82,19 +82,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         return true;
     }
 
-    protected String getFullQualifiedClassName(final TypeMirror typeMirror) {
-        final String typeName;
-        if (typeMirror instanceof DeclaredType) {
-            final DeclaredType type = (DeclaredType) typeMirror;
-            typeName = type.asElement().toString();
-        } else {
-            typeName = typeMirror.toString();
-        }
-        return typeName;
-    }
-
-
-    private void writeBuilderFile(final TypeElement typeElement, Map<Name, TypeMirror> mapFieldName2Type) {
+    protected void writeBuilderFile(final TypeElement typeElement, Map<Name, TypeMirror> mapFieldName2Type) {
 
         final String className = typeElement.getQualifiedName().toString();
         final String simpleClassName = typeElement.getSimpleName().toString();
@@ -143,6 +131,23 @@ public class RadesBuilderProcessor extends AbstractProcessor {
     }
 
 
+    protected String getFullQualifiedClassName(final TypeMirror typeMirror) {
+        final String typeName;
+        if (typeMirror instanceof DeclaredType) {
+            final DeclaredType type = (DeclaredType) typeMirror;
+            typeName = type.asElement().toString();
+        } else {
+            typeName = typeMirror.toString();
+        }
+        return typeName;
+    }
+
+    /**
+     * Ermittelt die vollständige Typ Signatur - rekursiv!!!
+     *
+     * @param type TypeMirror des zu bestimmenden Datentypen
+     * @return String Signatur des zu bestimmenden Datentypen
+     */
     protected String getFullQualifiedTypeSignature(final TypeMirror type) {
 
         final StringBuffer typeSignature = new StringBuffer();
