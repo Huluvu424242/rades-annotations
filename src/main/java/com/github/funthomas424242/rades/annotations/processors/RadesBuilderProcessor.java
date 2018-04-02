@@ -23,6 +23,7 @@ import javax.lang.model.type.TypeMirror;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -128,7 +129,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
             mapFieldName2Type.entrySet().forEach(fields -> {
                 final String fieldName = fields.getKey().toString();
                 final String setterName = "with" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-                final String argumentType = getFullQualifiedClassName(fields.getValue());
+                final String argumentType = getFullQualifiedTypeSignature(fields.getValue());
 
                 javaSrcFileCreator.writeSetterMethod(newInstanceName, builderSimpleClassName, fieldName, setterName, argumentType);
             });
@@ -139,6 +140,33 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
         }
+    }
+
+
+    protected String getFullQualifiedTypeSignature(final TypeMirror type) {
+
+        final StringBuffer typeSignature = new StringBuffer();
+
+        if (type instanceof DeclaredType) {
+            final DeclaredType declaredType = (DeclaredType) type;
+            typeSignature.append(getFullQualifiedClassName(type));
+
+            final List<? extends TypeMirror> typeArguments = declaredType.getTypeArguments();
+            if (!typeArguments.isEmpty()) {
+                typeSignature.append("<");
+                for (final ListIterator<? extends TypeMirror> it = typeArguments.listIterator(); it.hasNext(); ) {
+                    typeSignature.append(getFullQualifiedTypeSignature((TypeMirror) it.next()));
+                    if (it.hasNext()) {
+                        typeSignature.append(",");
+                    }
+                }
+                typeSignature.append(">");
+            }
+        } else {
+            typeSignature.append(getFullQualifiedClassName(type));
+        }
+
+        return typeSignature.toString();
     }
 
 

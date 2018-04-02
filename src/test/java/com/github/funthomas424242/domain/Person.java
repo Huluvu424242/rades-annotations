@@ -5,6 +5,7 @@ import com.github.funthomas424242.rades.annotations.RadesBuilder;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -34,6 +35,8 @@ public class Person {
     public int groesse;
 
     protected Set<Farbe> lieblingsfarben;
+
+    protected Map<String,Person> freunde;
 
 
     public int getId() {
