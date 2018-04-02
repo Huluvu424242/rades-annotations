@@ -31,10 +31,16 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @SupportedAnnotationTypes("com.github.funthomas424242.rades.annotations.RadesBuilder")
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @AutoService(Processor.class)
 public class RadesBuilderProcessor extends AbstractProcessor {
+
+    final Logger logger = LoggerFactory.getLogger(RadesBuilderProcessor.class);
+
 
     protected JavaModelService javaModelService = new JavaModelServiceProvider();
 
@@ -75,14 +81,14 @@ public class RadesBuilderProcessor extends AbstractProcessor {
                 if (annotatedElement.getKind() == ElementKind.ANNOTATION_TYPE) {
                     final TypeElement typeElement = (TypeElement) annotatedElement;
                     if (!processedAnnotations.contains(typeElement)) {
-                        System.out.println("###Annotation: " + typeElement);
+                        logger.debug("###Annotation: " + typeElement);
                         // als Annotation aufnehmen falls gerade nicht im Stack (Minioptimierung)
                         allAnnotations.push(typeElement);
                     }
                     continue;
                 }
                 if (annotatedElement.getKind().isClass()) {
-                    System.out.println("###Class: " + annotatedElement);
+                    logger.debug("###Class: " + annotatedElement);
                     annotatedClasses.add(annotatedElement);
                 }
             }
@@ -96,7 +102,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
     }
 
     private void createBuilderSrcFile(final Element annotatedElement) {
-        System.out.println("###WRITE BUILDER for: " + annotatedElement);
+        logger.debug("###WRITE BUILDER for: " + annotatedElement);
         final TypeElement typeElement = (TypeElement) annotatedElement;
         final Map<Name, TypeMirror> mapName2Type = new HashMap<>();
         final List<? extends Element> classMembers = annotatedElement.getEnclosedElements();
@@ -156,9 +162,9 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
             javaSrcFileCreator.writeClassFinal();
         } catch (IOException e) {
-            System.out.println(e.getLocalizedMessage());
+            logger.error(e.getLocalizedMessage());
         } catch (Exception e) {
-            System.out.println(e.getLocalizedMessage());
+            logger.error(e.getLocalizedMessage());
         }
     }
 
