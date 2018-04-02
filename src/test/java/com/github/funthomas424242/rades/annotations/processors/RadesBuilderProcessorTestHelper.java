@@ -6,14 +6,14 @@ import com.google.testing.compile.CompilationSubject;
 
 import javax.annotation.Nullable;
 
-public interface RadesBuilderProcessorTestHelper {
+public  class RadesBuilderProcessorTestHelper {
 
 
-    default CompilationSubject assertThat(final Compilation compilation) {
+    public static  CompilationSubject assertThat(final Compilation compilation) {
         return CompilationSubject.assertThat(compilation);
     }
 
-    default StringSubject assertThat(@Nullable String actual) {
+    public static StringSubject assertThat(@Nullable String actual) {
         return com.google.common.truth.Truth.assertThat(actual);
     }
 

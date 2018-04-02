@@ -16,11 +16,12 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessorTestHelper.assertThat;
 import static com.google.common.truth.Truth.assertAbout;
 import static com.google.testing.compile.Compiler.javac;
 import static com.google.testing.compile.JavaSourceSubjectFactory.javaSource;
 
-public class RadesBuilderProcessorTest implements RadesBuilderProcessorTestHelper {
+public class RadesBuilderProcessorTest {
 
     protected final String NONE_WRITEABLE_BUILDER_JAVA = "package com.github.funthomas424242.domain;\n" +
             "import javax.annotation.Generated;\n" +
