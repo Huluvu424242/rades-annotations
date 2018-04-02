@@ -16,7 +16,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessorTestHelper.assertThat;
+import static com.github.funthomas424242.rades.annotations.processors.AssertionHelper.assertThat;
 import static com.google.common.truth.Truth.assertAbout;
 import static com.google.testing.compile.Compiler.javac;
 import static com.google.testing.compile.JavaSourceSubjectFactory.javaSource;
