@@ -111,7 +111,6 @@ public class RadesBuilderProcessorTest {
     protected static URL getResourceURL(String projectSrcRoot, String resourcePath) throws MalformedURLException {
         final Path tmpPath = Paths.get(projectSrcRoot + resourcePath);
         final URL resourceURL = tmpPath.toAbsolutePath().toUri().toURL();
-        System.out.println("Resource:" + resourceURL);
         return resourceURL;
     }
 
