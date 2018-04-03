@@ -2,6 +2,8 @@ package com.github.funthomas424242.rades.annotations.processors;
 
 import com.github.funthomas424242.domain.Abteilung;
 import com.github.funthomas424242.domain.AbteilungBuilder;
+import com.github.funthomas424242.domain.Familie;
+import com.github.funthomas424242.domain.FamilieBuilder;
 import com.github.funthomas424242.domain.Person;
 import com.github.funthomas424242.domain.PersonBuilder;
 import com.google.common.collect.Sets;
@@ -38,6 +40,15 @@ public class RadesBuilderIntegrationTest {
                 .withAbteilungsNr("IT-8788")
                 .build();
         assertNotNull(abteilung);
+    }
+
+    @Test
+    @DisplayName("Alle Felder von Familie gültig befüllen.")
+    @Tags({@Tag("integration"), @Tag("builder")})
+    public void testFamilieAlleFelderBefuellt() {
+        final Familie familie = new FamilieBuilder()
+                .build();
+        assertNotNull(familie);
     }
 
     @Test
