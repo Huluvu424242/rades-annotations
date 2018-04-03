@@ -1,8 +1,6 @@
 package com.github.funthomas424242;
 
 
-import com.github.funthomas424242.rades.annotations.RadesBuilder;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
