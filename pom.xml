@@ -29,7 +29,7 @@
         <repository>
             <id>bintray-funthomas424242-funthomas424242-lib</id>
             <name>funthomas424242-funthomas424242-lib</name>
-            <url>https://api.bintray.com/maven/funthomas424242/funthomas424242-lib/rades-annotations/;publish=1</url>
+            <url>https://api.bintray.com/maven/funthomas424242/funthomas424242-lib/rades-annotations/;publish=0</url>
         </repository>
     </distributionManagement>
     <properties>
@@ -212,13 +212,5 @@
             </plugins>
         </pluginManagement>
     </build>
-
-    <distributionManagement>
-        <repository>
-            <id>bintray-funthomas424242-funthomas424242-libs</id>
-            <name>funthomas424242-funthomas424242-libs</name>
-            <url>https://api.bintray.com/maven/funthomas424242/funthomas424242-libs/rades-annotations/;publish=0</url>
-        </repository>
-    </distributionManagement>
 
 </project>
