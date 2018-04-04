@@ -89,9 +89,9 @@
         <!-- java interner logger -->
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-jdk14 -->
         <!--<dependency>-->
-            <!--<groupId>org.slf4j</groupId>-->
-            <!--<artifactId>slf4j-jdk14</artifactId>-->
-            <!--<version>1.8.0-beta2</version>-->
+        <!--<groupId>org.slf4j</groupId>-->
+        <!--<artifactId>slf4j-jdk14</artifactId>-->
+        <!--<version>1.8.0-beta2</version>-->
         <!--</dependency>-->
 
         <dependency>
@@ -127,15 +127,39 @@
                     <encoding>UTF-8</encoding>
                     <!-- Disable annotation processing -->
                     <compilerArgument>-Xlint:unchecked</compilerArgument>
-                    <!--<proc>none</proc>-->
-                    <!-- replaced by google auto-service -->
-                    <!--<generatedSourcesDirectory>${project.build.directory}/generated-sources/</generatedSourcesDirectory>-->
-                    <!--<annotationProcessors>-->
-                    <!--<annotationProcessor>-->
-                    <!--com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor-->
-                    <!--</annotationProcessor>-->
-                    <!--</annotationProcessors>-->
                 </configuration>
+            </plugin>
+            <plugin>
+                <!-- NOTE: We don't need a groupId specification because the group is
+                    org.apache.maven.plugins ...which is assumed by default. -->
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>package-assemblies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                                <descriptorRef>src</descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
