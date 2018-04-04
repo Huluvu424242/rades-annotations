@@ -7,7 +7,7 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 
 # [Unreleased]
 
-## [1.0.0] fertiggestellt 2018-04-03
+## [1.0.0] fertiggestellt 2018-04-04
 ### Added
 - Projekt Setup aufgesetzt und erste Fachlichkeit umgesetzt.
 - https://github.com/FunThomas424242/rades-annotations/issues/1[issue #1] Unit Tests implementiert.
