@@ -5,7 +5,15 @@ Das Format basiert auf http://keepachangelog.com/de/[Keep a Changelog].
 Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 
 
-# [Unreleased]
+## [Unreleased]
+### Added
+- n/a
+
+### Changed
+- n/a
+
+### Removed
+- n/a
 
 ## [1.0.0] fertiggestellt 2018-04-04
 ### Added
