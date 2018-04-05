@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  * Die generierte Builderklasse wird im gleichen Package erstellt.
  * Als Name der Builderklasse wird der Name des annotierten Types + "Builder" verwendet.
  *
- * @version %I%, %G%
+ * @version $Version$, $Date$
  * @since 1.1.0
  */
 @Documented
