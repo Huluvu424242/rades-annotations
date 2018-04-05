@@ -1,8 +1,8 @@
 package com.github.funthomas424242.domain;
 
-import com.github.funthomas424242.MetaAnnotation;
+import com.github.funthomas424242.rades.annotations.RadesBuilder;
 
-@MetaAnnotation
+@RadesBuilder
 public class Abteilung {
 
     private int id;

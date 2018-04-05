@@ -5,6 +5,8 @@ import com.github.funthomas424242.rades.annotations.lang.java.JavaModelService;
 import com.github.funthomas424242.rades.annotations.lang.java.JavaModelServiceProvider;
 import com.github.funthomas424242.rades.annotations.lang.java.JavaSrcFileCreator;
 import com.google.auto.service.AutoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
@@ -31,10 +33,9 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-@SupportedAnnotationTypes("com.github.funthomas424242.rades.annotations.RadesBuilder")
+@SupportedAnnotationTypes({"com.github.funthomas424242.rades.annotations.RadesBuilder"
+        , "com.github.funthomas424242.rades.annotations.RadesAddBuilder"
+        , "com.github.funthomas424242.rades.annotations.AddBuilder"})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @AutoService(Processor.class)
 public class RadesBuilderProcessor extends AbstractProcessor {
