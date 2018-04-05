@@ -17,14 +17,52 @@ sondern es genügt die Integration des JCenters in Maven als Downloadquelle.
 [source,xml]
 ----
 <repositories>
-    <repository>
+    <repository>  <!--1-->
         <snapshots>
             <enabled>false</enabled>
         </snapshots>
         <id>central</id>
         <name>bintray</name>
-        <url>https://jcenter.bintray.com</url> <!--1-->
+        <url>https://jcenter.bintray.com</url> <!--3-->
     </repository>
 </repositories>
+:
+<dependencies>
+    <dependency>  <!--2-->
+        <groupId>com.github.funthomas424242</groupId>
+        <artifactId>rades-annotations</artifactId>
+        <version>1.1.0</version>
+    </dependency>
+</dependencies>
 ----
-<1> Das ist der eigentlich Download URL des JCenter
+<1> Definition des Repositories.
+<2> Definition der Projektabhängigkeit.
+<3> Das ist der eigentliche Download URL des JCenter.
+
+
+## Benutzung der Annotationen
+
+.Person.java
+[source,java]
+----
+import com.github.funthomas424242.rades.annotations.RadesAddBuilder;
+
+@RadesAddBuilder
+public class Person {
+:
+}
+----
+
+## Das Generat
+
+Die *@RadesAddBuilder* bzw. die *@AddBuilder* Annotationen können synonym verwendet werden, sie nutzen den selben Annotationsprozessor.
+Die verschiedenen Schreibweisen bilden lediglich eine Auswahl für den Entwickler um die Lesbarkeit seines Programmkodes
+verbessern zu können - für den Fall, dass noch weitere Annotationsframeworks zum Einsatz kommen.
+
+Die Annotationen erzeugen eine Javaklasse welche den Namen des annotierten Elements trägt, erweitert um den Suffix "Builder".
+Obiger Kode würde also zur Generierung der Klasse PersonBuilder führen. Diese Klasse wird im gleichen Package wie die
+annotierte Klasse Person liegen. Letzteres ist erforderlich um über Java Bordmitel Zugriff auf die Attribute der
+annotierten Klasse Person zu erhalten.
+
+IMPORTANT: private Attribute werden vom generierten Builder nicht unterstützt.
+
