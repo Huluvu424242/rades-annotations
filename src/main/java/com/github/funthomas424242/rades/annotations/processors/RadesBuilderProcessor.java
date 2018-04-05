@@ -109,7 +109,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         for (final Element classMember : classMembers) {
             if (classMember.getKind().isField()) {
                 final Set<Modifier> fieldModifiers = classMember.getModifiers();
-                if (fieldModifiers.contains(Modifier.PUBLIC) || fieldModifiers.contains(Modifier.PROTECTED)) {
+                if (!fieldModifiers.contains(Modifier.PRIVATE)) {
                     final Name fieldName = classMember.getSimpleName();
                     final TypeMirror fieldTypeMirror = classMember.asType();
                     mapName2Type.put(fieldName, fieldTypeMirror);

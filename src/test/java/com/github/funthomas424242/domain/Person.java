@@ -28,7 +28,8 @@ public class Person {
     @NotNull
     protected String name;
 
-    protected String vorname;
+    // check for package scope
+    String vorname;
 
     protected LocalDate birthday;
 
