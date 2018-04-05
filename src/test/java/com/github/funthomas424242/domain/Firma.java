@@ -1,17 +1,17 @@
 package com.github.funthomas424242.domain;
 
-import com.github.funthomas424242.rades.annotations.RadesBuilder;
+import com.github.funthomas424242.rades.annotations.AddBuilder;
 
 import java.util.Date;
 
-@RadesBuilder
-public class Abteilung {
+@AddBuilder
+public class Firma {
 
     private int id;
 
     protected String name;
 
-    protected String abteilungsNr;
+    protected String betriebeNr;
 
     protected Date gruendungstag;
 

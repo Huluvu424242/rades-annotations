@@ -4,6 +4,8 @@ import com.github.funthomas424242.domain.Abteilung;
 import com.github.funthomas424242.domain.AbteilungBuilder;
 import com.github.funthomas424242.domain.Familie;
 import com.github.funthomas424242.domain.FamilieBuilder;
+import com.github.funthomas424242.domain.Firma;
+import com.github.funthomas424242.domain.FirmaBuilder;
 import com.github.funthomas424242.domain.Person;
 import com.github.funthomas424242.domain.PersonBuilder;
 import com.google.common.collect.Sets;
@@ -29,6 +31,17 @@ public class RadesBuilderIntegrationTest {
     public static void setUp() {
         // needed for Travis CI wich has en
         Locale.setDefault(new Locale("de", "DE"));
+    }
+
+    @Test
+    @DisplayName("Alle Felder der Firma gültig befüllen.")
+    @Tags({@Tag("integration"), @Tag("builder")})
+    public void testFirmaAlleFelderBefuellt() {
+        final Firma firma = new FirmaBuilder()
+                .withName("Musterfirma")
+                .withBetriebeNr("AG-8788-S")
+                .build();
+        assertNotNull(firma);
     }
 
     @Test
