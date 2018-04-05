@@ -1,0 +1,17 @@
+<project>
+    <bannerLeft>
+        <name>${project.artifactId}</name>
+        <!--<src>http://maven.apache.org/images/apache-maven-project-2.png</src>-->
+        <href>https://github.com/FunThomas424242/rades-annotations</href>
+    </bannerLeft>
+
+    <bannerRight>
+        <src>http://maven.apache.org/images/maven-logo-2.gif</src>
+    </bannerRight>
+
+    <body>
+        <menu name="User guide">
+            <item href="usage.html" name="Usage" />
+        </menu>
+    </body>
+</project>
