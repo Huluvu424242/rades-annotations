@@ -8,9 +8,9 @@ image:https://badge.waffle.io/FunThomas424242/rades-annotations.svg?columns=all[
 [#main]
 = rades-annotations
 
-
 Rades Annotationen zur Automatisierung
 
+Hier finden Sie link:docs/asciidoc/index.adoc[die Projektdokumentation, das Nutzerhandbuch].
 
 [#quellen]
 = Quellen im Internet
@@ -28,5 +28,3 @@ Dieses Projekt wäre ohne die Dienste, welche Open-Source-Projekte großzügig u
 * Waffle.io welches für die agile Abarbeitung von Bugs und Features genutzt wird.
 * JFrog welches für die Bereitstellung von Bintray, der Distributionsplattform, die verwendet wird, um mögliche Downloads anzubieten. Bintray war wirklich von unschätzbarem Wert, da es nicht nur kostenloses Hosting und Traffic für die Software bietet, sondern es auch sehr einfach macht, ein Repository für benutzerdefinierte Binärformate einzurichten und die Metadaten der Downloads zu verwalten. Dank der einfach zu verwendenden REST-API ist es möglich einen automatisierten Workflow mit GitHub und Travis CI einzurichten, um die Software in kürzester Zeit zu erstellen, hochzuladen und zu katalogisieren.
 
-
-link:docs/asciidoc/index.adoc[Projektdokumentation/Nutzerhandbuch]
