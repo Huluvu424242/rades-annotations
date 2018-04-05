@@ -1,1 +1,30 @@
-# Test1
+# Rades Annotations Project
+
+Dieses Projekt stellt Annotationen nebst zugehörigen Annotation Prozessoren bereit. Sobald das ausgelieferte
+Projektarchiv (JAR) im Klassenpfad Ihrer Anwendung eingebunden ist, können Sie die Annotationen benutzen.
+
+## Download des Projektarchives
+
+### Manueller Download
+Sie können das Produkt über Ihren Webbroser manuell von der
+link:https://bintray.com/funthomas424242/funthomas424242-libs/rades-annotations[JFrog] Seite herunterladen.
+
+### Download per Mavenintegration
+Da das Projekt dankenswerter Weise von JFrog ins JCenter aufgenommen wurde, wird kein spezieller Download Link benötigt,
+sondern es genügt die Integration des JCenters in Maven als Downloadquelle.
+
+.pom.xml
+[source,xml]
+----
+<repositories>
+    <repository>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+        <id>central</id>
+        <name>bintray</name>
+        <url>https://jcenter.bintray.com</url> <!--1-->
+    </repository>
+</repositories>
+----
+<1> Das ist der eigentlich Download URL des JCenter
