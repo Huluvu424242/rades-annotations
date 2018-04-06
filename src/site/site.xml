@@ -10,8 +10,9 @@
     </bannerRight>
 
     <body>
-        <menu name="User guide">
-            <item href="index.html" name="Benutzerhandbuch" />
+        <menu name="Benutzer">
+            <item href="https://github.com/FunThomas424242/rades-annotations" name="Projekt" />
+            <item href="index.html" name="Handbuch" />
         </menu>
     </body>
 </project>
