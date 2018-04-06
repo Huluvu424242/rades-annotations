@@ -8,7 +8,10 @@ image:https://badge.waffle.io/FunThomas424242/rades-annotations.svg?columns=all[
 [#main]
 = rades-annotations
 
-Rades Annotationen zur Automatisierung
+Stellt im Rahmen von link:https://github.com/FunThomas424242/RADeS[Rades] Annotationen zur Automatisierung bereit.
+Die angebotenen Annotationen können zur Generierung folgender Pattern genutzt werden:
+
+* link:https://en.wikipedia.org/wiki/Builder_pattern[Builder Pattern]
 
 Hier finden Sie link:https://funthomas424242.github.io/rades-annotations/index.html[die Projektdokumentation, das Nutzerhandbuch].
 
