@@ -11,7 +11,7 @@
 
     <body>
         <menu name="User guide">
-            <item href="usage.html" name="Usage" />
+            <item href="index.html" name="Benutzerhandbuch" />
         </menu>
     </body>
 </project>
