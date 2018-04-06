@@ -136,8 +136,6 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
             javaSrcFileCreator.init();
 
-            javaSrcFileCreator.getNowAsISOString();
-
             if (packageName != null) {
                 javaSrcFileCreator.writePackage(packageName);
             }
