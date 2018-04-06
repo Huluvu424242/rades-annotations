@@ -10,9 +10,13 @@
     </bannerRight>
 
     <body>
-        <menu name="Benutzer">
-            <item href="https://github.com/FunThomas424242/rades-annotations" name="Projekt" />
-            <item href="index.html" name="Handbuch" />
+        <menu name="RADES Universum">
+            <item name="RADES Projekt" href="https://github.com/FunThomas424242/RADeS"/>
+            <item name="~ Annotations" href="index.html">
+                <item name="Quellen" href="https://github.com/FunThomas424242/rades-annotations"  />
+                <item name="Handbuch" href="index.html"/>
+            </item>
+            <item name="~ JBoss Forge Addon" href="https://github.com/FunThomas424242/rades.forge-addon"/>
         </menu>
     </body>
 </project>
