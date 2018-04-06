@@ -129,25 +129,15 @@
                     <compilerArgument>-Xlint:unchecked</compilerArgument>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>org.asciidoctor</groupId>-->
-                <!--<artifactId>asciidoctor-maven-plugin</artifactId>-->
-                <!--<version>1.5.6</version>-->
-            <!--</plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.7</version>
                 <configuration>
-                    <siteDirectory>${basedir}/docs</siteDirectory>
+                    <outputDirectory>${basedir}/docs</outputDirectory>
                     <locales>de</locales>
                 </configuration>
                 <dependencies>
-                    <!--<dependency>-->
-                        <!--<groupId>org.apache.maven.doxia</groupId>-->
-                        <!--<artifactId>doxia-module-markdown</artifactId>-->
-                        <!--<version>1.4</version>-->
-                    <!--</dependency>-->
                     <dependency><!-- add Asciidoctor Doxia Parser Module -->
                         <groupId>org.asciidoctor</groupId>
                         <artifactId>asciidoctor-maven-plugin</artifactId>

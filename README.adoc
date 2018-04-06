@@ -10,7 +10,7 @@ image:https://badge.waffle.io/FunThomas424242/rades-annotations.svg?columns=all[
 
 Rades Annotationen zur Automatisierung
 
-Hier finden Sie link:docs/asciidoc/index.adoc[die Projektdokumentation, das Nutzerhandbuch].
+Hier finden Sie link:docs/asciidoc/index.html[die Projektdokumentation, das Nutzerhandbuch].
 
 [#quellen]
 = Quellen im Internet
