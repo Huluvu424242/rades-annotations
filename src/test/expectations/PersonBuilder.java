@@ -8,7 +8,8 @@ import javax.validation.ValidationException;
 import javax.validation.Validator;
 
 @Generated(value="com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor"
-, comments="com.github.funthomas424242.domain.Person")
+        , date="2018-04-06T20:36:46.754"
+        , comments="com.github.funthomas424242.domain.Person")
 public class PersonBuilder {
 
     private Person person;

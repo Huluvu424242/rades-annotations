@@ -92,6 +92,11 @@ public class RadesBuilderProcessorTest {
             };
             return creator;
         }
+
+        @Override
+        public String getNowAsISOString() {
+            return "2018-04-06T20:36:46.754";
+        }
     }
 
     static class NoClosebleJavaModelProvider implements JavaModelService {
@@ -104,6 +109,11 @@ public class RadesBuilderProcessorTest {
                 }
             };
             return creator;
+        }
+
+        @Override
+        public String getNowAsISOString() {
+            return "2018-04-06T20:36:46.755";
         }
     }
 

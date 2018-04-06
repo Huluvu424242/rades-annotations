@@ -3,10 +3,10 @@ package com.github.funthomas424242.rades.annotations.lang.java;
 import javax.annotation.processing.Filer;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class JavaSrcFileCreator implements AutoCloseable {
+
+    protected JavaModelService javaModelService = new JavaModelServiceProvider();
 
     protected final Filer filer;
 
@@ -17,6 +17,16 @@ public class JavaSrcFileCreator implements AutoCloseable {
     public JavaSrcFileCreator(final Filer filer, final String className) {
         this.filer = filer;
         this.className = className;
+    }
+
+
+    /**
+     * Please only use this method for mocking in your test code!
+     *
+     * @param javaModelService mock to replace the default intern instance.
+     */
+    protected void setJavaModelService(final JavaModelService javaModelService) {
+        this.javaModelService = javaModelService;
     }
 
 
@@ -71,11 +81,6 @@ public class JavaSrcFileCreator implements AutoCloseable {
         writer.println();
     }
 
-    public String getNowAsISOString() {
-        final LocalDateTime now = LocalDateTime.now();
-        return now.format(DateTimeFormatter.ISO_DATE_TIME);
-    }
-
     public void writeBuildMethod(String simpleClassName, String objectName) {
         writer.print("    public ");
         writer.print(simpleClassName);
@@ -101,8 +106,7 @@ public class JavaSrcFileCreator implements AutoCloseable {
 
     public void writeClassAnnotations(String className) {
         writer.print("@Generated(value=\"com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor\"\n" +
-                //TODO Zeiterzeugung in Utilklasse auslagern und im Test mocken
-                //", date=\"" + nowString + "\"\n" +
+                ", date=\"" + javaModelService.getNowAsISOString() + "\"\n" +
                 ", comments=\"" + className + "\")\n"
         );
     }
