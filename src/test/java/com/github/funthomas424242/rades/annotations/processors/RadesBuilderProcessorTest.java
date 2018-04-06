@@ -80,11 +80,23 @@ public class RadesBuilderProcessorTest {
     @Rule
     public final ExpectFailure expectFailure = new ExpectFailure();
 
+    static class DefaultJavaModelProvider implements JavaModelService {
+        @Override
+        public JavaSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className) {
+            return new JavaSrcFileCreator(filer, className, this);
+        }
+
+        @Override
+        public String getNowAsISOString() {
+            return "2018-04-06T20:36:46.750";
+        }
+    }
+
 
     static class NoWritableJavaModelProvider implements JavaModelService {
         @Override
         public JavaSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className) {
-            final JavaSrcFileCreator creator = new JavaSrcFileCreator(filer, className) {
+            final JavaSrcFileCreator creator = new JavaSrcFileCreator(filer, className,this) {
                 @Override
                 public void init() throws IOException {
                     throw new IOException("Medium ist schreibgeschützt!");
@@ -102,7 +114,7 @@ public class RadesBuilderProcessorTest {
     static class NoClosebleJavaModelProvider implements JavaModelService {
         @Override
         public JavaSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className) {
-            final JavaSrcFileCreator creator = new JavaSrcFileCreator(filer, className) {
+            final JavaSrcFileCreator creator = new JavaSrcFileCreator(filer, className,this) {
                 @Override
                 public void close() throws Exception {
                     throw new Exception("Kann Stream nicht schließen!");
@@ -137,10 +149,11 @@ public class RadesBuilderProcessorTest {
 
     @Test
     public void processTest() throws MalformedURLException {
-
+        final RadesBuilderProcessor processor=new RadesBuilderProcessor();
+        processor.setJavaModelService(new DefaultJavaModelProvider());
 
         final Compilation compilation = javac()
-                .withProcessors(new RadesBuilderProcessor())
+                .withProcessors(processor)
                 .compile(JavaFileObjects.forResource(urlPersonJava));
         assertThat(compilation).succeeded();
         assertThat(compilation)
@@ -149,9 +162,12 @@ public class RadesBuilderProcessorTest {
                 );
 
         // equivalent mitl altem API
+        final RadesBuilderProcessor processor1=new RadesBuilderProcessor();
+        processor1.setJavaModelService(new DefaultJavaModelProvider());
+
         assertAbout(javaSource())
                 .that(JavaFileObjects.forResource(urlPersonJava))
-                .processedWith(new RadesBuilderProcessor())
+                .processedWith(processor1)
                 .compilesWithoutError()
                 .and()
                 .generatesSources(JavaFileObjects.forResource(urlPersonBuilderJava));
@@ -161,20 +177,24 @@ public class RadesBuilderProcessorTest {
 
     @Test
     public void shouldCompilePersonJavaWithoutErrors() {
+        final RadesBuilderProcessor processor=new RadesBuilderProcessor();
+        processor.setJavaModelService(new DefaultJavaModelProvider());
 
         assertAbout(javaSource())
                 .that(JavaFileObjects.forResource(urlPersonJava))
-                .processedWith(new RadesBuilderProcessor())
+                .processedWith(processor)
                 .compilesWithoutError();
 
     }
 
     @Test
     public void shouldCompileMetaAnnotationJavaWithoutErrors() {
+        final RadesBuilderProcessor processor=new RadesBuilderProcessor();
+        processor.setJavaModelService(new DefaultJavaModelProvider());
 
         assertAbout(javaSource())
                 .that(JavaFileObjects.forResource(urlMetaAnnotationJava))
-                .processedWith(new RadesBuilderProcessor())
+                .processedWith(processor)
                 .compilesWithoutError();
 
     }
@@ -182,13 +202,15 @@ public class RadesBuilderProcessorTest {
 
     @Test
     public void shouldCompileNonPackageClassWithoutErrors() {
+        final RadesBuilderProcessor processor=new RadesBuilderProcessor();
+        processor.setJavaModelService(new DefaultJavaModelProvider());
 
         assertAbout(javaSource())
                 .that(JavaFileObjects.forSourceString("NonePackageClass", "\n" +
                         "@com.github.funthomas424242.rades.annotations.RadesBuilder\n" +
                         "public class NonePackageClass {\n" +
                         "}\n"))
-                .processedWith(new RadesBuilderProcessor())
+                .processedWith(processor)
                 .compilesWithoutError();
 
     }

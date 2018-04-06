@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 
 public class JavaSrcFileCreator implements AutoCloseable {
 
-    protected JavaModelService javaModelService = new JavaModelServiceProvider();
+    protected final JavaModelService javaModelService;
 
     protected final Filer filer;
 
@@ -14,21 +14,12 @@ public class JavaSrcFileCreator implements AutoCloseable {
 
     protected PrintWriter writer;
 
-    public JavaSrcFileCreator(final Filer filer, final String className) {
+    public JavaSrcFileCreator(final Filer filer, final String className, final JavaModelService javaModelService) {
         this.filer = filer;
         this.className = className;
+        this.javaModelService=javaModelService;
+
     }
-
-
-    /**
-     * Please only use this method for mocking in your test code!
-     *
-     * @param javaModelService mock to replace the default intern instance.
-     */
-    protected void setJavaModelService(final JavaModelService javaModelService) {
-        this.javaModelService = javaModelService;
-    }
-
 
 // Add if needed
 //    public JavaSrcFileCreator(final Filer filer, final Element packageElement, final CharSequence className) throws IOException {
