@@ -14,7 +14,8 @@
             <item name="RADES Projekt" href="https://github.com/FunThomas424242/RADeS"/>
             <item name="~ Annotations" href="index.html">
                 <item name="Quellen" href="https://github.com/FunThomas424242/rades-annotations"  />
-                <item name="Handbuch" href="index.html"/>
+                <item name="Benutzer" href="benutzer.html"/>
+                <item name="Entwickler" href="entwickler.html"/>
             </item>
             <item name="~ JBoss Forge Addon" href="https://github.com/FunThomas424242/rades.forge-addon"/>
         </menu>
