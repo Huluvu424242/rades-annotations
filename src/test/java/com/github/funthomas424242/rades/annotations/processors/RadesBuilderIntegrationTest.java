@@ -2,6 +2,10 @@ package com.github.funthomas424242.rades.annotations.processors;
 
 import com.github.funthomas424242.domain.Abteilung;
 import com.github.funthomas424242.domain.AbteilungBuilder;
+import com.github.funthomas424242.domain.Familie;
+import com.github.funthomas424242.domain.FamilieBuilder;
+import com.github.funthomas424242.domain.Firma;
+import com.github.funthomas424242.domain.FirmaBuilder;
 import com.github.funthomas424242.domain.Person;
 import com.github.funthomas424242.domain.PersonBuilder;
 import com.google.common.collect.Sets;
@@ -30,6 +34,17 @@ public class RadesBuilderIntegrationTest {
     }
 
     @Test
+    @DisplayName("Alle Felder der Firma gültig befüllen.")
+    @Tags({@Tag("integration"), @Tag("builder")})
+    public void testFirmaAlleFelderBefuellt() {
+        final Firma firma = new FirmaBuilder()
+                .withName("Musterfirma")
+                .withBetriebeNr("AG-8788-S")
+                .build();
+        assertNotNull(firma);
+    }
+
+    @Test
     @DisplayName("Alle Felder von Abteilung gültig befüllen.")
     @Tags({@Tag("integration"), @Tag("builder")})
     public void testAbteilungAlleFelderBefuellt() {
@@ -38,6 +53,15 @@ public class RadesBuilderIntegrationTest {
                 .withAbteilungsNr("IT-8788")
                 .build();
         assertNotNull(abteilung);
+    }
+
+    @Test
+    @DisplayName("Alle Felder von Familie gültig befüllen.")
+    @Tags({@Tag("integration"), @Tag("builder")})
+    public void testFamilieAlleFelderBefuellt() {
+        final Familie familie = new FamilieBuilder()
+                .build();
+        assertNotNull(familie);
     }
 
     @Test

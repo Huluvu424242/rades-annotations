@@ -4,6 +4,8 @@ import javax.annotation.processing.Filer;
 
 public interface JavaModelService {
 
-    public JavaSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className);
+    JavaSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className);
+
+    String getNowAsISOString();
 
 }

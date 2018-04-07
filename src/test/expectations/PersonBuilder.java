@@ -8,7 +8,8 @@ import javax.validation.ValidationException;
 import javax.validation.Validator;
 
 @Generated(value="com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor"
-, comments="com.github.funthomas424242.domain.Person")
+        , date="2018-04-06T20:36:46.750"
+        , comments="com.github.funthomas424242.domain.Person")
 public class PersonBuilder {
 
     private Person person;
@@ -39,7 +40,22 @@ public class PersonBuilder {
         return value;
     }
 
-    public PersonBuilder withLieblingsfarben( final java.util.Set lieblingsfarben ) {
+    public PersonBuilder withGroesse( final int groesse ) {
+        this.person.groesse = groesse;
+        return this;
+    }
+
+    public PersonBuilder withVorname( final java.lang.String vorname ) {
+        this.person.vorname = vorname;
+        return this;
+    }
+
+    public PersonBuilder withFreunde( final java.util.Map<java.lang.String,com.github.funthomas424242.domain.Person> freunde ) {
+        this.person.freunde = freunde;
+        return this;
+    }
+
+    public PersonBuilder withLieblingsfarben( final java.util.Set<com.github.funthomas424242.domain.Person.Farbe> lieblingsfarben ) {
         this.person.lieblingsfarben = lieblingsfarben;
         return this;
     }
@@ -49,18 +65,8 @@ public class PersonBuilder {
         return this;
     }
 
-    public PersonBuilder withGroesse( final int groesse ) {
-        this.person.groesse = groesse;
-        return this;
-    }
-
     public PersonBuilder withName( final java.lang.String name ) {
         this.person.name = name;
-        return this;
-    }
-
-    public PersonBuilder withVorname( final java.lang.String vorname ) {
-        this.person.vorname = vorname;
         return this;
     }
 

@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.funthomas424242</groupId>
     <artifactId>rades-annotations</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
     <description>Rades Annotationen zur Automatisierung</description>
     <licenses>
         <license>
@@ -29,7 +29,7 @@
         <repository>
             <id>bintray-funthomas424242-funthomas424242-lib</id>
             <name>funthomas424242-funthomas424242-lib</name>
-            <url>https://api.bintray.com/maven/funthomas424242/funthomas424242-lib/rades-annotations/;publish=1</url>
+            <url>https://api.bintray.com/maven/funthomas424242/funthomas424242-lib/rades-annotations/;publish=0</url>
         </repository>
     </distributionManagement>
     <properties>
@@ -68,12 +68,32 @@
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.8.0-beta2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-core -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.3.0-alpha4</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.3.0-alpha4</version>
+        </dependency>
+        <!-- java interner logger -->
+        <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-jdk14 -->
         <!--<dependency>-->
-            <!--<groupId>com.google.guava</groupId>-->
-            <!--<artifactId>guava</artifactId>-->
-            <!--<version>${guava-version}</version>-->
-            <!--<type>jar</type>-->
+        <!--<groupId>org.slf4j</groupId>-->
+        <!--<artifactId>slf4j-jdk14</artifactId>-->
+        <!--<version>1.8.0-beta2</version>-->
         <!--</dependency>-->
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -96,7 +116,26 @@
 
     <build>
         <plugins>
-
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <configuration>
+                            <filesets>
+                                <fileset>
+                                    <directory>${basedir}/docs</directory>
+                                    <followSymlinks>false</followSymlinks>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -107,15 +146,57 @@
                     <encoding>UTF-8</encoding>
                     <!-- Disable annotation processing -->
                     <compilerArgument>-Xlint:unchecked</compilerArgument>
-                    <!--<proc>none</proc>-->
-                    <!-- replaced by google auto-service -->
-                    <!--<generatedSourcesDirectory>${project.build.directory}/generated-sources/</generatedSourcesDirectory>-->
-                    <!--<annotationProcessors>-->
-                    <!--<annotationProcessor>-->
-                    <!--com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor-->
-                    <!--</annotationProcessor>-->
-                    <!--</annotationProcessors>-->
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.7</version>
+                <configuration>
+                    <outputDirectory>${basedir}/docs</outputDirectory>
+                    <locales>de</locales>
+                    <relativizeDecorationLinks>false</relativizeDecorationLinks>
+                </configuration>
+                <dependencies>
+                    <dependency><!-- add Asciidoctor Doxia Parser Module -->
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctor-maven-plugin</artifactId>
+                        <version>1.5.6</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <!-- NOTE: We don't need a groupId specification because the group is
+                    org.apache.maven.plugins ...which is assumed by default. -->
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>package-assemblies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                                <descriptorRef>src</descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -168,4 +249,5 @@
             </plugins>
         </pluginManagement>
     </build>
+
 </project>

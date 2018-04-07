@@ -5,6 +5,8 @@ import com.github.funthomas424242.rades.annotations.lang.java.JavaModelService;
 import com.github.funthomas424242.rades.annotations.lang.java.JavaModelServiceProvider;
 import com.github.funthomas424242.rades.annotations.lang.java.JavaSrcFileCreator;
 import com.google.auto.service.AutoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
@@ -15,6 +17,7 @@ import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
@@ -22,14 +25,23 @@ import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
+import java.util.stream.Collectors;
 
-@SupportedAnnotationTypes("com.github.funthomas424242.rades.annotations.RadesBuilder")
+@SupportedAnnotationTypes({"com.github.funthomas424242.rades.annotations.RadesBuilder"
+        , "com.github.funthomas424242.rades.annotations.RadesAddBuilder"
+        , "com.github.funthomas424242.rades.annotations.AddBuilder"})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @AutoService(Processor.class)
 public class RadesBuilderProcessor extends AbstractProcessor {
+
+    protected final Logger logger = LoggerFactory.getLogger(RadesBuilderProcessor.class);
+
 
     protected JavaModelService javaModelService = new JavaModelServiceProvider();
 
@@ -54,46 +66,62 @@ public class RadesBuilderProcessor extends AbstractProcessor {
     public boolean process(final Set<? extends TypeElement> annotations, final RoundEnvironment roundEnv) {
 //        final Types types = this.processingEnvironment.getTypeUtils();
 
-        for (TypeElement annotation : annotations) {
+        final Stack<TypeElement> allAnnotations = new Stack<>();
+        annotations.stream().collect(Collectors.toList()).forEach(annotation -> {
+            allAnnotations.push(annotation);
+        });
+
+        final Set<Element> processedAnnotations = new HashSet<>();
+        final Set<Element> annotatedClasses = new HashSet<>();
+        while (!allAnnotations.empty()) {
+            final TypeElement annotation = allAnnotations.pop();
+            processedAnnotations.add(annotation);
+
             final Set<? extends Element> annotatedElements = roundEnv.getElementsAnnotatedWith(annotation);
             for (final Element annotatedElement : annotatedElements) {
-                // TODO compute ANNOTATION_TYPE additional to CLASS
-                if (!annotatedElement.getKind().isClass()) {
+                if (annotatedElement.getKind() == ElementKind.ANNOTATION_TYPE) {
+                    final TypeElement typeElement = (TypeElement) annotatedElement;
+                    if (!processedAnnotations.contains(typeElement)) {
+                        logger.debug("###Annotation: " + typeElement);
+                        // als Annotation aufnehmen falls gerade nicht im Stack (Minioptimierung)
+                        allAnnotations.push(typeElement);
+                    }
                     continue;
                 }
-                final TypeElement typeElement = (TypeElement) annotatedElement;
-                final Map<Name, TypeMirror> mapName2Type = new HashMap<>();
-                final List<? extends Element> classMembers = annotatedElement.getEnclosedElements();
-                for (final Element classMember : classMembers) {
-                    if (classMember.getKind().isField()) {
-                        final Set<Modifier> fieldModifiers = classMember.getModifiers();
-                        if (fieldModifiers.contains(Modifier.PUBLIC) || fieldModifiers.contains(Modifier.PROTECTED)) {
-                            final Name fieldName = classMember.getSimpleName();
-                            final TypeMirror fieldTypeMirror = classMember.asType();
-                            mapName2Type.put(fieldName, fieldTypeMirror);
-                        }
-                    }
+                if (annotatedElement.getKind().isClass()) {
+                    logger.debug("###Class: " + annotatedElement);
+                    annotatedClasses.add(annotatedElement);
                 }
-
-                writeBuilderFile(typeElement, mapName2Type);
             }
         }
+
+        annotatedClasses.forEach(element -> {
+            createBuilderSrcFile(element);
+        });
+
         return true;
     }
 
-    protected String getFullQualifiedClassName(final TypeMirror typeMirror) {
-        final String typeName;
-        if (typeMirror instanceof DeclaredType) {
-            final DeclaredType type = (DeclaredType) typeMirror;
-            typeName = type.asElement().toString();
-        } else {
-            typeName = typeMirror.toString();
+    private void createBuilderSrcFile(final Element annotatedElement) {
+        logger.debug("###WRITE BUILDER for: " + annotatedElement);
+        final TypeElement typeElement = (TypeElement) annotatedElement;
+        final Map<Name, TypeMirror> mapName2Type = new HashMap<>();
+        final List<? extends Element> classMembers = annotatedElement.getEnclosedElements();
+        for (final Element classMember : classMembers) {
+            if (classMember.getKind().isField()) {
+                final Set<Modifier> fieldModifiers = classMember.getModifiers();
+                if (!fieldModifiers.contains(Modifier.PRIVATE)) {
+                    final Name fieldName = classMember.getSimpleName();
+                    final TypeMirror fieldTypeMirror = classMember.asType();
+                    mapName2Type.put(fieldName, fieldTypeMirror);
+                }
+            }
         }
-        return typeName;
+
+        writeBuilderFile(typeElement, mapName2Type);
     }
 
-
-    private void writeBuilderFile(final TypeElement typeElement, Map<Name, TypeMirror> mapFieldName2Type) {
+    protected void writeBuilderFile(final TypeElement typeElement, Map<Name, TypeMirror> mapFieldName2Type) {
 
         final String className = typeElement.getQualifiedName().toString();
         final String simpleClassName = typeElement.getSimpleName().toString();
@@ -107,8 +135,6 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         try (final JavaSrcFileCreator javaSrcFileCreator = javaModelService.getJavaSrcFileCreator(filer, builderClassName)) {
 
             javaSrcFileCreator.init();
-
-            javaSrcFileCreator.getNowAsISOString();
 
             if (packageName != null) {
                 javaSrcFileCreator.writePackage(packageName);
@@ -128,17 +154,61 @@ public class RadesBuilderProcessor extends AbstractProcessor {
             mapFieldName2Type.entrySet().forEach(fields -> {
                 final String fieldName = fields.getKey().toString();
                 final String setterName = "with" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-                final String argumentType = getFullQualifiedClassName(fields.getValue());
+                final String argumentType = getFullQualifiedTypeSignature(fields.getValue());
 
                 javaSrcFileCreator.writeSetterMethod(newInstanceName, builderSimpleClassName, fieldName, setterName, argumentType);
             });
 
             javaSrcFileCreator.writeClassFinal();
         } catch (IOException e) {
-            System.out.println(e.getLocalizedMessage());
+            logger.error(e.getLocalizedMessage());
         } catch (Exception e) {
-            System.out.println(e.getLocalizedMessage());
+            logger.error(e.getLocalizedMessage());
         }
+    }
+
+
+    protected String getFullQualifiedClassName(final TypeMirror typeMirror) {
+        final String typeName;
+        if (typeMirror instanceof DeclaredType) {
+            final DeclaredType type = (DeclaredType) typeMirror;
+            typeName = type.asElement().toString();
+        } else {
+            typeName = typeMirror.toString();
+        }
+        return typeName;
+    }
+
+    /**
+     * Ermittelt die vollständige Typ Signatur - rekursiv!!!
+     *
+     * @param type TypeMirror des zu bestimmenden Datentypen
+     * @return String Signatur des zu bestimmenden Datentypen
+     */
+    protected String getFullQualifiedTypeSignature(final TypeMirror type) {
+
+        final StringBuffer typeSignature = new StringBuffer();
+
+        if (type instanceof DeclaredType) {
+            final DeclaredType declaredType = (DeclaredType) type;
+            typeSignature.append(getFullQualifiedClassName(type));
+
+            final List<? extends TypeMirror> typeArguments = declaredType.getTypeArguments();
+            if (!typeArguments.isEmpty()) {
+                typeSignature.append("<");
+                for (final ListIterator<? extends TypeMirror> it = typeArguments.listIterator(); it.hasNext(); ) {
+                    typeSignature.append(getFullQualifiedTypeSignature((TypeMirror) it.next()));
+                    if (it.hasNext()) {
+                        typeSignature.append(",");
+                    }
+                }
+                typeSignature.append(">");
+            }
+        } else {
+            typeSignature.append(getFullQualifiedClassName(type));
+        }
+
+        return typeSignature.toString();
     }
 
 
