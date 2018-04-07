@@ -8,13 +8,12 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 ## [Unreleased]
 ### Added
 - https://github.com/FunThomas424242/rades-annotations/issues/15[issue #15] Datumserzeugung im @Generated bereitgestellt
-- https://github.com/FunThomas424242/rades-annotations/issues/31[issue #31] Package scoped Attribute berücksichtigt.
 - https://github.com/FunThomas424242/rades-annotations/issues/33[issue #33] Projektdokumentation erstellt
-- https://github.com/FunThomas424242/rades-annotations/issues/34[issue #34] @RadesBuilder ersetzt durch @AddBuilder
 und @RadesAddBuilder.
 
 ### Changed
-- n/a
+- https://github.com/FunThomas424242/rades-annotations/issues/31[issue #31] Package scoped Attribute berücksichtigt.
+- https://github.com/FunThomas424242/rades-annotations/issues/34[issue #34] @RadesBuilder ersetzt durch @AddBuilder
 
 ### Removed
 - n/a
