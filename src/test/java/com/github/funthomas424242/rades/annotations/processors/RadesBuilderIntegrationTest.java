@@ -5,7 +5,7 @@ import com.github.funthomas424242.domain.AbteilungBuilder;
 import com.github.funthomas424242.domain.Familie;
 import com.github.funthomas424242.domain.FamilieBuilder;
 import com.github.funthomas424242.domain.Firma;
-import com.github.funthomas424242.domain.FirmaBuilder;
+import com.github.funthomas424242.domain.FirmaAGErbauer;
 import com.github.funthomas424242.domain.Person;
 import com.github.funthomas424242.domain.PersonBuilder;
 import com.google.common.collect.Sets;
@@ -37,7 +37,7 @@ public class RadesBuilderIntegrationTest {
     @DisplayName("Alle Felder der Firma gültig befüllen.")
     @Tags({@Tag("integration"), @Tag("builder")})
     public void testFirmaAlleFelderBefuellt() {
-        final Firma firma = new FirmaBuilder()
+        final Firma firma = new FirmaAGErbauer()
                 .withName("Musterfirma")
                 .withBetriebeNr("AG-8788-S")
                 .build();

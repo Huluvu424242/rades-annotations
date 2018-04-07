@@ -20,5 +20,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.SOURCE)
 public @interface RadesAddBuilder {
 
+    String simpleBuilderClassName() default "";
 
 }

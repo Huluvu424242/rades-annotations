@@ -1,5 +1,7 @@
 package com.github.funthomas424242.rades.annotations.processors;
 
+import com.github.funthomas424242.rades.annotations.AddBuilder;
+import com.github.funthomas424242.rades.annotations.RadesAddBuilder;
 import com.github.funthomas424242.rades.annotations.lang.java.JavaModelHelper;
 import com.github.funthomas424242.rades.annotations.lang.java.JavaModelService;
 import com.github.funthomas424242.rades.annotations.lang.java.JavaModelServiceProvider;
@@ -123,13 +125,34 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
     protected void writeBuilderFile(final TypeElement typeElement, Map<Name, TypeMirror> mapFieldName2Type) {
 
+        String specifiedBuilderClassName=null;
+        final RadesAddBuilder radesAddBuilder = typeElement.getAnnotation(RadesAddBuilder.class);
+        if(specifiedBuilderClassName==null && radesAddBuilder != null){
+            final String tmp = radesAddBuilder.simpleBuilderClassName().trim();
+            if(tmp.length()>0) {
+                specifiedBuilderClassName = tmp;
+            }
+            System.out.println("###1|SimpleBuilderClassName: " + specifiedBuilderClassName);
+        }
+        final AddBuilder addBuilder = typeElement.getAnnotation(AddBuilder.class);
+        if(specifiedBuilderClassName==null && addBuilder != null){
+            final String tmp=addBuilder.simpleBuilderClassName().trim();
+            if(tmp.length()>0) {
+                specifiedBuilderClassName = tmp;
+            }
+            System.out.println("###2|SimpleBuilderClassName: " + specifiedBuilderClassName);
+        }
+
         final String className = typeElement.getQualifiedName().toString();
         final String simpleClassName = typeElement.getSimpleName().toString();
         final String packageName = JavaModelHelper.computePackageName(className);
 
         final String newInstanceName = simpleClassName.substring(0, 1).toLowerCase() + simpleClassName.substring(1);
-        final String builderClassName = className + "Builder";
-        final String builderSimpleClassName = simpleClassName + "Builder";
+        final String builderClassName = (specifiedBuilderClassName!=null) ? packageName+"."+specifiedBuilderClassName :className + "Builder";
+        final String builderSimpleClassName =  (specifiedBuilderClassName!=null) ? specifiedBuilderClassName : simpleClassName + "Builder";
+        System.out.println("###specifiedBuilderClassName: " + specifiedBuilderClassName);
+        System.out.println("###builderClassName: " + builderClassName);
+        System.out.println("###builderSimpleClassName: " + builderSimpleClassName);
 
         final Filer filer = processingEnv.getFiler();
         try (final JavaSrcFileCreator javaSrcFileCreator = javaModelService.getJavaSrcFileCreator(filer, builderClassName)) {
