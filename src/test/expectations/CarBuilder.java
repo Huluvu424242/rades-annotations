@@ -40,13 +40,13 @@ public class CarBuilder {
         return value;
     }
 
-    public CarBuilder withMotor( final java.lang.Object motor ) {
-        this.auto.motor = motor;
+    public CarBuilder withTyp( final java.lang.String typ ) {
+        this.auto.typ = typ;
         return this;
     }
 
-    public CarBuilder withTyp( final java.lang.String typ ) {
-        this.auto.typ = typ;
+    public CarBuilder withMotor( final java.lang.Object motor ) {
+        this.auto.motor = motor;
         return this;
     }
 
