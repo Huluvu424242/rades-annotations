@@ -145,7 +145,7 @@
                     <target>${maven.compiler.target}</target>
                     <encoding>UTF-8</encoding>
                     <!-- Disable annotation processing -->
-                    <compilerArgument>-Xlint:unchecked</compilerArgument>
+                    <compilerArgument>-Xlint:all</compilerArgument>
                 </configuration>
             </plugin>
             <plugin>
