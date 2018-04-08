@@ -198,19 +198,19 @@ public class RadesBuilderProcessor extends AbstractProcessor {
             if (tmp.length() > 0) {
                 return tmp;
             }
-            System.out.println("###1|SimpleBuilderClassName: " + specifiedBuilderClassName);
+            logger.debug("###1|SimpleBuilderClassName: " + specifiedBuilderClassName);
         }
         return specifiedBuilderClassName;
     }
 
     protected String getAddBuilderSimpleClassName(final TypeElement typeElement, final String specifiedBuilderClassName) {
-        final AddBuilder radesAddBuilder = typeElement.getAnnotation(AddBuilder.class);
-        if (specifiedBuilderClassName == null && radesAddBuilder != null) {
-            final String tmp = radesAddBuilder.simpleBuilderClassName().trim();
+        final AddBuilder addBuilder = typeElement.getAnnotation(AddBuilder.class);
+        if (specifiedBuilderClassName == null && addBuilder != null) {
+            final String tmp = addBuilder.simpleBuilderClassName().trim();
             if (tmp.length() > 0) {
                 return tmp;
             }
-            System.out.println("###2|SimpleBuilderClassName: " + specifiedBuilderClassName);
+            logger.debug("###2|SimpleBuilderClassName: " + specifiedBuilderClassName);
         }
         return specifiedBuilderClassName;
     }

@@ -2,6 +2,8 @@ package com.github.funthomas424242.rades.annotations.processors;
 
 import com.github.funthomas424242.domain.Abteilung;
 import com.github.funthomas424242.domain.AbteilungBuilder;
+import com.github.funthomas424242.domain.Auto;
+import com.github.funthomas424242.domain.CarBuilder;
 import com.github.funthomas424242.domain.Familie;
 import com.github.funthomas424242.domain.FamilieBuilder;
 import com.github.funthomas424242.domain.Firma;
@@ -32,6 +34,19 @@ public class RadesBuilderIntegrationTest {
         // needed for Travis CI wich has en
         Locale.setDefault(new Locale("de", "DE"));
     }
+
+    @Test
+    @DisplayName("Alle Felder der Auto gültig befüllen.")
+    @Tags({@Tag("integration"), @Tag("builder")})
+    public void testAutoAlleFelderBefuellt() {
+        final Auto firma = new CarBuilder()
+                .withHersteller("Opel")
+                .withMotor("Viertakt Motor")
+                .withTyp("Corsa")
+                .build();
+        assertNotNull(firma);
+    }
+
 
     @Test
     @DisplayName("Alle Felder der Firma gültig befüllen.")
