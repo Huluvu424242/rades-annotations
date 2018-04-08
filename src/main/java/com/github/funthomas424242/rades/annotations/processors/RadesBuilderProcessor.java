@@ -135,9 +135,9 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         final String newInstanceName = simpleClassName.substring(0, 1).toLowerCase() + simpleClassName.substring(1);
         final String builderClassName = getBuilderClassName(specifiedBuilderClassName, packageName, qualifiedClassName);
         final String builderSimpleClassName = getBuilderSimpleClassName(specifiedBuilderClassName, simpleClassName);
-        System.out.println("###specifiedBuilderClassName: " + specifiedBuilderClassName);
-        System.out.println("###builderClassName: " + builderClassName);
-        System.out.println("###builderSimpleClassName: " + builderSimpleClassName);
+        logger.debug("###specifiedBuilderClassName: " + specifiedBuilderClassName);
+        logger.debug("###builderClassName: " + builderClassName);
+        logger.debug("###builderSimpleClassName: " + builderSimpleClassName);
 
         final Filer filer = processingEnv.getFiler();
         try (final JavaSrcFileCreator javaSrcFileCreator = javaModelService.getJavaSrcFileCreator(filer, builderClassName)) {
