@@ -9,22 +9,22 @@ import javax.validation.Validator;
 
 @Generated(value="com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor"
         , date="2018-04-06T20:36:46.750"
-        , comments="com.github.funthomas424242.domain.Auto")
-public class CarBuilder {
+        , comments="com.github.funthomas424242.domain.Tier")
+public class TierBuilder {
 
-    private Auto auto;
+    private Tier tier;
 
-    public CarBuilder(){
-        this(new Auto());
+    public TierBuilder(){
+        this(new Tier());
     }
 
-    public CarBuilder( final Auto auto ){
-        this.auto = auto;
+    public TierBuilder( final Tier tier ){
+        this.tier = tier;
     }
 
-    public Auto build() {
+    public Tier build() {
         final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-        final java.util.Set<ConstraintViolation<Auto>> constraintViolations = validator.validate(this.auto);
+        final java.util.Set<ConstraintViolation<Tier>> constraintViolations = validator.validate(this.tier);
 
         if (constraintViolations.size() > 0) {
             java.util.Set<String> violationMessages = new java.util.HashSet<String>();
@@ -33,26 +33,11 @@ public class CarBuilder {
                 violationMessages.add(constraintViolation.getPropertyPath() + ": " + constraintViolation.getMessage());
             }
 
-            throw new ValidationException("Auto is not valid:\n" + StringUtils.join(violationMessages, "\n"));
+            throw new ValidationException("Tier is not valid:\n" + StringUtils.join(violationMessages, "\n"));
         }
-        final Auto value = this.auto;
-        this.auto = null;
+        final Tier value = this.tier;
+        this.tier = null;
         return value;
-    }
-
-    public CarBuilder withTyp( final java.lang.String typ ) {
-        this.auto.typ = typ;
-        return this;
-    }
-
-    public CarBuilder withMotor( final java.lang.String motor ) {
-        this.auto.motor = motor;
-        return this;
-    }
-
-    public CarBuilder withHersteller( final java.lang.String hersteller ) {
-        this.auto.hersteller = hersteller;
-        return this;
     }
 
 }

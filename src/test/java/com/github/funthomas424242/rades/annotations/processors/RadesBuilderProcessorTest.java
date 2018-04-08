@@ -76,6 +76,8 @@ public class RadesBuilderProcessorTest {
     protected static URL urlFirmaBuilderJava;
     protected static URL urlAutoJava;
     protected static URL urlAutoBuilderJava;
+    protected static URL urlTierJava;
+    protected static URL urlTierBuilderJava;
     protected static URL urlMetaAnnotationJava;
     protected static URL urlNonePackageClassJava;
     protected static URL urlNoneWriteableBuilderJava;
@@ -134,6 +136,8 @@ public class RadesBuilderProcessorTest {
         urlFirmaBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "FirmaAGErbauer.java");
         urlAutoJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/domain/Auto.java");
         urlAutoBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "CarBuilder.java");
+        urlTierJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/domain/Tier.java");
+        urlTierBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "TierBuilder.java");
         urlMetaAnnotationJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/MetaAnnotation.java");
         urlNonePackageClassJava = getResourceURL(TEST_EXPECTATION_FOLDER, "NonePackageClass.java");
         urlNoneWriteableBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "NoneWriteableBuilder.java");
@@ -197,6 +201,23 @@ public class RadesBuilderProcessorTest {
                 .hasSourceEquivalentTo(JavaFileObjects.forResource(urlAutoBuilderJava)
                 );
     }
+
+    @Test
+    public void processTier() throws MalformedURLException {
+        final RadesBuilderProcessor processor = new RadesBuilderProcessor();
+        processor.setJavaModelService(new DefaultJavaModelProvider());
+
+        final Compilation compilation = javac()
+                .withProcessors(processor)
+                .compile(JavaFileObjects.forResource(urlTierJava));
+        assertThat(compilation).succeeded();
+        assertThat(compilation)
+                .generatedSourceFile("com.github.funthomas424242.domain.TierBuilder")
+                .hasSourceEquivalentTo(JavaFileObjects.forResource(urlTierBuilderJava)
+                );
+    }
+
+
 
     @Test
     public void shouldCompilePersonJavaWithoutErrors() {
