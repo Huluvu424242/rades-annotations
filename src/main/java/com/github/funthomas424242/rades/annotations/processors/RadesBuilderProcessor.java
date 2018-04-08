@@ -1,5 +1,7 @@
 package com.github.funthomas424242.rades.annotations.processors;
 
+import com.github.funthomas424242.rades.annotations.AddBuilder;
+import com.github.funthomas424242.rades.annotations.RadesAddBuilder;
 import com.github.funthomas424242.rades.annotations.lang.java.JavaModelHelper;
 import com.github.funthomas424242.rades.annotations.lang.java.JavaModelService;
 import com.github.funthomas424242.rades.annotations.lang.java.JavaModelServiceProvider;
@@ -123,13 +125,19 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
     protected void writeBuilderFile(final TypeElement typeElement, Map<Name, TypeMirror> mapFieldName2Type) {
 
-        final String className = typeElement.getQualifiedName().toString();
+        String specifiedBuilderClassName = null;
+        specifiedBuilderClassName = getRadesAddBuilderSimpleClassName(typeElement, specifiedBuilderClassName);
+        specifiedBuilderClassName = getAddBuilderSimpleClassName(typeElement, specifiedBuilderClassName);
+        final String qualifiedClassName = typeElement.getQualifiedName().toString();
         final String simpleClassName = typeElement.getSimpleName().toString();
-        final String packageName = JavaModelHelper.computePackageName(className);
+        final String packageName = JavaModelHelper.computePackageName(qualifiedClassName);
 
         final String newInstanceName = simpleClassName.substring(0, 1).toLowerCase() + simpleClassName.substring(1);
-        final String builderClassName = className + "Builder";
-        final String builderSimpleClassName = simpleClassName + "Builder";
+        final String builderClassName = getBuilderClassName(specifiedBuilderClassName, packageName, qualifiedClassName);
+        final String builderSimpleClassName = getBuilderSimpleClassName(specifiedBuilderClassName, simpleClassName);
+        logger.debug("###specifiedBuilderClassName: " + specifiedBuilderClassName);
+        logger.debug("###builderClassName: " + builderClassName);
+        logger.debug("###builderSimpleClassName: " + builderSimpleClassName);
 
         final Filer filer = processingEnv.getFiler();
         try (final JavaSrcFileCreator javaSrcFileCreator = javaModelService.getJavaSrcFileCreator(filer, builderClassName)) {
@@ -141,7 +149,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
             }
             javaSrcFileCreator.writeImports();
 
-            javaSrcFileCreator.writeClassAnnotations(className);
+            javaSrcFileCreator.writeClassAnnotations(qualifiedClassName);
             javaSrcFileCreator.writeClassDeclaration(builderSimpleClassName);
 
             javaSrcFileCreator.writeFieldDefinition(simpleClassName, newInstanceName);
@@ -167,6 +175,45 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         }
     }
 
+    protected String getBuilderSimpleClassName(final String specifiedBuilderClassName, final String simpleClassName) {
+        if (specifiedBuilderClassName != null) {
+            return specifiedBuilderClassName;
+        } else {
+            return simpleClassName + "Builder";
+        }
+    }
+
+    protected String getBuilderClassName(final String specifiedBuilderClassName, final String packageName, final String className) {
+        if(specifiedBuilderClassName!=null){
+            return packageName + "." + specifiedBuilderClassName;
+        }else{
+            return className + "Builder";
+        }
+    }
+
+    protected String getRadesAddBuilderSimpleClassName(final TypeElement typeElement, final String specifiedBuilderClassName) {
+        final RadesAddBuilder radesAddBuilder = typeElement.getAnnotation(RadesAddBuilder.class);
+        if (specifiedBuilderClassName == null && radesAddBuilder != null) {
+            final String tmp = radesAddBuilder.simpleBuilderClassName().trim();
+            if (tmp.length() > 0) {
+                return tmp;
+            }
+            logger.debug("###1|SimpleBuilderClassName: " + specifiedBuilderClassName);
+        }
+        return specifiedBuilderClassName;
+    }
+
+    protected String getAddBuilderSimpleClassName(final TypeElement typeElement, final String specifiedBuilderClassName) {
+        final AddBuilder addBuilder = typeElement.getAnnotation(AddBuilder.class);
+        if (specifiedBuilderClassName == null && addBuilder != null) {
+            final String tmp = addBuilder.simpleBuilderClassName().trim();
+            if (tmp.length() > 0) {
+                return tmp;
+            }
+            logger.debug("###2|SimpleBuilderClassName: " + specifiedBuilderClassName);
+        }
+        return specifiedBuilderClassName;
+    }
 
     protected String getFullQualifiedClassName(final TypeMirror typeMirror) {
         final String typeName;

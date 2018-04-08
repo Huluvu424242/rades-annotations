@@ -4,7 +4,7 @@ import com.github.funthomas424242.rades.annotations.AddBuilder;
 
 import java.util.Date;
 
-@AddBuilder
+@AddBuilder(simpleBuilderClassName = "FirmaAGErbauer")
 public class Firma {
 
     private int id;
