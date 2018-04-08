@@ -72,6 +72,8 @@ public class RadesBuilderProcessorTest {
 
     protected static URL urlPersonJava;
     protected static URL urlPersonBuilderJava;
+    protected static URL urlFirmaJava;
+    protected static URL urlFirmaBuilderJava;
     protected static URL urlMetaAnnotationJava;
     protected static URL urlNonePackageClassJava;
     protected static URL urlNoneWriteableBuilderJava;
@@ -125,15 +127,17 @@ public class RadesBuilderProcessorTest {
     @BeforeClass
     public static void setUp() throws MalformedURLException {
         urlPersonJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/domain/Person.java");
-        urlMetaAnnotationJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/MetaAnnotation.java");
         urlPersonBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "PersonBuilder.java");
+        urlFirmaJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/domain/Firma.java");
+        urlFirmaBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "FirmaAGErbauer.java");
+        urlMetaAnnotationJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/MetaAnnotation.java");
         urlNonePackageClassJava = getResourceURL(TEST_EXPECTATION_FOLDER, "NonePackageClass.java");
         urlNoneWriteableBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "NoneWriteableBuilder.java");
     }
 
 
     @Test
-    public void processTest() throws MalformedURLException {
+    public void processPerson() throws MalformedURLException {
         final RadesBuilderProcessor processor = new RadesBuilderProcessor();
         processor.setJavaModelService(new DefaultJavaModelProvider());
 
@@ -159,6 +163,22 @@ public class RadesBuilderProcessorTest {
 
 
     }
+
+    @Test
+    public void processFirma() throws MalformedURLException {
+        final RadesBuilderProcessor processor = new RadesBuilderProcessor();
+        processor.setJavaModelService(new DefaultJavaModelProvider());
+
+        final Compilation compilation = javac()
+                .withProcessors(processor)
+                .compile(JavaFileObjects.forResource(urlFirmaJava));
+        assertThat(compilation).succeeded();
+        assertThat(compilation)
+                .generatedSourceFile("com.github.funthomas424242.domain.FirmaAGErbauer")
+                .hasSourceEquivalentTo(JavaFileObjects.forResource(urlFirmaBuilderJava)
+                );
+    }
+
 
     @Test
     public void shouldCompilePersonJavaWithoutErrors() {
