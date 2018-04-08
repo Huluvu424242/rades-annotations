@@ -5,9 +5,9 @@ import com.github.funthomas424242.rades.annotations.RadesAddBuilder;
 @RadesAddBuilder(simpleBuilderClassName = "CarBuilder")
 public class Auto {
 
-    Object motor;
-
     protected String typ;
+
+    Object motor;
 
     protected String hersteller;
 
