@@ -7,7 +7,7 @@ public class Auto {
 
     protected String typ;
 
-    String motor;
+    protected String motor;
 
     protected String hersteller;
 
