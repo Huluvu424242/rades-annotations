@@ -4,8 +4,17 @@ Alle wichtigen Änderungen am Projekt sind in dieser Datei dokumentiert.
 Das Format basiert auf http://keepachangelog.com/de/[Keep a Changelog].
 Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 
-
 ## [Unreleased]
+### Added
+- n/a
+
+### Changed
+- n/a
+
+### Removed
+- n/a
+
+## [1.1.0] fertiggestellt 2018-04-09
 ### Added
 - https://github.com/FunThomas424242/rades-annotations/issues/11[issue #11] Attribute simpleClassName wird unterstützt
 - https://github.com/FunThomas424242/rades-annotations/issues/15[issue #15] Datumserzeugung im @Generated bereitgestellt
