@@ -7,7 +7,7 @@ import javax.validation.Validation;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
 
-@Generated(value="com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor"
+@Generated(value="RadesBuilderProcessor"
         , date="2018-04-06T20:36:46.750"
         , comments="com.github.funthomas424242.domain.Firma")
 public class FirmaAGErbauer {
@@ -40,6 +40,11 @@ public class FirmaAGErbauer {
         return value;
     }
 
+    public FirmaAGErbauer withGruendungstag( final java.util.Date gruendungstag ) {
+        this.firma.gruendungstag = gruendungstag;
+        return this;
+    }
+
     public FirmaAGErbauer withBetriebeNr( final java.lang.String betriebeNr ) {
         this.firma.betriebeNr = betriebeNr;
         return this;
@@ -47,11 +52,6 @@ public class FirmaAGErbauer {
 
     public FirmaAGErbauer withName( final java.lang.String name ) {
         this.firma.name = name;
-        return this;
-    }
-
-    public FirmaAGErbauer withGruendungstag( final java.util.Date gruendungstag ) {
-        this.firma.gruendungstag = gruendungstag;
         return this;
     }
 

@@ -1,7 +1,7 @@
-package com.github.funthomas424242.rades.annotations.processors;
+package com.github.funthomas424242.rades.annotations.builder.processors;
 
-import com.github.funthomas424242.rades.annotations.lang.java.JavaModelServiceProvider;
-import com.github.funthomas424242.rades.annotations.lang.java.JavaSrcFileCreator;
+import com.github.funthomas424242.rades.annotations.builder.model.java.JavaModelServiceProvider;
+import com.github.funthomas424242.rades.annotations.builder.model.java.JavaSrcFileCreator;
 import com.google.common.truth.ExpectFailure;
 import com.google.testing.compile.Compilation;
 import com.google.testing.compile.JavaFileObjects;
@@ -16,7 +16,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static com.github.funthomas424242.rades.annotations.processors.AssertionHelper.assertThat;
+import static com.github.funthomas424242.rades.annotations.builder.processors.AssertionHelper.assertThat;
 import static com.google.common.truth.Truth.assertAbout;
 import static com.google.testing.compile.Compiler.javac;
 import static com.google.testing.compile.JavaSourceSubjectFactory.javaSource;
@@ -32,7 +32,7 @@ public class RadesBuilderProcessorTest {
             "import javax.validation.ValidationException;\n" +
             "import javax.validation.Validator;\n" +
             "\n" +
-            "@Generated(value=\"com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor\"\n" +
+            "@Generated(value=\"RadesBuilderProcessor\"\n" +
             ", comments=\"com.github.funthomas424242.domain.NoneWriteable\")\n" +
             "public class NoneWriteableBuilder {\n" +
             "\n" +
@@ -138,7 +138,7 @@ public class RadesBuilderProcessorTest {
         urlAutoBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "CarBuilder.java");
         urlTierJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/domain/Tier.java");
         urlTierBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "TierBuilder.java");
-        urlMetaAnnotationJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/MetaAnnotation.java");
+        urlMetaAnnotationJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/rades/annotations/builder/MetaAnnotation.java");
         urlNonePackageClassJava = getResourceURL(TEST_EXPECTATION_FOLDER, "NonePackageClass.java");
         urlNoneWriteableBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "NoneWriteableBuilder.java");
     }
@@ -218,7 +218,6 @@ public class RadesBuilderProcessorTest {
     }
 
 
-
     @Test
     public void shouldCompilePersonJavaWithoutErrors() {
         final RadesBuilderProcessor processor = new RadesBuilderProcessor();
@@ -251,7 +250,7 @@ public class RadesBuilderProcessorTest {
 
         assertAbout(javaSource())
                 .that(JavaFileObjects.forSourceString("NonePackageClass", "\n" +
-                        "@com.github.funthomas424242.rades.annotations.RadesBuilder\n" +
+                        "@com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder\n" +
                         "public class NonePackageClass {\n" +
                         "}\n"))
                 .processedWith(processor)
@@ -270,7 +269,7 @@ public class RadesBuilderProcessorTest {
                 .about(javaSource())
                 .that(JavaFileObjects.forSourceString("com.github.funthomas424242.domain.NoneWriteable", "\n" +
                         "package com.github.funthomas424242.domain;\n" +
-                        "@com.github.funthomas424242.rades.annotations.RadesBuilder\n" +
+                        "@com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder\n" +
                         "public class NoneWriteable {\n" +
                         "}\n"))
                 .processedWith(processor)

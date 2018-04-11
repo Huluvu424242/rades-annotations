@@ -7,7 +7,7 @@ import javax.validation.Validation;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
 
-@Generated(value="com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor"
+@Generated(value="RadesBuilderProcessor"
         , date="2018-04-06T20:36:46.750"
         , comments="com.github.funthomas424242.domain.Auto")
 public class CarBuilder {
@@ -40,6 +40,11 @@ public class CarBuilder {
         return value;
     }
 
+    public CarBuilder withHersteller( final java.lang.String hersteller ) {
+        this.auto.hersteller = hersteller;
+        return this;
+    }
+
     public CarBuilder withTyp( final java.lang.String typ ) {
         this.auto.typ = typ;
         return this;
@@ -47,11 +52,6 @@ public class CarBuilder {
 
     public CarBuilder withMotor( final java.lang.String motor ) {
         this.auto.motor = motor;
-        return this;
-    }
-
-    public CarBuilder withHersteller( final java.lang.String hersteller ) {
-        this.auto.hersteller = hersteller;
         return this;
     }
 

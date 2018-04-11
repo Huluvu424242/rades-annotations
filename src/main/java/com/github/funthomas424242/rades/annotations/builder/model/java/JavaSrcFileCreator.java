@@ -1,4 +1,4 @@
-package com.github.funthomas424242.rades.annotations.lang.java;
+package com.github.funthomas424242.rades.annotations.builder.model.java;
 
 import javax.annotation.processing.Filer;
 import java.io.IOException;
@@ -96,7 +96,7 @@ public class JavaSrcFileCreator implements AutoCloseable {
     }
 
     public void writeClassAnnotations(String className) {
-        writer.print("@Generated(value=\"com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor\"\n" +
+        writer.print("@Generated(value=\"RadesBuilderProcessor\"\n" +
                 ", date=\"" + javaModelService.getNowAsISOString() + "\"\n" +
                 ", comments=\"" + className + "\")\n"
         );

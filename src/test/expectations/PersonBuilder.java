@@ -7,7 +7,7 @@ import javax.validation.Validation;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
 
-@Generated(value="com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor"
+@Generated(value="RadesBuilderProcessor"
         , date="2018-04-06T20:36:46.750"
         , comments="com.github.funthomas424242.domain.Person")
 public class PersonBuilder {
@@ -40,16 +40,6 @@ public class PersonBuilder {
         return value;
     }
 
-    public PersonBuilder withGroesse( final int groesse ) {
-        this.person.groesse = groesse;
-        return this;
-    }
-
-    public PersonBuilder withVorname( final java.lang.String vorname ) {
-        this.person.vorname = vorname;
-        return this;
-    }
-
     public PersonBuilder withFreunde( final java.util.Map<java.lang.String,com.github.funthomas424242.domain.Person> freunde ) {
         this.person.freunde = freunde;
         return this;
@@ -62,6 +52,16 @@ public class PersonBuilder {
 
     public PersonBuilder withBirthday( final java.time.LocalDate birthday ) {
         this.person.birthday = birthday;
+        return this;
+    }
+
+    public PersonBuilder withGroesse( final int groesse ) {
+        this.person.groesse = groesse;
+        return this;
+    }
+
+    public PersonBuilder withVorname( final java.lang.String vorname ) {
+        this.person.vorname = vorname;
         return this;
     }
 

@@ -7,7 +7,7 @@ import javax.validation.Validation;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
 
-@Generated(value="com.github.funthomas424242.rades.annotations.processors.RadesBuilderProcessor"
+@Generated(value="RadesBuilderProcessor"
         , date="2018-04-06T20:36:46.750"
         , comments="com.github.funthomas424242.domain.Tier")
 public class TierBuilder {

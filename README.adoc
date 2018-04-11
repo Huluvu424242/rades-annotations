@@ -12,6 +12,7 @@ Stellt im Rahmen von link:https://github.com/FunThomas424242/RADeS[Rades] Annota
 Die angebotenen Annotationen können zur Generierung folgender Pattern genutzt werden:
 
 * link:https://en.wikipedia.org/wiki/Builder_pattern[Builder Pattern]
+* link:https://sourcemaking.com/design_patterns/private_class_data[Accessor Pattern]
 
 Hier finden Sie link:https://funthomas424242.github.io/rades-annotations/index.html[die Projektdokumentation, das Nutzerhandbuch].
 

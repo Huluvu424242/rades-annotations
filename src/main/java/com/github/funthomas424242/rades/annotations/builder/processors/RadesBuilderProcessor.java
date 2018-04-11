@@ -1,11 +1,11 @@
-package com.github.funthomas424242.rades.annotations.processors;
+package com.github.funthomas424242.rades.annotations.builder.processors;
 
-import com.github.funthomas424242.rades.annotations.AddBuilder;
-import com.github.funthomas424242.rades.annotations.RadesAddBuilder;
+import com.github.funthomas424242.rades.annotations.builder.AddBuilder;
+import com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder;
+import com.github.funthomas424242.rades.annotations.builder.model.java.JavaSrcFileCreator;
 import com.github.funthomas424242.rades.annotations.lang.java.JavaModelHelper;
-import com.github.funthomas424242.rades.annotations.lang.java.JavaModelService;
-import com.github.funthomas424242.rades.annotations.lang.java.JavaModelServiceProvider;
-import com.github.funthomas424242.rades.annotations.lang.java.JavaSrcFileCreator;
+import com.github.funthomas424242.rades.annotations.builder.model.java.JavaModelService;
+import com.github.funthomas424242.rades.annotations.builder.model.java.JavaModelServiceProvider;
 import com.google.auto.service.AutoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,9 +35,9 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
-@SupportedAnnotationTypes({"com.github.funthomas424242.rades.annotations.RadesBuilder"
-        , "com.github.funthomas424242.rades.annotations.RadesAddBuilder"
-        , "com.github.funthomas424242.rades.annotations.AddBuilder"})
+@SupportedAnnotationTypes({"com.github.funthomas424242.rades.annotations.builder.RadesBuilder"
+        , "com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder"
+        , "com.github.funthomas424242.rades.annotations.builder.AddBuilder"})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @AutoService(Processor.class)
 public class RadesBuilderProcessor extends AbstractProcessor {

@@ -6,13 +6,13 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 
 ## [Unreleased]
 ### Added
-- n/a
+- https://github.com/FunThomas424242/rades-annotations/issues/43[issue #43] Compatibillity Tests erstellt
 
 ### Changed
-- n/a
+- https://github.com/FunThomas424242/rades-annotations/issues/42[issue #42] Packages umstrukturiert -> Annotationen
 
 ### Removed
-- n/a
+- https://github.com/FunThomas424242/rades-annotations/issues/44[issue #44] Support für @RadesBuilder entfernt
 
 ## [1.1.0] fertiggestellt 2018-04-09
 ### Added

@@ -1,10 +1,10 @@
 package com.github.funthomas424242.domain;
 
-import com.github.funthomas424242.rades.annotations.RadesBuilder;
+import com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder;
 
 import java.util.Date;
 
-@RadesBuilder
+@RadesAddBuilder
 public class Abteilung {
 
     private int id;

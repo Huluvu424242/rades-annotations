@@ -31,7 +31,7 @@ sondern es genügt die Integration des JCenters in Maven als Downloadquelle.
     <dependency>  <!--2-->
         <groupId>com.github.funthomas424242</groupId>
         <artifactId>rades-annotations</artifactId>
-        <version>1.1.0</version>
+        <version>2.0.0</version>
     </dependency>
 </dependencies>
 ----
@@ -45,7 +45,7 @@ sondern es genügt die Integration des JCenters in Maven als Downloadquelle.
 .Person.java
 [source,java]
 ----
-import com.github.funthomas424242.rades.annotations.RadesAddBuilder;
+import com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder;
 
 @RadesAddBuilder
 public class Person {

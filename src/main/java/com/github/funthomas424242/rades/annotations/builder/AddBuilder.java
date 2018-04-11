@@ -1,4 +1,4 @@
-package com.github.funthomas424242.rades.annotations;
+package com.github.funthomas424242.rades.annotations.builder;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
