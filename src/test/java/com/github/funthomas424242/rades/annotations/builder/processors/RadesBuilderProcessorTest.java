@@ -250,7 +250,7 @@ public class RadesBuilderProcessorTest {
 
         assertAbout(javaSource())
                 .that(JavaFileObjects.forSourceString("NonePackageClass", "\n" +
-                        "@com.github.funthomas424242.rades.annotations.builder.RadesBuilder\n" +
+                        "@com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder\n" +
                         "public class NonePackageClass {\n" +
                         "}\n"))
                 .processedWith(processor)
@@ -269,7 +269,7 @@ public class RadesBuilderProcessorTest {
                 .about(javaSource())
                 .that(JavaFileObjects.forSourceString("com.github.funthomas424242.domain.NoneWriteable", "\n" +
                         "package com.github.funthomas424242.domain;\n" +
-                        "@com.github.funthomas424242.rades.annotations.builder.RadesBuilder\n" +
+                        "@com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder\n" +
                         "public class NoneWriteable {\n" +
                         "}\n"))
                 .processedWith(processor)
