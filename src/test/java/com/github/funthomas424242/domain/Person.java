@@ -1,6 +1,6 @@
 package com.github.funthomas424242.domain;
 
-import com.github.funthomas424242.rades.annotations.RadesAddBuilder;
+import com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;

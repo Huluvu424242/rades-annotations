@@ -1,5 +1,7 @@
-package com.github.funthomas424242.rades.annotations.lang.java;
+package com.github.funthomas424242.rades.annotations.builder.model.java;
 
+import com.github.funthomas424242.rades.annotations.builder.model.java.JavaModelService;
+import com.github.funthomas424242.rades.annotations.builder.model.java.JavaSrcFileCreator;
 import com.google.auto.service.AutoService;
 
 import javax.annotation.processing.Filer;

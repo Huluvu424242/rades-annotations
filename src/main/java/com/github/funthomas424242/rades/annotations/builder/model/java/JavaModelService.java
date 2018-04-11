@@ -1,4 +1,6 @@
-package com.github.funthomas424242.rades.annotations.lang.java;
+package com.github.funthomas424242.rades.annotations.builder.model.java;
+
+import com.github.funthomas424242.rades.annotations.builder.model.java.JavaSrcFileCreator;
 
 import javax.annotation.processing.Filer;
 

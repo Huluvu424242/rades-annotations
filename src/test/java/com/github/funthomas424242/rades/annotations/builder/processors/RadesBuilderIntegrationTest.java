@@ -1,4 +1,4 @@
-package com.github.funthomas424242.rades.annotations.processors;
+package com.github.funthomas424242.rades.annotations.builder.processors;
 
 import com.github.funthomas424242.domain.Abteilung;
 import com.github.funthomas424242.domain.AbteilungBuilder;

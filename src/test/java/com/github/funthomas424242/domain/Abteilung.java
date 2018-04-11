@@ -1,6 +1,6 @@
 package com.github.funthomas424242.domain;
 
-import com.github.funthomas424242.rades.annotations.RadesBuilder;
+import com.github.funthomas424242.rades.annotations.builder.RadesBuilder;
 
 import java.util.Date;
 
