@@ -1,7 +1,7 @@
 package com.github.funthomas424242.rades.annotations.builder.processors;
 
-import com.github.funthomas424242.rades.annotations.builder.model.java.JavaSrcFileCreator;
 import com.github.funthomas424242.rades.annotations.builder.model.java.JavaModelServiceProvider;
+import com.github.funthomas424242.rades.annotations.builder.model.java.JavaSrcFileCreator;
 import com.google.common.truth.ExpectFailure;
 import com.google.testing.compile.Compilation;
 import com.google.testing.compile.JavaFileObjects;
@@ -138,7 +138,7 @@ public class RadesBuilderProcessorTest {
         urlAutoBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "CarBuilder.java");
         urlTierJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/domain/Tier.java");
         urlTierBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "TierBuilder.java");
-        urlMetaAnnotationJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/MetaAnnotation.java");
+        urlMetaAnnotationJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/rades/annotations/builder/MetaAnnotation.java");
         urlNonePackageClassJava = getResourceURL(TEST_EXPECTATION_FOLDER, "NonePackageClass.java");
         urlNoneWriteableBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "NoneWriteableBuilder.java");
     }
@@ -216,7 +216,6 @@ public class RadesBuilderProcessorTest {
                 .hasSourceEquivalentTo(JavaFileObjects.forResource(urlTierBuilderJava)
                 );
     }
-
 
 
     @Test
