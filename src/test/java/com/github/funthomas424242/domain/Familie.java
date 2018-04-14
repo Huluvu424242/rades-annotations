@@ -1,7 +1,7 @@
 package com.github.funthomas424242.domain;
 
-import com.github.funthomas424242.rades.annotations.builder.MetaMetaAnnotation;
+import com.github.funthomas424242.rades.annotations.builder.BuilderMetaMetaAnnotation;
 
-@MetaMetaAnnotation
+@BuilderMetaMetaAnnotation
 public class Familie {
 }
