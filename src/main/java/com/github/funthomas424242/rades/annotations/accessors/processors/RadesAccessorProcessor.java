@@ -1,11 +1,11 @@
-package com.github.funthomas424242.rades.annotations.builder.processors;
+package com.github.funthomas424242.rades.annotations.accessors.processors;
 
-import com.github.funthomas424242.rades.annotations.builder.AddBuilder;
-import com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder;
-import com.github.funthomas424242.rades.annotations.builder.model.java.BuilderSrcFileCreator;
+import com.github.funthomas424242.rades.annotations.accessors.AddAccessor;
+import com.github.funthomas424242.rades.annotations.accessors.RadesAddAccessor;
+import com.github.funthomas424242.rades.annotations.accessors.model.java.AccessorInjectionService;
+import com.github.funthomas424242.rades.annotations.accessors.model.java.AccessorInjectionServiceProvider;
+import com.github.funthomas424242.rades.annotations.accessors.model.java.AccessorSrcFileCreator;
 import com.github.funthomas424242.rades.annotations.lang.java.JavaModelHelper;
-import com.github.funthomas424242.rades.annotations.builder.model.java.BuilderInjectionService;
-import com.github.funthomas424242.rades.annotations.builder.model.java.BuilderInjectionServiceProvider;
 import com.google.auto.service.AutoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,17 +35,16 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
-@SupportedAnnotationTypes({"com.github.funthomas424242.rades.annotations.builder.RadesBuilder"
-        , "com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder"
-        , "com.github.funthomas424242.rades.annotations.builder.AddBuilder"})
+@SupportedAnnotationTypes({"com.github.funthomas424242.rades.annotations.accessors.RadesAddAccessor"
+        , "com.github.funthomas424242.rades.annotations.accessors.AddAccessor"})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @AutoService(Processor.class)
-public class RadesBuilderProcessor extends AbstractProcessor {
+public class RadesAccessorProcessor extends AbstractProcessor {
 
-    protected final Logger logger = LoggerFactory.getLogger(RadesBuilderProcessor.class);
+    protected final Logger logger = LoggerFactory.getLogger(RadesAccessorProcessor.class);
 
 
-    protected BuilderInjectionService javaModelService = new BuilderInjectionServiceProvider();
+    protected AccessorInjectionService javaModelService = new AccessorInjectionServiceProvider();
 
     protected ProcessingEnvironment processingEnvironment;
 
@@ -54,7 +53,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
      *
      * @param javaModelService mock to replace the default intern instance.
      */
-    protected void setJavaModelService(final BuilderInjectionService javaModelService) {
+    public void setJavaModelService(final AccessorInjectionService javaModelService) {
         this.javaModelService = javaModelService;
     }
 
@@ -98,14 +97,14 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         }
 
         annotatedClasses.forEach(element -> {
-            createBuilderSrcFile(element);
+            createAccessorSrcFile(element);
         });
 
         return true;
     }
 
-    private void createBuilderSrcFile(final Element annotatedElement) {
-        logger.debug("###WRITE BUILDER for: " + annotatedElement);
+    private void createAccessorSrcFile(final Element annotatedElement) {
+        logger.debug("###WRITE ACCESSOR for: " + annotatedElement);
         final TypeElement typeElement = (TypeElement) annotatedElement;
         final Map<Name, TypeMirror> mapName2Type = new HashMap<>();
         final List<? extends Element> classMembers = annotatedElement.getEnclosedElements();
@@ -120,27 +119,27 @@ public class RadesBuilderProcessor extends AbstractProcessor {
             }
         }
 
-        writeBuilderFile(typeElement, mapName2Type);
+        writeAccessorFile(typeElement, mapName2Type);
     }
 
-    protected void writeBuilderFile(final TypeElement typeElement, Map<Name, TypeMirror> mapFieldName2Type) {
+    protected void writeAccessorFile(final TypeElement typeElement, Map<Name, TypeMirror> mapFieldName2Type) {
 
-        String specifiedBuilderClassName = null;
-        specifiedBuilderClassName = getRadesAddBuilderSimpleClassName(typeElement, specifiedBuilderClassName);
-        specifiedBuilderClassName = getAddBuilderSimpleClassName(typeElement, specifiedBuilderClassName);
+        String specifiedAccessorClassName = null;
+        specifiedAccessorClassName = getRadesAddAccessorSimpleClassName(typeElement, specifiedAccessorClassName);
+        specifiedAccessorClassName = getAddAccessorSimpleClassName(typeElement, specifiedAccessorClassName);
         final String qualifiedClassName = typeElement.getQualifiedName().toString();
         final String simpleClassName = typeElement.getSimpleName().toString();
         final String packageName = JavaModelHelper.computePackageName(qualifiedClassName);
 
         final String newInstanceName = simpleClassName.substring(0, 1).toLowerCase() + simpleClassName.substring(1);
-        final String builderClassName = getBuilderClassName(specifiedBuilderClassName, packageName, qualifiedClassName);
-        final String builderSimpleClassName = getBuilderSimpleClassName(specifiedBuilderClassName, simpleClassName);
-        logger.debug("###specifiedBuilderClassName: " + specifiedBuilderClassName);
-        logger.debug("###builderClassName: " + builderClassName);
-        logger.debug("###builderSimpleClassName: " + builderSimpleClassName);
+        final String accessorClassName = getAccessorClassName(specifiedAccessorClassName, packageName, qualifiedClassName);
+        final String accessorSimpleClassName = getAccessorSimpleClassName(specifiedAccessorClassName, simpleClassName);
+        logger.debug("###specifiedAccessorClassName: " + specifiedAccessorClassName);
+        logger.debug("###accessorClassName: " + accessorClassName);
+        logger.debug("###accessorSimpleClassName: " + accessorSimpleClassName);
 
         final Filer filer = processingEnv.getFiler();
-        try (final BuilderSrcFileCreator javaSrcFileCreator = javaModelService.getJavaSrcFileCreator(filer, builderClassName)) {
+        try (final AccessorSrcFileCreator javaSrcFileCreator = javaModelService.getJavaSrcFileCreator(filer, accessorClassName)) {
 
             javaSrcFileCreator.init();
 
@@ -150,21 +149,20 @@ public class RadesBuilderProcessor extends AbstractProcessor {
             javaSrcFileCreator.writeImports();
 
             javaSrcFileCreator.writeClassAnnotations(qualifiedClassName);
-            javaSrcFileCreator.writeClassDeclaration(builderSimpleClassName);
+            javaSrcFileCreator.writeClassDeclaration(accessorSimpleClassName);
 
             javaSrcFileCreator.writeFieldDefinition(simpleClassName, newInstanceName);
 
-            javaSrcFileCreator.writeConstructors(simpleClassName, newInstanceName, builderSimpleClassName);
+            javaSrcFileCreator.writeConstructors(simpleClassName, newInstanceName, accessorSimpleClassName);
 
-
-            javaSrcFileCreator.writeBuildMethod(simpleClassName, newInstanceName);
+            javaSrcFileCreator.writeGetOriginalObject(simpleClassName,newInstanceName);
 
             mapFieldName2Type.entrySet().forEach(fields -> {
                 final String fieldName = fields.getKey().toString();
-                final String setterName = "with" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-                final String argumentType = getFullQualifiedTypeSignature(fields.getValue());
+                final String getterName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+                final String returnType = getFullQualifiedTypeSignature(fields.getValue());
 
-                javaSrcFileCreator.writeSetterMethod(newInstanceName, builderSimpleClassName, fieldName, setterName, argumentType);
+                javaSrcFileCreator.writeGetterMethod(newInstanceName, fieldName, getterName, returnType);
             });
 
             javaSrcFileCreator.writeClassFinal();
@@ -175,44 +173,44 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         }
     }
 
-    protected String getBuilderSimpleClassName(final String specifiedBuilderClassName, final String simpleClassName) {
-        if (specifiedBuilderClassName != null) {
-            return specifiedBuilderClassName;
+    protected String getAccessorSimpleClassName(final String specifiedAccessorClassName, final String simpleClassName) {
+        if (specifiedAccessorClassName != null) {
+            return specifiedAccessorClassName;
         } else {
-            return simpleClassName + "Builder";
+            return simpleClassName + "Accessor";
         }
     }
 
-    protected String getBuilderClassName(final String specifiedBuilderClassName, final String packageName, final String className) {
-        if(specifiedBuilderClassName!=null){
-            return packageName + "." + specifiedBuilderClassName;
-        }else{
-            return className + "Builder";
+    protected String getAccessorClassName(final String specifiedAccessorClassName, final String packageName, final String className) {
+        if (specifiedAccessorClassName != null) {
+            return packageName + "." + specifiedAccessorClassName;
+        } else {
+            return className + "Accessor";
         }
     }
 
-    protected String getRadesAddBuilderSimpleClassName(final TypeElement typeElement, final String specifiedBuilderClassName) {
-        final RadesAddBuilder radesAddBuilder = typeElement.getAnnotation(RadesAddBuilder.class);
-        if (specifiedBuilderClassName == null && radesAddBuilder != null) {
-            final String tmp = radesAddBuilder.simpleBuilderClassName().trim();
+    protected String getRadesAddAccessorSimpleClassName(final TypeElement typeElement, final String specifiedAccessorClassName) {
+        final RadesAddAccessor radesAddAccessor = typeElement.getAnnotation(RadesAddAccessor.class);
+        if (specifiedAccessorClassName == null && radesAddAccessor != null) {
+            final String tmp = radesAddAccessor.simpleAccessorClassName().trim();
             if (tmp.length() > 0) {
                 return tmp;
             }
-            logger.debug("###1|SimpleBuilderClassName: " + specifiedBuilderClassName);
+            logger.debug("###1|SimpleAccessorClassName: " + specifiedAccessorClassName);
         }
-        return specifiedBuilderClassName;
+        return specifiedAccessorClassName;
     }
 
-    protected String getAddBuilderSimpleClassName(final TypeElement typeElement, final String specifiedBuilderClassName) {
-        final AddBuilder addBuilder = typeElement.getAnnotation(AddBuilder.class);
-        if (specifiedBuilderClassName == null && addBuilder != null) {
-            final String tmp = addBuilder.simpleBuilderClassName().trim();
+    protected String getAddAccessorSimpleClassName(final TypeElement typeElement, final String specifiedAccessorClassName) {
+        final AddAccessor addAccessor = typeElement.getAnnotation(AddAccessor.class);
+        if (specifiedAccessorClassName == null && addAccessor != null) {
+            final String tmp = addAccessor.simpleAccessorClassName().trim();
             if (tmp.length() > 0) {
                 return tmp;
             }
-            logger.debug("###2|SimpleBuilderClassName: " + specifiedBuilderClassName);
+            logger.debug("###2|SimpleAccessorClassName: " + specifiedAccessorClassName);
         }
-        return specifiedBuilderClassName;
+        return specifiedAccessorClassName;
     }
 
     protected String getFullQualifiedClassName(final TypeMirror typeMirror) {

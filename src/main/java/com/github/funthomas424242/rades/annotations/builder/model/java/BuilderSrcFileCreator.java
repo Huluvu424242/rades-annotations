@@ -4,9 +4,9 @@ import javax.annotation.processing.Filer;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class JavaSrcFileCreator implements AutoCloseable {
+public class BuilderSrcFileCreator implements AutoCloseable {
 
-    protected final JavaModelService javaModelService;
+    protected final BuilderInjectionService javaModelService;
 
     protected final Filer filer;
 
@@ -14,7 +14,7 @@ public class JavaSrcFileCreator implements AutoCloseable {
 
     protected PrintWriter writer;
 
-    public JavaSrcFileCreator(final Filer filer, final String className, final JavaModelService javaModelService) {
+    public BuilderSrcFileCreator(final Filer filer, final String className, final BuilderInjectionService javaModelService) {
         this.filer = filer;
         this.className = className;
         this.javaModelService=javaModelService;

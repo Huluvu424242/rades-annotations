@@ -1,4 +1,4 @@
-package com.github.funthomas424242.rades.annotations.builder.processors;
+package com.github.funthomas424242.rades.annotations.lang.java;
 
 import com.google.common.truth.StringSubject;
 import com.google.testing.compile.Compilation;

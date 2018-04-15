@@ -1,7 +1,5 @@
-package com.github.funthomas424242.rades.annotations.builder.compatibillity;
+package com.github.funthomas424242.rades.annotations.builder;
 
-import com.github.funthomas424242.rades.annotations.builder.AddBuilder;
-import com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
@@ -9,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RadesAnnotationsCompatibillityTests {
+public class RadesBuilderCompatibillityTests {
 
     @Test
     @DisplayName("Prüfe korrektes Package für @AddBuilder")

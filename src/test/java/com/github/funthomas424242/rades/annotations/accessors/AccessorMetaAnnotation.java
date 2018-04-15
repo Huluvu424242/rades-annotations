@@ -1,4 +1,4 @@
-package com.github.funthomas424242.rades.annotations.builder;
+package com.github.funthomas424242.rades.annotations.accessors;
 
 
 import java.lang.annotation.ElementType;
@@ -7,8 +7,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
-@MetaMetaAnnotation
-@RadesAddBuilder
+@AccessorMetaMetaAnnotation
+@RadesAddAccessor
 @Retention(RetentionPolicy.SOURCE)
-public @interface MetaAnnotation {
+public @interface AccessorMetaAnnotation {
 }
