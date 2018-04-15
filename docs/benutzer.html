@@ -16,12 +16,17 @@
     <script type="text/javascript" src="./js/apache-maven-fluido-1.7.min.js"></script>
   </head>
   <body class="topBarDisabled">
+    <a href="https://github.com/FunThomas424242/rades-annotations">
+      <img style="position: absolute; top: 0; right: 0; border: 0; z-index: 10000;"
+        src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"
+        alt="Fork me on GitHub">
+    </a>
     <div class="container-fluid">
       <div id="banner">
-        <div class="pull-left"><a href="https://github.com/FunThomas424242/rades-annotations" id="bannerLeft"><h2>rades-annotations</h2>
-</a></div>
-        <div class="pull-right"><div id="bannerRight"><img src="http://maven.apache.org/images/maven-logo-2.gif"  alt=""/></div>
+        <div class="pull-left"><div id="bannerLeft"><h2>rades-annotations</h2>
 </div>
+</div>
+        <div class="pull-right"></div>
         <div class="clear"><hr/></div>
       </div>
 
@@ -60,6 +65,25 @@
         </div>
         <div id="bodyColumn"  class="span10" >
 <h1>Rades Annotations Projekt</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#download_des_projektarchives">Download des Projektarchives</a>
+<ul class="sectlevel2">
+<li><a href="#manueller_download">Manueller Download</a></li>
+<li><a href="#download_per_mavenintegration">Download per Mavenintegration</a></li>
+</ul>
+</li>
+<li><a href="#benutzung_der_annotationen">Benutzung der Annotationen</a></li>
+<li><a href="#das_generat">Das Generat</a></li>
+<li><a href="#beispiele">Beispiele</a>
+<ul class="sectlevel2">
+<li><a href="#builder_und_accessor_für_person_radesaddbuilder_radesaddaccessor">Builder und Accessor für Person (@RadesAddBuilder, @RadesAddAccessor)</a></li>
+<li><a href="#builder_und_accessor_für_firma_addbuilder_addaccessor">Builder und Accessor für Firma (@AddBuilder, @AddAccessor)</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
@@ -88,18 +112,18 @@ sondern es genügt die Integration des JCenters in Maven als Downloadquelle.</p>
 <div class="title">pom.xml</div>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="xml"><span style="color:#070;font-weight:bold">&lt;repositories&gt;</span>
-    <span style="color:#070;font-weight:bold">&lt;repository&gt;</span>  <b class="conum">(1)</b>
+    <span style="color:#070;font-weight:bold">&lt;repository&gt;</span>  <i class="conum" data-value="1"></i><b>(1)</b>
         <span style="color:#070;font-weight:bold">&lt;snapshots&gt;</span>
             <span style="color:#070;font-weight:bold">&lt;enabled&gt;</span>false<span style="color:#070;font-weight:bold">&lt;/enabled&gt;</span>
         <span style="color:#070;font-weight:bold">&lt;/snapshots&gt;</span>
         <span style="color:#070;font-weight:bold">&lt;id&gt;</span>central<span style="color:#070;font-weight:bold">&lt;/id&gt;</span>
         <span style="color:#070;font-weight:bold">&lt;name&gt;</span>bintray<span style="color:#070;font-weight:bold">&lt;/name&gt;</span>
-        <span style="color:#070;font-weight:bold">&lt;url&gt;</span>https://jcenter.bintray.com<span style="color:#070;font-weight:bold">&lt;/url&gt;</span> <b class="conum">(3)</b>
+        <span style="color:#070;font-weight:bold">&lt;url&gt;</span>https://jcenter.bintray.com<span style="color:#070;font-weight:bold">&lt;/url&gt;</span> <i class="conum" data-value="3"></i><b>(3)</b>
     <span style="color:#070;font-weight:bold">&lt;/repository&gt;</span>
 <span style="color:#070;font-weight:bold">&lt;/repositories&gt;</span>
 :
 <span style="color:#070;font-weight:bold">&lt;dependencies&gt;</span>
-    <span style="color:#070;font-weight:bold">&lt;dependency&gt;</span>  <b class="conum">(2)</b>
+    <span style="color:#070;font-weight:bold">&lt;dependency&gt;</span>  <i class="conum" data-value="2"></i><b>(2)</b>
         <span style="color:#070;font-weight:bold">&lt;groupId&gt;</span>com.github.funthomas424242<span style="color:#070;font-weight:bold">&lt;/groupId&gt;</span>
         <span style="color:#070;font-weight:bold">&lt;artifactId&gt;</span>rades-annotations<span style="color:#070;font-weight:bold">&lt;/artifactId&gt;</span>
         <span style="color:#070;font-weight:bold">&lt;version&gt;</span>2.0.0<span style="color:#070;font-weight:bold">&lt;/version&gt;</span>
@@ -108,17 +132,20 @@ sondern es genügt die Integration des JCenters in Maven als Downloadquelle.</p>
 </div>
 </div>
 <div class="colist arabic">
-<ol>
-<li>
-<p>Definition des Repositories.</p>
-</li>
-<li>
-<p>Definition der Projektabhängigkeit.</p>
-</li>
-<li>
-<p>Das ist der eigentliche Download URL des JCenter.</p>
-</li>
-</ol>
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Definition des Repositories.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Definition der Projektabhängigkeit.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Das ist der eigentliche Download URL des JCenter.</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -157,7 +184,7 @@ annotierten Klasse Person zu erhalten.</p>
 <table>
 <tr>
 <td class="icon">
-<div class="title">Important</div>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 private Attribute werden vom generierten Builder nicht unterstützt.
@@ -171,7 +198,7 @@ private Attribute werden vom generierten Builder nicht unterstützt.
 <h2 id="beispiele">Beispiele</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="builder_und_accessor_für_person">Builder und Accessor für Person</h3>
+<h3 id="builder_und_accessor_für_person_radesaddbuilder_radesaddaccessor">Builder und Accessor für Person (@RadesAddBuilder, @RadesAddAccessor)</h3>
 <div class="listingblock">
 <div class="title">Person.java</div>
 <div class="content">
@@ -371,6 +398,147 @@ private Attribute werden vom generierten Builder nicht unterstützt.
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="builder_und_accessor_für_firma_addbuilder_addaccessor">Builder und Accessor für Firma (@AddBuilder, @AddAccessor)</h3>
+<div class="listingblock">
+<div class="title">Firma.java</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span style="color:#080;font-weight:bold">package</span> <span style="color:#707;font-weight:bold">com.github.funthomas424242.domain</span>;
+
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">com.github.funthomas424242.rades.annotations.accessors.AddAccessor</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">com.github.funthomas424242.rades.annotations.builder.AddBuilder</span>;
+
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">java.util.Date</span>;
+
+<span style="color:#007">@AddBuilder</span>(simpleBuilderClassName = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">FirmaAGErbauer</span><span style="color:#710">&quot;</span></span>)
+<span style="color:#007">@AddAccessor</span>(simpleAccessorClassName =  <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">FirmaAGZugreifer</span><span style="color:#710">&quot;</span></span>)
+<span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">Firma</span> {
+
+    <span style="color:#088;font-weight:bold">private</span> <span style="color:#339;font-weight:bold">int</span> id;
+
+    <span style="color:#088;font-weight:bold">protected</span> <span style="color:#0a8;font-weight:bold">String</span> name;
+
+    <span style="color:#088;font-weight:bold">protected</span> <span style="color:#0a8;font-weight:bold">String</span> betriebeNr;
+
+    <span style="color:#088;font-weight:bold">protected</span> <span style="color:#0a8;font-weight:bold">Date</span> gruendungstag;
+
+    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">int</span> getId() {
+        <span style="color:#080;font-weight:bold">return</span> id;
+    }
+
+    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> setId(<span style="color:#088;font-weight:bold">final</span> <span style="color:#339;font-weight:bold">int</span> id) {
+        <span style="color:#950">this</span>.id = id;
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Aus dieser Domain Klasse ensteht folgender Builder</p>
+</div>
+<div class="listingblock">
+<div class="title">FirmaAGErbauer.java</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span style="color:#080;font-weight:bold">package</span> <span style="color:#707;font-weight:bold">com.github.funthomas424242.domain</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">javax.annotation.Generated</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">org.apache.commons.lang3.StringUtils</span>;
+
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">javax.validation.ConstraintViolation</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">javax.validation.Validation</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">javax.validation.ValidationException</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">javax.validation.Validator</span>;
+
+<span style="color:#007">@Generated</span>(value=<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">RadesBuilderProcessor</span><span style="color:#710">&quot;</span></span>
+        , date=<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">2018-04-06T20:36:46.750</span><span style="color:#710">&quot;</span></span>
+        , comments=<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">com.github.funthomas424242.domain.Firma</span><span style="color:#710">&quot;</span></span>)
+<span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">FirmaAGErbauer</span> {
+
+    <span style="color:#088;font-weight:bold">private</span> Firma firma;
+
+    <span style="color:#088;font-weight:bold">public</span> FirmaAGErbauer(){
+        <span style="color:#950">this</span>(<span style="color:#080;font-weight:bold">new</span> Firma());
+    }
+
+    <span style="color:#088;font-weight:bold">public</span> FirmaAGErbauer( <span style="color:#088;font-weight:bold">final</span> Firma firma ){
+        <span style="color:#950">this</span>.firma = firma;
+    }
+
+    <span style="color:#088;font-weight:bold">public</span> Firma build() {
+        <span style="color:#088;font-weight:bold">final</span> <span style="color:#0a8;font-weight:bold">Validator</span> validator = Validation.buildDefaultValidatorFactory().getValidator();
+        <span style="color:#088;font-weight:bold">final</span> java.util.Set&lt;ConstraintViolation&lt;Firma&gt;&gt; constraintViolations = validator.validate(<span style="color:#950">this</span>.firma);
+
+        <span style="color:#080;font-weight:bold">if</span> (constraintViolations.size() &gt; <span style="color:#00D">0</span>) {
+            java.util.Set&lt;<span style="color:#0a8;font-weight:bold">String</span>&gt; violationMessages = <span style="color:#080;font-weight:bold">new</span> java.util.HashSet&lt;<span style="color:#0a8;font-weight:bold">String</span>&gt;();
+
+            <span style="color:#080;font-weight:bold">for</span> (ConstraintViolation&lt;?&gt; constraintViolation : constraintViolations) {
+                violationMessages.add(constraintViolation.getPropertyPath() + <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">: </span><span style="color:#710">&quot;</span></span> + constraintViolation.getMessage());
+            }
+
+            <span style="color:#080;font-weight:bold">throw</span> <span style="color:#080;font-weight:bold">new</span> ValidationException(<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">Firma is not valid:</span><span style="color:#b0b">\n</span><span style="color:#710">&quot;</span></span> + StringUtils.join(violationMessages, <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#b0b">\n</span><span style="color:#710">&quot;</span></span>));
+        }
+        <span style="color:#088;font-weight:bold">final</span> Firma value = <span style="color:#950">this</span>.firma;
+        <span style="color:#950">this</span>.firma = <span style="color:#069">null</span>;
+        <span style="color:#080;font-weight:bold">return</span> value;
+    }
+
+    <span style="color:#088;font-weight:bold">public</span> FirmaAGErbauer withGruendungstag( <span style="color:#088;font-weight:bold">final</span> java.util.Date gruendungstag ) {
+        <span style="color:#950">this</span>.firma.gruendungstag = gruendungstag;
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>;
+    }
+
+    <span style="color:#088;font-weight:bold">public</span> FirmaAGErbauer withBetriebeNr( <span style="color:#088;font-weight:bold">final</span> java.lang.String betriebeNr ) {
+        <span style="color:#950">this</span>.firma.betriebeNr = betriebeNr;
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>;
+    }
+
+    <span style="color:#088;font-weight:bold">public</span> FirmaAGErbauer withName( <span style="color:#088;font-weight:bold">final</span> java.lang.String name ) {
+        <span style="color:#950">this</span>.firma.name = name;
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>;
+    }
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>und folgender Accessor</p>
+</div>
+<div class="listingblock">
+<div class="title">FirmaAGZugreifer.java</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span style="color:#080;font-weight:bold">package</span> <span style="color:#707;font-weight:bold">com.github.funthomas424242.domain</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">javax.annotation.Generated</span>;
+
+<span style="color:#007">@Generated</span>(value=<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">RadesAccessorProcessor</span><span style="color:#710">&quot;</span></span>
+        , date=<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">2018-04-06T20:36:46.750</span><span style="color:#710">&quot;</span></span>
+        , comments=<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">com.github.funthomas424242.domain.Firma</span><span style="color:#710">&quot;</span></span>)
+<span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">FirmaAGZugreifer</span> {
+
+    <span style="color:#088;font-weight:bold">protected</span> <span style="color:#088;font-weight:bold">final</span> Firma firma;
+
+    <span style="color:#088;font-weight:bold">public</span> FirmaAGZugreifer( <span style="color:#088;font-weight:bold">final</span> Firma firma ){
+        <span style="color:#950">this</span>.firma = firma;
+    }
+
+    <span style="color:#088;font-weight:bold">public</span> Firma toFirma(){
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.firma;
+    }
+
+    <span style="color:#088;font-weight:bold">public</span> java.util.Date getGruendungstag( ) {
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.firma.gruendungstag;
+    }
+
+    <span style="color:#088;font-weight:bold">public</span> java.lang.String getBetriebeNr( ) {
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.firma.betriebeNr;
+    }
+
+    <span style="color:#088;font-weight:bold">public</span> java.lang.String getName( ) {
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.firma.name;
+    }
+
+}</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
         </div>
@@ -383,7 +551,10 @@ private Attribute werden vom generierten Builder nicht unterstützt.
             <p>Copyright &copy;2018.
 All rights reserved.</p>
         </div>
-      </div>
+    <div id="ohloh" class="pull-right">
+      <script type="text/javascript" src="https://www.ohloh.net/p/rades-annotations/widgets/project_factoids.js"></script>
+    </div>
+        </div>
     </footer>
   </body>
 </html>

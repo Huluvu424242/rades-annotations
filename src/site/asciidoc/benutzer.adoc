@@ -3,6 +3,7 @@
 Dieses Projekt stellt Annotationen nebst zugehörigen Annotation Prozessoren bereit. Sobald das ausgelieferte
 Projektarchiv (JAR) im Klassenpfad Ihrer Anwendung eingebunden ist, können Sie die Annotationen benutzen.
 
+
 ## Download des Projektarchives
 
 ### Manueller Download
@@ -64,11 +65,12 @@ Obiger Kode würde also zur Generierung der Klasse PersonBuilder führen. Diese 
 annotierte Klasse Person liegen. Letzteres ist erforderlich um über Java Bordmitel Zugriff auf die Attribute der
 annotierten Klasse Person zu erhalten.
 
-IMPORTANT: private Attribute werden vom generierten Builder nicht unterstützt.
+[IMPORTANT]
+private Attribute werden vom generierten Builder nicht unterstützt.
 
 ## Beispiele
 
-### Builder und Accessor für Person
+### Builder und Accessor für Person (@RadesAddBuilder, @RadesAddAccessor)
 
 .Person.java
 [source,java]
@@ -90,4 +92,28 @@ und folgender Accessor
 [source,java]
 ----
 include::../../test/expectations/PersonAccessor.java[]
+----
+
+### Builder und Accessor für Firma (@AddBuilder, @AddAccessor)
+
+.Firma.java
+[source,java]
+----
+include::../../test/java/com/github/funthomas424242/domain/Firma.java[]
+----
+
+Aus dieser Domain Klasse ensteht folgender Builder
+
+.FirmaAGErbauer.java
+[source,java]
+----
+include::../../test/expectations/FirmaAGErbauer.java[]
+----
+
+und folgender Accessor
+
+.FirmaAGZugreifer.java
+[source,java]
+----
+include::../../test/expectations/FirmaAGZugreifer.java[]
 ----
