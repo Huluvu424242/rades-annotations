@@ -157,6 +157,10 @@
                     <outputDirectory>${basedir}/docs</outputDirectory>
                     <locales>de</locales>
                     <relativizeDecorationLinks>false</relativizeDecorationLinks>
+                    <requires>
+                        <require>asciidoctor-diagram</require>
+                    </requires>
+                    <backend>html5</backend>
                     <asciidoc>
                         <attributes>
                             <icons>font</icons>
