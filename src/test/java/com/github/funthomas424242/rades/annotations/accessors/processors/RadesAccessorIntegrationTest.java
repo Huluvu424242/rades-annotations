@@ -22,14 +22,12 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
-import javax.validation.ValidationException;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class RadesAccessorIntegrationTest {
@@ -51,9 +49,9 @@ public class RadesAccessorIntegrationTest {
                 .build();
         assertNotNull(auto);
         final CarAccessor car = new CarAccessor(auto);
-        assertEquals("Opel",car.getHersteller());
-        assertEquals("Viertakt Motor",car.getMotor());
-        assertEquals("Corsa",car.getTyp());
+        assertEquals("Opel", car.getHersteller());
+        assertEquals("Viertakt Motor", car.getMotor());
+        assertEquals("Corsa", car.getTyp());
     }
 
 
@@ -67,8 +65,8 @@ public class RadesAccessorIntegrationTest {
                 .build();
         assertNotNull(firma);
         final FirmaAGZugreifer firmaAccessor = new FirmaAGZugreifer(firma);
-        assertEquals("Musterfirma",firmaAccessor.getName());
-        assertEquals("AG-8788-S",firmaAccessor.getBetriebeNr());
+        assertEquals("Musterfirma", firmaAccessor.getName());
+        assertEquals("AG-8788-S", firmaAccessor.getBetriebeNr());
     }
 
     @Test
@@ -81,8 +79,8 @@ public class RadesAccessorIntegrationTest {
                 .build();
         assertNotNull(abteilung);
         final AbteilungAccessor accessor = new AbteilungAccessor(abteilung);
-        assertEquals("Musterabteilung",accessor.getName());
-        assertEquals("IT-8788",accessor.getAbteilungsNr());
+        assertEquals("Musterabteilung", accessor.getName());
+        assertEquals("IT-8788", accessor.getAbteilungsNr());
 
     }
 
