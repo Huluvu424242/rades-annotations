@@ -28,6 +28,7 @@ import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 
 public class RadesAccessorIntegrationTest {
@@ -52,6 +53,7 @@ public class RadesAccessorIntegrationTest {
         assertEquals("Opel", car.getHersteller());
         assertEquals("Viertakt Motor", car.getMotor());
         assertEquals("Corsa", car.getTyp());
+        assertSame(auto,car.toAuto());
     }
 
 
@@ -67,6 +69,7 @@ public class RadesAccessorIntegrationTest {
         final FirmaAGZugreifer firmaAccessor = new FirmaAGZugreifer(firma);
         assertEquals("Musterfirma", firmaAccessor.getName());
         assertEquals("AG-8788-S", firmaAccessor.getBetriebeNr());
+        assertSame(firma,firmaAccessor.toFirma());
     }
 
     @Test
@@ -81,6 +84,7 @@ public class RadesAccessorIntegrationTest {
         final AbteilungAccessor accessor = new AbteilungAccessor(abteilung);
         assertEquals("Musterabteilung", accessor.getName());
         assertEquals("IT-8788", accessor.getAbteilungsNr());
+        assertSame(abteilung,accessor.toAbteilung());
 
     }
 
@@ -93,6 +97,7 @@ public class RadesAccessorIntegrationTest {
         assertNotNull(familie);
         final FamilieAccessor accessor = new FamilieAccessor(familie);
         assertNotNull(accessor);
+        assertSame(familie,accessor.toFamilie());
     }
 
     @Test
@@ -113,6 +118,7 @@ public class RadesAccessorIntegrationTest {
         assertEquals(LocalDate.of(1968, 12, 25), accessor.getBirthday());
         assertEquals(175, accessor.getGroesse());
         assertEquals(Sets.newHashSet(Person.Farbe.BLAU), accessor.getLieblingsfarben());
+        assertSame(person,accessor.toPerson());
     }
 //
 //    @Test
