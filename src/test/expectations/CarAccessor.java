@@ -6,10 +6,14 @@ import javax.annotation.Generated;
 , comments="com.github.funthomas424242.domain.Auto")
 public class CarAccessor {
 
-    private Auto auto;
+    protected final Auto auto;
 
     public CarAccessor( final Auto auto ){
         this.auto = auto;
+    }
+
+    public Auto toAuto(){
+        return this.auto;
     }
 
     public java.lang.String getHersteller( ) {

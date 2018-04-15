@@ -6,10 +6,14 @@ import javax.annotation.Generated;
         , comments="com.github.funthomas424242.domain.Tier")
 public class TierAccessor {
 
-    private Tier tier;
+    protected final Tier tier;
 
     public TierAccessor( final Tier tier ){
         this.tier = tier;
+    }
+
+    public Tier toTier(){
+        return this.tier;
     }
 
 }

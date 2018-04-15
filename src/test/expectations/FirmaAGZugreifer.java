@@ -6,10 +6,14 @@ import javax.annotation.Generated;
         , comments="com.github.funthomas424242.domain.Firma")
 public class FirmaAGZugreifer {
 
-    private Firma firma;
+    protected final Firma firma;
 
     public FirmaAGZugreifer( final Firma firma ){
         this.firma = firma;
+    }
+
+    public Firma toFirma(){
+        return this.firma;
     }
 
     public java.util.Date getGruendungstag( ) {

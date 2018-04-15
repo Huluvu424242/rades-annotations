@@ -6,10 +6,14 @@ import javax.annotation.Generated;
         , comments="com.github.funthomas424242.domain.Person")
 public class PersonAccessor {
 
-    private Person person;
+    protected final Person person;
 
     public PersonAccessor( final Person person ){
         this.person = person;
+    }
+
+    public Person toPerson(){
+        return this.person;
     }
 
     public int getGroesse( ) {

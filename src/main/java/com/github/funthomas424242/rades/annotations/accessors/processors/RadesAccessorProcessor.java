@@ -155,6 +155,8 @@ public class RadesAccessorProcessor extends AbstractProcessor {
 
             javaSrcFileCreator.writeConstructors(simpleClassName, newInstanceName, accessorSimpleClassName);
 
+            javaSrcFileCreator.writeGetOriginalObject(simpleClassName,newInstanceName);
+
             mapFieldName2Type.entrySet().forEach(fields -> {
                 final String fieldName = fields.getKey().toString();
                 final String getterName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
