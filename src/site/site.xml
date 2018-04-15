@@ -1,19 +1,53 @@
-<project>
-    <bannerLeft>
-        <name>${project.artifactId}</name>
-        <!--<src>http://maven.apache.org/images/apache-maven-project-2.png</src>-->
-        <href>https://github.com/FunThomas424242/rades-annotations</href>
-    </bannerLeft>
+<project xmlns="http://maven.apache.org/DECORATION/1.8.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 http://maven.apache.org/xsd/decoration-1.8.0.xsd"
+         >
 
-    <bannerRight>
-        <src>http://maven.apache.org/images/maven-logo-2.gif</src>
-    </bannerRight>
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.7</version>
+    </skin>
+
+    <custom>
+        <fluidoSkin>
+            <topBarEnabled>false</topBarEnabled>
+            <topBarContainerStyle>width: 90%;</topBarContainerStyle>
+            <sideBarEnabled>true</sideBarEnabled>
+            <gitHub>
+                <projectId>FunThomas424242/rades-annotations</projectId>
+                <ribbonOrientation>right</ribbonOrientation>
+                <ribbonColor>gray</ribbonColor>
+            </gitHub>
+            <ohloh>
+                <projectId>rades-annotations</projectId>
+                <!--<projectId>735033</projectId>-->
+                <widget>factoids</widget>
+            </ohloh>
+            <googlePlusOne/>
+            <facebookLike/>
+            <googleSearch/>
+            <sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
+        </fluidoSkin>
+    </custom>
+
+    <!--<url>http://maven.apache.org/skins/maven-fluido-skin</url>-->
+
+    <!--<bannerLeft>-->
+        <!--<name>${project.artifactId}</name>-->
+        <!--&lt;!&ndash;<src>http://maven.apache.org/images/apache-maven-project-2.png</src>&ndash;&gt;-->
+        <!--<href>https://github.com/FunThomas424242/rades-annotations</href>-->
+    <!--</bannerLeft>-->
+
+    <!--<bannerRight>-->
+        <!--<src>http://maven.apache.org/images/maven-logo-2.gif</src>-->
+    <!--</bannerRight>-->
 
     <body>
         <menu name="RADES Universum">
             <item name="RADES Projekt" href="https://github.com/FunThomas424242/RADeS"/>
             <item name="~ Annotations" href="index.html">
                 <item name="Quellen" href="https://github.com/FunThomas424242/rades-annotations"  />
+                <item name="Changelog" href="changelog.html"/>
                 <item name="Benutzer" href="benutzer.html"/>
                 <item name="Entwickler" href="entwickler.html"/>
             </item>

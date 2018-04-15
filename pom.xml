@@ -157,8 +157,22 @@
                     <outputDirectory>${basedir}/docs</outputDirectory>
                     <locales>de</locales>
                     <relativizeDecorationLinks>false</relativizeDecorationLinks>
+                    <asciidoc>
+                        <attributes>
+                            <icons>font</icons>
+                            <source-highlighter>coderay</source-highlighter>
+                            <coderay-css>style</coderay-css>
+                            <toc>left</toc>
+                            <!--<toclevels>2</toclevels>-->
+                        </attributes>
+                    </asciidoc>
                 </configuration>
                 <dependencies>
+                    <!--<dependency>-->
+                        <!--<groupId>org.apache.maven.skins</groupId>-->
+                        <!--<artifactId>maven-fluido-skin</artifactId>-->
+                        <!--<version>1.7</version>-->
+                    <!--</dependency>-->
                     <dependency><!-- add Asciidoctor Doxia Parser Module -->
                         <groupId>org.asciidoctor</groupId>
                         <artifactId>asciidoctor-maven-plugin</artifactId>

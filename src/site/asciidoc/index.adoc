@@ -1,4 +1,9 @@
 # Rades Annotations Projekt
+:author: FunThomas424242 (Thomas Schubert)
+//:toc:
+:icons: font
+:lang: de
+:encoding: iso-8859-1
 
 Dieses Projekt stellt Annotationen nebst zugehörigen Annotation Prozessoren bereit. Sobald das ausgelieferte
 Projektarchiv (JAR) im Klassenpfad Ihrer Anwendung eingebunden ist, können Sie die Annotationen benutzen.
