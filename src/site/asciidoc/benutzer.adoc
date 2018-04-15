@@ -66,3 +66,28 @@ annotierten Klasse Person zu erhalten.
 
 IMPORTANT: private Attribute werden vom generierten Builder nicht unterstützt.
 
+## Beispiele
+
+### Builder und Accessor für Person
+
+.Person.java
+[source,java]
+----
+include::../../test/java/com/github/funthomas424242/domain/Person.java[]
+----
+
+Aus dieser Domain Klasse ensteht folgender Builder
+
+.PersonBuilder.java
+[source,java]
+----
+include::../../test/expectations/PersonBuilder.java[]
+----
+
+und folgender Accessor
+
+.PersonAccessor.java
+[source,java]
+----
+include::../../test/expectations/PersonAccessor.java[]
+----

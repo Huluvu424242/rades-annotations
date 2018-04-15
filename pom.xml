@@ -157,6 +157,12 @@
                     <outputDirectory>${basedir}/docs</outputDirectory>
                     <locales>de</locales>
                     <relativizeDecorationLinks>false</relativizeDecorationLinks>
+                    <asciidoc>
+                        <attributes>
+                            <source-highlighter>coderay</source-highlighter>
+                            <coderay-css>style</coderay-css>
+                        </attributes>
+                    </asciidoc>
                 </configuration>
                 <dependencies>
                     <dependency><!-- add Asciidoctor Doxia Parser Module -->
