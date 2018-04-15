@@ -1,24 +1,39 @@
-package com.github.funthomas424242.domain
+package com.github.funthomas424242.domain;
+import javax.annotation.Generated;
 
-import java.util.Date;
+@Generated(value="RadesAccessorProcessor"
+        , date="2018-04-06T20:36:46.750"
+        , comments="com.github.funthomas424242.domain.Person")
+public class PersonAccessor {
 
-public class PersonAccessor{
-    final protected Person person;
+    private Person person;
 
-    public PersonAccessor(final Person person){
-        this.person=person;
+    public PersonAccessor( final Person person ){
+        this.person = person;
     }
 
-    public String getName(){
-        return this.person.name;
+    public int getGroesse( ) {
+        return this.person.groesse;
     }
 
-    public String getVorname(){
+    public java.lang.String getVorname( ) {
         return this.person.vorname;
     }
 
-    public Date getBirthday(){
+    public java.util.Map<java.lang.String,com.github.funthomas424242.domain.Person> getFreunde( ) {
+        return this.person.freunde;
+    }
+
+    public java.util.Set<com.github.funthomas424242.domain.Person.Farbe> getLieblingsfarben( ) {
+        return this.person.lieblingsfarben;
+    }
+
+    public java.time.LocalDate getBirthday( ) {
         return this.person.birthday;
+    }
+
+    public java.lang.String getName( ) {
+        return this.person.name;
     }
 
 }

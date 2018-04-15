@@ -1,7 +1,8 @@
-package com.github.funthomas424242.rades.annotations.builder.processors;
+package com.github.funthomas424242.rades.annotations.accessors;
 
-import com.github.funthomas424242.rades.annotations.builder.model.java.BuilderInjectionServiceProvider;
-import com.github.funthomas424242.rades.annotations.builder.model.java.BuilderSrcFileCreator;
+import com.github.funthomas424242.rades.annotations.accessors.model.java.AccessorInjectionServiceProvider;
+import com.github.funthomas424242.rades.annotations.accessors.model.java.AccessorSrcFileCreator;
+import com.github.funthomas424242.rades.annotations.accessors.processors.RadesAccessorProcessor;
 import com.google.common.truth.ExpectFailure;
 import com.google.testing.compile.Compilation;
 import com.google.testing.compile.JavaFileObjects;
@@ -21,48 +22,26 @@ import static com.google.common.truth.Truth.assertAbout;
 import static com.google.testing.compile.Compiler.javac;
 import static com.google.testing.compile.JavaSourceSubjectFactory.javaSource;
 
-public class RadesBuilderProcessorTest {
+public class RadesAccessorProcessorTest {
 
-    protected final String NONE_WRITEABLE_BUILDER_JAVA = "package com.github.funthomas424242.domain;\n" +
+    protected final String NONE_WRITEABLE_ACCESSOR_JAVA = "package com.github.funthomas424242.domain;\n" +
             "import javax.annotation.Generated;\n" +
-            "import org.apache.commons.lang3.StringUtils;\n" +
             "\n" +
-            "import javax.validation.ConstraintViolation;\n" +
-            "import javax.validation.Validation;\n" +
-            "import javax.validation.ValidationException;\n" +
-            "import javax.validation.Validator;\n" +
             "\n" +
-            "@Generated(value=\"RadesBuilderProcessor\"\n" +
+            "@Generated(value=\"RadesAccessorProcessor\"\n" +
             ", comments=\"com.github.funthomas424242.domain.NoneWriteable\")\n" +
-            "public class NoneWriteableBuilder {\n" +
+            "public class NoneWriteableAccessor {\n" +
             "\n" +
             "    private NoneWriteable noneWriteable;\n" +
             "\n" +
-            "    public NoneWriteableBuilder(){\n" +
+            "    public NoneWriteableAccessor(){\n" +
             "        this(new NoneWriteable());\n" +
             "    }\n" +
             "\n" +
-            "    public NoneWriteableBuilder( final NoneWriteable noneWriteable ){\n" +
+            "    public NoneWriteableAccessor( final NoneWriteable noneWriteable ){\n" +
             "        this.noneWriteable = noneWriteable;\n" +
             "    }\n" +
             "\n" +
-            "    public NoneWriteable build() {\n" +
-            "        final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();\n" +
-            "        final java.util.Set<ConstraintViolation<NoneWriteable>> constraintViolations = validator.validate(this.noneWriteable);\n" +
-            "\n" +
-            "        if (constraintViolations.size() > 0) {\n" +
-            "            java.util.Set<String> violationMessages = new java.util.HashSet<String>();\n" +
-            "\n" +
-            "            for (ConstraintViolation<?> constraintViolation : constraintViolations) {\n" +
-            "                violationMessages.add(constraintViolation.getPropertyPath() + \": \" + constraintViolation.getMessage());\n" +
-            "            }\n" +
-            "\n" +
-            "            throw new ValidationException(\"NoneWriteable is not valid:\\n\" + StringUtils.join(violationMessages, \"\\n\"));\n" +
-            "        }\n" +
-            "        final NoneWriteable value = this.noneWriteable;\n" +
-            "        this.noneWriteable = null;\n" +
-            "        return value;\n" +
-            "    }\n" +
             "\n" +
             "}\n";
 
@@ -71,22 +50,22 @@ public class RadesBuilderProcessorTest {
     protected static final String TEST_EXPECTATION_FOLDER = "src/test/expectations/";
 
     protected static URL urlPersonJava;
-    protected static URL urlPersonBuilderJava;
+    protected static URL urlPersonAccessorJava;
     protected static URL urlFirmaJava;
-    protected static URL urlFirmaBuilderJava;
+    protected static URL urlFirmaAccessorJava;
     protected static URL urlAutoJava;
-    protected static URL urlAutoBuilderJava;
+    protected static URL urlAutoAccessorJava;
     protected static URL urlTierJava;
-    protected static URL urlTierBuilderJava;
+    protected static URL urlTierAccessorJava;
     protected static URL urlMetaAnnotationJava;
     protected static URL urlNonePackageClassJava;
-    protected static URL urlNoneWriteableBuilderJava;
+    protected static URL urlNoneWriteableAccessorJava;
 
 
     @Rule
     public final ExpectFailure expectFailure = new ExpectFailure();
 
-    static class DefaultJavaModelProvider extends BuilderInjectionServiceProvider {
+    static class DefaultJavaModelProvider extends AccessorInjectionServiceProvider {
         @Override
         public String getNowAsISOString() {
             return "2018-04-06T20:36:46.750";
@@ -94,10 +73,10 @@ public class RadesBuilderProcessorTest {
     }
 
 
-    static class NoWritableJavaModelProvider extends BuilderInjectionServiceProvider {
+    static class NoWritableJavaModelProvider extends AccessorInjectionServiceProvider {
         @Override
-        public BuilderSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className) {
-            final BuilderSrcFileCreator creator = new BuilderSrcFileCreator(filer, className, this) {
+        public AccessorSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className) {
+            final AccessorSrcFileCreator creator = new AccessorSrcFileCreator(filer, className, this) {
                 @Override
                 public void init() throws IOException {
                     throw new IOException("Medium ist schreibgeschützt!");
@@ -107,10 +86,10 @@ public class RadesBuilderProcessorTest {
         }
     }
 
-    static class NoClosebleJavaModelProvider extends BuilderInjectionServiceProvider {
+    static class NoClosebleJavaModelProvider extends AccessorInjectionServiceProvider {
         @Override
-        public BuilderSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className) {
-            final BuilderSrcFileCreator creator = new BuilderSrcFileCreator(filer, className, this) {
+        public AccessorSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className) {
+            final AccessorSrcFileCreator creator = new AccessorSrcFileCreator(filer, className, this) {
                 @Override
                 public void close() throws Exception {
                     throw new Exception("Kann Stream nicht schließen!");
@@ -131,22 +110,22 @@ public class RadesBuilderProcessorTest {
     @BeforeClass
     public static void setUp() throws MalformedURLException {
         urlPersonJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/domain/Person.java");
-        urlPersonBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "PersonBuilder.java");
+        urlPersonAccessorJava = getResourceURL(TEST_EXPECTATION_FOLDER, "PersonAccessor.java");
         urlFirmaJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/domain/Firma.java");
-        urlFirmaBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "FirmaAGErbauer.java");
+        urlFirmaAccessorJava = getResourceURL(TEST_EXPECTATION_FOLDER, "FirmaAGZugreifer.java");
         urlAutoJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/domain/Auto.java");
-        urlAutoBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "CarBuilder.java");
+        urlAutoAccessorJava = getResourceURL(TEST_EXPECTATION_FOLDER, "CarAccessor.java");
         urlTierJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/domain/Tier.java");
-        urlTierBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "TierBuilder.java");
-        urlMetaAnnotationJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/rades/annotations/builder/BuilderMetaAnnotation.java");
+        urlTierAccessorJava = getResourceURL(TEST_EXPECTATION_FOLDER, "TierAccessor.java");
+        urlMetaAnnotationJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/rades/annotations/accessors/AccessorMetaAnnotation.java");
         urlNonePackageClassJava = getResourceURL(TEST_EXPECTATION_FOLDER, "NonePackageClass.java");
-        urlNoneWriteableBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "NoneWriteableBuilder.java");
+        urlNoneWriteableAccessorJava = getResourceURL(TEST_EXPECTATION_FOLDER, "NoneWriteableAccessor.java");
     }
 
 
     @Test
     public void processPerson() throws MalformedURLException {
-        final RadesBuilderProcessor processor = new RadesBuilderProcessor();
+        final RadesAccessorProcessor processor = new RadesAccessorProcessor();
         processor.setJavaModelService(new DefaultJavaModelProvider());
 
         final Compilation compilation = javac()
@@ -154,12 +133,12 @@ public class RadesBuilderProcessorTest {
                 .compile(JavaFileObjects.forResource(urlPersonJava));
         assertThat(compilation).succeeded();
         assertThat(compilation)
-                .generatedSourceFile("com.github.funthomas424242.domain.PersonBuilder")
-                .hasSourceEquivalentTo(JavaFileObjects.forResource(urlPersonBuilderJava)
+                .generatedSourceFile("com.github.funthomas424242.domain.PersonAccessor")
+                .hasSourceEquivalentTo(JavaFileObjects.forResource(urlPersonAccessorJava)
                 );
 
         // equivalent mitl altem API
-        final RadesBuilderProcessor processor1 = new RadesBuilderProcessor();
+        final RadesAccessorProcessor processor1 = new RadesAccessorProcessor();
         processor1.setJavaModelService(new DefaultJavaModelProvider());
 
         assertAbout(javaSource())
@@ -167,14 +146,14 @@ public class RadesBuilderProcessorTest {
                 .processedWith(processor1)
                 .compilesWithoutError()
                 .and()
-                .generatesSources(JavaFileObjects.forResource(urlPersonBuilderJava));
+                .generatesSources(JavaFileObjects.forResource(urlPersonAccessorJava));
 
 
     }
 
     @Test
     public void processFirma() throws MalformedURLException {
-        final RadesBuilderProcessor processor = new RadesBuilderProcessor();
+        final RadesAccessorProcessor processor = new RadesAccessorProcessor();
         processor.setJavaModelService(new DefaultJavaModelProvider());
 
         final Compilation compilation = javac()
@@ -182,14 +161,14 @@ public class RadesBuilderProcessorTest {
                 .compile(JavaFileObjects.forResource(urlFirmaJava));
         assertThat(compilation).succeeded();
         assertThat(compilation)
-                .generatedSourceFile("com.github.funthomas424242.domain.FirmaAGErbauer")
-                .hasSourceEquivalentTo(JavaFileObjects.forResource(urlFirmaBuilderJava)
+                .generatedSourceFile("com.github.funthomas424242.domain.FirmaAGZugreifer")
+                .hasSourceEquivalentTo(JavaFileObjects.forResource(urlFirmaAccessorJava)
                 );
     }
 
     @Test
     public void processAuto() throws MalformedURLException {
-        final RadesBuilderProcessor processor = new RadesBuilderProcessor();
+        final RadesAccessorProcessor processor = new RadesAccessorProcessor();
         processor.setJavaModelService(new DefaultJavaModelProvider());
 
         final Compilation compilation = javac()
@@ -197,14 +176,14 @@ public class RadesBuilderProcessorTest {
                 .compile(JavaFileObjects.forResource(urlAutoJava));
         assertThat(compilation).succeeded();
         assertThat(compilation)
-                .generatedSourceFile("com.github.funthomas424242.domain.CarBuilder")
-                .hasSourceEquivalentTo(JavaFileObjects.forResource(urlAutoBuilderJava)
+                .generatedSourceFile("com.github.funthomas424242.domain.CarAccessor")
+                .hasSourceEquivalentTo(JavaFileObjects.forResource(urlAutoAccessorJava)
                 );
     }
 
     @Test
     public void processTier() throws MalformedURLException {
-        final RadesBuilderProcessor processor = new RadesBuilderProcessor();
+        final RadesAccessorProcessor processor = new RadesAccessorProcessor();
         processor.setJavaModelService(new DefaultJavaModelProvider());
 
         final Compilation compilation = javac()
@@ -212,15 +191,15 @@ public class RadesBuilderProcessorTest {
                 .compile(JavaFileObjects.forResource(urlTierJava));
         assertThat(compilation).succeeded();
         assertThat(compilation)
-                .generatedSourceFile("com.github.funthomas424242.domain.TierBuilder")
-                .hasSourceEquivalentTo(JavaFileObjects.forResource(urlTierBuilderJava)
+                .generatedSourceFile("com.github.funthomas424242.domain.TierAccessor")
+                .hasSourceEquivalentTo(JavaFileObjects.forResource(urlTierAccessorJava)
                 );
     }
 
 
     @Test
     public void shouldCompilePersonJavaWithoutErrors() {
-        final RadesBuilderProcessor processor = new RadesBuilderProcessor();
+        final RadesAccessorProcessor processor = new RadesAccessorProcessor();
         processor.setJavaModelService(new DefaultJavaModelProvider());
 
         assertAbout(javaSource())
@@ -232,7 +211,7 @@ public class RadesBuilderProcessorTest {
 
     @Test
     public void shouldCompileMetaAnnotationJavaWithoutErrors() {
-        final RadesBuilderProcessor processor = new RadesBuilderProcessor();
+        final RadesAccessorProcessor processor = new RadesAccessorProcessor();
         processor.setJavaModelService(new DefaultJavaModelProvider());
 
         assertAbout(javaSource())
@@ -245,12 +224,12 @@ public class RadesBuilderProcessorTest {
 
     @Test
     public void shouldCompileNonPackageClassWithoutErrors() {
-        final RadesBuilderProcessor processor = new RadesBuilderProcessor();
+        final RadesAccessorProcessor processor = new RadesAccessorProcessor();
         processor.setJavaModelService(new DefaultJavaModelProvider());
 
         assertAbout(javaSource())
                 .that(JavaFileObjects.forSourceString("NonePackageClass", "\n" +
-                        "@com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder\n" +
+                        "@com.github.funthomas424242.rades.annotations.accessors.RadesAddAccessor\n" +
                         "public class NonePackageClass {\n" +
                         "}\n"))
                 .processedWith(processor)
@@ -260,33 +239,33 @@ public class RadesBuilderProcessorTest {
 
 
     @Test
-    public void shouldFailToWriteNoneWriteableBuilderClass() {
+    public void shouldFailToWriteNoneWriteableAccessorClass() {
 
-        final RadesBuilderProcessor processor = new RadesBuilderProcessor();
+        final RadesAccessorProcessor processor = new RadesAccessorProcessor();
         processor.setJavaModelService(new NoWritableJavaModelProvider());
 
         expectFailure.whenTesting()
                 .about(javaSource())
                 .that(JavaFileObjects.forSourceString("com.github.funthomas424242.domain.NoneWriteable", "\n" +
                         "package com.github.funthomas424242.domain;\n" +
-                        "@com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder\n" +
+                        "@com.github.funthomas424242.rades.annotations.accessors.RadesAddAccessor\n" +
                         "public class NoneWriteable {\n" +
                         "}\n"))
                 .processedWith(processor)
                 .compilesWithoutError()
                 .and()
                 .generatesFiles(JavaFileObjects.forSourceString(
-                        "com.github.funthomas424242.domain.NoneWriteableBuilder", NONE_WRITEABLE_BUILDER_JAVA));
+                        "com.github.funthomas424242.domain.NoneWriteableAccessor", NONE_WRITEABLE_ACCESSOR_JAVA));
 
         final AssertionError expected = expectFailure.getFailure();
-        assertThat(expected.getMessage()).contains("Did not find a generated file corresponding to com/github/funthomas424242/domain/NoneWriteableBuilder.java");
+        assertThat(expected.getMessage()).contains("Did not find a generated file corresponding to com/github/funthomas424242/domain/NoneWriteableAccessor.java");
     }
 
 
     @Test(expected = NullPointerException.class)
-    public void shouldFailToCloseNoneCloseableBuilderClass() {
+    public void shouldFailToCloseNoneCloseableAccessorClass() {
 
-        final RadesBuilderProcessor processor = new RadesBuilderProcessor();
+        final RadesAccessorProcessor processor = new RadesAccessorProcessor();
         processor.setJavaModelService(new NoClosebleJavaModelProvider());
 
         assertAbout(javaSource())
@@ -294,6 +273,6 @@ public class RadesBuilderProcessorTest {
                 .processedWith(processor)
                 .compilesWithoutError()
                 .and()
-                .generatesSources(JavaFileObjects.forResource(urlPersonBuilderJava));
+                .generatesSources(JavaFileObjects.forResource(urlPersonAccessorJava));
     }
 }
