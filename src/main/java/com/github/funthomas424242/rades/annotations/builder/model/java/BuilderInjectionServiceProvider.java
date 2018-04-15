@@ -5,12 +5,12 @@ import com.google.auto.service.AutoService;
 
 import javax.annotation.processing.Filer;
 
-@AutoService(JavaModelService.class)
-public class JavaModelServiceProvider implements JavaModelService {
+@AutoService(BuilderInjectionService.class)
+public class BuilderInjectionServiceProvider implements BuilderInjectionService {
 
     @Override
-    public JavaSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className) {
-        return new JavaSrcFileCreator(filer, className, this);
+    public BuilderSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className) {
+        return new BuilderSrcFileCreator(filer, className, this);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.github.funthomas424242.rades.annotations.builder.processors;
 
-import com.github.funthomas424242.rades.annotations.builder.model.java.JavaModelServiceProvider;
-import com.github.funthomas424242.rades.annotations.builder.model.java.JavaSrcFileCreator;
+import com.github.funthomas424242.rades.annotations.builder.model.java.BuilderInjectionServiceProvider;
+import com.github.funthomas424242.rades.annotations.builder.model.java.BuilderSrcFileCreator;
 import com.google.common.truth.ExpectFailure;
 import com.google.testing.compile.Compilation;
 import com.google.testing.compile.JavaFileObjects;
@@ -86,7 +86,7 @@ public class RadesBuilderProcessorTest {
     @Rule
     public final ExpectFailure expectFailure = new ExpectFailure();
 
-    static class DefaultJavaModelProvider extends JavaModelServiceProvider {
+    static class DefaultJavaModelProvider extends BuilderInjectionServiceProvider {
         @Override
         public String getNowAsISOString() {
             return "2018-04-06T20:36:46.750";
@@ -94,10 +94,10 @@ public class RadesBuilderProcessorTest {
     }
 
 
-    static class NoWritableJavaModelProvider extends JavaModelServiceProvider {
+    static class NoWritableJavaModelProvider extends BuilderInjectionServiceProvider {
         @Override
-        public JavaSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className) {
-            final JavaSrcFileCreator creator = new JavaSrcFileCreator(filer, className, this) {
+        public BuilderSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className) {
+            final BuilderSrcFileCreator creator = new BuilderSrcFileCreator(filer, className, this) {
                 @Override
                 public void init() throws IOException {
                     throw new IOException("Medium ist schreibgeschützt!");
@@ -107,10 +107,10 @@ public class RadesBuilderProcessorTest {
         }
     }
 
-    static class NoClosebleJavaModelProvider extends JavaModelServiceProvider {
+    static class NoClosebleJavaModelProvider extends BuilderInjectionServiceProvider {
         @Override
-        public JavaSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className) {
-            final JavaSrcFileCreator creator = new JavaSrcFileCreator(filer, className, this) {
+        public BuilderSrcFileCreator getJavaSrcFileCreator(final Filer filer, final String className) {
+            final BuilderSrcFileCreator creator = new BuilderSrcFileCreator(filer, className, this) {
                 @Override
                 public void close() throws Exception {
                     throw new Exception("Kann Stream nicht schließen!");

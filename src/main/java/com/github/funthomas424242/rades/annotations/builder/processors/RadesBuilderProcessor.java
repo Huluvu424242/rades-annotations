@@ -2,10 +2,10 @@ package com.github.funthomas424242.rades.annotations.builder.processors;
 
 import com.github.funthomas424242.rades.annotations.builder.AddBuilder;
 import com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder;
-import com.github.funthomas424242.rades.annotations.builder.model.java.JavaSrcFileCreator;
+import com.github.funthomas424242.rades.annotations.builder.model.java.BuilderSrcFileCreator;
 import com.github.funthomas424242.rades.annotations.lang.java.JavaModelHelper;
-import com.github.funthomas424242.rades.annotations.builder.model.java.JavaModelService;
-import com.github.funthomas424242.rades.annotations.builder.model.java.JavaModelServiceProvider;
+import com.github.funthomas424242.rades.annotations.builder.model.java.BuilderInjectionService;
+import com.github.funthomas424242.rades.annotations.builder.model.java.BuilderInjectionServiceProvider;
 import com.google.auto.service.AutoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +45,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
     protected final Logger logger = LoggerFactory.getLogger(RadesBuilderProcessor.class);
 
 
-    protected JavaModelService javaModelService = new JavaModelServiceProvider();
+    protected BuilderInjectionService javaModelService = new BuilderInjectionServiceProvider();
 
     protected ProcessingEnvironment processingEnvironment;
 
@@ -54,7 +54,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
      *
      * @param javaModelService mock to replace the default intern instance.
      */
-    protected void setJavaModelService(final JavaModelService javaModelService) {
+    protected void setJavaModelService(final BuilderInjectionService javaModelService) {
         this.javaModelService = javaModelService;
     }
 
@@ -140,7 +140,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         logger.debug("###builderSimpleClassName: " + builderSimpleClassName);
 
         final Filer filer = processingEnv.getFiler();
-        try (final JavaSrcFileCreator javaSrcFileCreator = javaModelService.getJavaSrcFileCreator(filer, builderClassName)) {
+        try (final BuilderSrcFileCreator javaSrcFileCreator = javaModelService.getJavaSrcFileCreator(filer, builderClassName)) {
 
             javaSrcFileCreator.init();
 
