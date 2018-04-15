@@ -11,6 +11,7 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 
 ### Changed
 - https://github.com/FunThomas424242/rades-annotations/issues/42[issue #42] Packages umstrukturiert -> Annotationen
+- https://github.com/FunThomas424242/rades-annotations/issues/46[issue #46] Dokumentation aktualisiert
 
 ### Removed
 - https://github.com/FunThomas424242/rades-annotations/issues/44[issue #44] Support für @RadesBuilder entfernt
