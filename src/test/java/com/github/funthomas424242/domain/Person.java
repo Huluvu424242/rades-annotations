@@ -1,5 +1,6 @@
 package com.github.funthomas424242.domain;
 
+import com.github.funthomas424242.rades.annotations.accessors.RadesAddAccessor;
 import com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder;
 
 import javax.validation.constraints.NotNull;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 
 @RadesAddBuilder
+@RadesAddAccessor
 public class Person {
 
     public enum Farbe {

@@ -32,30 +32,20 @@ public class AccessorSrcFileCreator implements AutoCloseable {
     }
 
 
-    public void writeSetterMethod(String objectName, String builderSimpleClassName, String fieldName, String setterName, String argumentType) {
+    public void writeGetterMethod(final String objectName, final String fieldName, final String getterName, final String returnType) {
         writer.print("    public ");
-        writer.print(builderSimpleClassName);
+        writer.print(returnType);
         writer.print(" ");
-        writer.print(setterName);
+        writer.print(getterName);
 
-        writer.print("( final ");
-
-        writer.print(argumentType);
-        writer.println(" " + fieldName + " ) {");
-        writer.print("        this." + objectName + ".");
-        writer.print(fieldName);
-        writer.println(" = " + fieldName + ";");
-        writer.println("        return this;");
+        writer.println("( ) { ");
+        writer.println("        return this." +objectName +"."+ fieldName + ";");
         writer.println("    }");
         writer.println();
     }
 
-    public void writeConstructors(String simpleClassName, String objectName, String builderSimpleClassName) {
-        writer.print("    public " + builderSimpleClassName + "(){\n");
-        writer.print("        this(new " + simpleClassName + "());\n");
-        writer.print("    }\n");
-        writer.print("\n");
-        writer.print("    public " + builderSimpleClassName + "( final " + simpleClassName + " " + objectName + " ){\n");
+    public void writeConstructors(final String simpleClassName, final String objectName, final String accessorSimpleClassName) {
+        writer.print("    public " + accessorSimpleClassName + "( final " + simpleClassName + " " + objectName + " ){\n");
         writer.print("        this." + objectName + " = " + objectName + ";\n");
         writer.print("    }\n");
         writer.println();
@@ -67,36 +57,15 @@ public class AccessorSrcFileCreator implements AutoCloseable {
         writer.print(" " + objectName + ";\n\n");
     }
 
-    public void writeClassDeclaration(String builderSimpleClassName) {
-        writer.println("public class " + builderSimpleClassName + " {");
+    public void writeClassDeclaration(final String accessorSimpleClassName) {
+        writer.println("public class " + accessorSimpleClassName + " {");
         writer.println();
     }
 
-    public void writeBuildMethod(String simpleClassName, String objectName) {
-        writer.print("    public ");
-        writer.print(simpleClassName);
-        writer.println(" build() {");
-        writer.println("        final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();");
-        writer.println("        final java.util.Set<ConstraintViolation<" + simpleClassName + ">> constraintViolations = validator.validate(this." + objectName + ");");
-        writer.println();
-        writer.println("        if (constraintViolations.size() > 0) {");
-        writer.println("            java.util.Set<String> violationMessages = new java.util.HashSet<String>();");
-        writer.println();
-        writer.println("            for (ConstraintViolation<?> constraintViolation : constraintViolations) {");
-        writer.println("                violationMessages.add(constraintViolation.getPropertyPath() + \": \" + constraintViolation.getMessage());");
-        writer.println("            }");
-        writer.println();
-        writer.println("            throw new ValidationException(\"" + simpleClassName + " is not valid:\\n\" + StringUtils.join(violationMessages, \"\\n\"));");
-        writer.println("        }");
-        writer.println("        final " + simpleClassName + " value = this." + objectName + ";");
-        writer.println("        this." + objectName + " = null;");
-        writer.println("        return value;");
-        writer.println("    }");
-        writer.println();
-    }
+
 
     public void writeClassAnnotations(String className) {
-        writer.print("@Generated(value=\"RadesBuilderProcessor\"\n" +
+        writer.print("@Generated(value=\"RadesAccessorProcessor\"\n" +
                 ", date=\"" + javaModelService.getNowAsISOString() + "\"\n" +
                 ", comments=\"" + className + "\")\n"
         );
@@ -109,11 +78,6 @@ public class AccessorSrcFileCreator implements AutoCloseable {
 
     public void writeImports() {
         writer.println("import javax.annotation.Generated;");
-        writer.println("import org.apache.commons.lang3.StringUtils;\n");
-        writer.println("import javax.validation.ConstraintViolation;");
-        writer.println("import javax.validation.Validation;");
-        writer.println("import javax.validation.ValidationException;");
-        writer.println("import javax.validation.Validator;");
         writer.println();
     }
 

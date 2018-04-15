@@ -1,10 +1,10 @@
 package com.github.funthomas424242.rades.annotations.accessors.processors;
 
-import com.github.funthomas424242.rades.annotations.builder.AddBuilder;
-import com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder;
-import com.github.funthomas424242.rades.annotations.builder.model.java.BuilderInjectionService;
-import com.github.funthomas424242.rades.annotations.builder.model.java.BuilderInjectionServiceProvider;
-import com.github.funthomas424242.rades.annotations.builder.model.java.BuilderSrcFileCreator;
+import com.github.funthomas424242.rades.annotations.accessors.AddAccessor;
+import com.github.funthomas424242.rades.annotations.accessors.RadesAddAccessor;
+import com.github.funthomas424242.rades.annotations.accessors.model.java.AccessorInjectionService;
+import com.github.funthomas424242.rades.annotations.accessors.model.java.AccessorInjectionServiceProvider;
+import com.github.funthomas424242.rades.annotations.accessors.model.java.AccessorSrcFileCreator;
 import com.github.funthomas424242.rades.annotations.lang.java.JavaModelHelper;
 import com.google.auto.service.AutoService;
 import org.slf4j.Logger;
@@ -19,6 +19,7 @@ import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
@@ -26,10 +27,13 @@ import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
+import java.util.stream.Collectors;
 
 @SupportedAnnotationTypes({"com.github.funthomas424242.rades.annotations.accessors.RadesAddAccessor"
         , "com.github.funthomas424242.rades.annotations.accessor.AddAccessor"})
@@ -40,7 +44,7 @@ public class RadesAccessorProcessor extends AbstractProcessor {
     protected final Logger logger = LoggerFactory.getLogger(RadesAccessorProcessor.class);
 
 
-    protected BuilderInjectionService javaModelService = new BuilderInjectionServiceProvider();
+    protected AccessorInjectionService javaModelService = new AccessorInjectionServiceProvider();
 
     protected ProcessingEnvironment processingEnvironment;
 
@@ -49,7 +53,7 @@ public class RadesAccessorProcessor extends AbstractProcessor {
      *
      * @param javaModelService mock to replace the default intern instance.
      */
-    protected void setJavaModelService(final BuilderInjectionService javaModelService) {
+    protected void setJavaModelService(final AccessorInjectionService javaModelService) {
         this.javaModelService = javaModelService;
     }
 
@@ -61,46 +65,46 @@ public class RadesAccessorProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(final Set<? extends TypeElement> annotations, final RoundEnvironment roundEnv) {
-////        final Types types = this.processingEnvironment.getTypeUtils();
-//
-//        final Stack<TypeElement> allAnnotations = new Stack<>();
-//        annotations.stream().collect(Collectors.toList()).forEach(annotation -> {
-//            allAnnotations.push(annotation);
-//        });
-//
-//        final Set<Element> processedAnnotations = new HashSet<>();
-//        final Set<Element> annotatedClasses = new HashSet<>();
-//        while (!allAnnotations.empty()) {
-//            final TypeElement annotation = allAnnotations.pop();
-//            processedAnnotations.add(annotation);
-//
-//            final Set<? extends Element> annotatedElements = roundEnv.getElementsAnnotatedWith(annotation);
-//            for (final Element annotatedElement : annotatedElements) {
-//                if (annotatedElement.getKind() == ElementKind.ANNOTATION_TYPE) {
-//                    final TypeElement typeElement = (TypeElement) annotatedElement;
-//                    if (!processedAnnotations.contains(typeElement)) {
-//                        logger.debug("###Annotation: " + typeElement);
-//                        // als Annotation aufnehmen falls gerade nicht im Stack (Minioptimierung)
-//                        allAnnotations.push(typeElement);
-//                    }
-//                    continue;
-//                }
-//                if (annotatedElement.getKind().isClass()) {
-//                    logger.debug("###Class: " + annotatedElement);
-//                    annotatedClasses.add(annotatedElement);
-//                }
-//            }
-//        }
-//
-//        annotatedClasses.forEach(element -> {
-//            createBuilderSrcFile(element);
-//        });
+//        final Types types = this.processingEnvironment.getTypeUtils();
+
+        final Stack<TypeElement> allAnnotations = new Stack<>();
+        annotations.stream().collect(Collectors.toList()).forEach(annotation -> {
+            allAnnotations.push(annotation);
+        });
+
+        final Set<Element> processedAnnotations = new HashSet<>();
+        final Set<Element> annotatedClasses = new HashSet<>();
+        while (!allAnnotations.empty()) {
+            final TypeElement annotation = allAnnotations.pop();
+            processedAnnotations.add(annotation);
+
+            final Set<? extends Element> annotatedElements = roundEnv.getElementsAnnotatedWith(annotation);
+            for (final Element annotatedElement : annotatedElements) {
+                if (annotatedElement.getKind() == ElementKind.ANNOTATION_TYPE) {
+                    final TypeElement typeElement = (TypeElement) annotatedElement;
+                    if (!processedAnnotations.contains(typeElement)) {
+                        logger.debug("###Annotation: " + typeElement);
+                        // als Annotation aufnehmen falls gerade nicht im Stack (Minioptimierung)
+                        allAnnotations.push(typeElement);
+                    }
+                    continue;
+                }
+                if (annotatedElement.getKind().isClass()) {
+                    logger.debug("###Class: " + annotatedElement);
+                    annotatedClasses.add(annotatedElement);
+                }
+            }
+        }
+
+        annotatedClasses.forEach(element -> {
+            createBuilderSrcFile(element);
+        });
 
         return true;
     }
 
     private void createBuilderSrcFile(final Element annotatedElement) {
-        logger.debug("###WRITE BUILDER for: " + annotatedElement);
+        logger.debug("###WRITE ACCESSOR for: " + annotatedElement);
         final TypeElement typeElement = (TypeElement) annotatedElement;
         final Map<Name, TypeMirror> mapName2Type = new HashMap<>();
         final List<? extends Element> classMembers = annotatedElement.getEnclosedElements();
@@ -130,12 +134,12 @@ public class RadesAccessorProcessor extends AbstractProcessor {
         final String newInstanceName = simpleClassName.substring(0, 1).toLowerCase() + simpleClassName.substring(1);
         final String builderClassName = getBuilderClassName(specifiedBuilderClassName, packageName, qualifiedClassName);
         final String builderSimpleClassName = getBuilderSimpleClassName(specifiedBuilderClassName, simpleClassName);
-        logger.debug("###specifiedBuilderClassName: " + specifiedBuilderClassName);
-        logger.debug("###builderClassName: " + builderClassName);
-        logger.debug("###builderSimpleClassName: " + builderSimpleClassName);
+        logger.debug("###specifiedAccessorClassName: " + specifiedBuilderClassName);
+        logger.debug("###accessorClassName: " + builderClassName);
+        logger.debug("###accessorSimpleClassName: " + builderSimpleClassName);
 
         final Filer filer = processingEnv.getFiler();
-        try (final BuilderSrcFileCreator javaSrcFileCreator = javaModelService.getJavaSrcFileCreator(filer, builderClassName)) {
+        try (final AccessorSrcFileCreator javaSrcFileCreator = javaModelService.getJavaSrcFileCreator(filer, builderClassName)) {
 
             javaSrcFileCreator.init();
 
@@ -152,14 +156,14 @@ public class RadesAccessorProcessor extends AbstractProcessor {
             javaSrcFileCreator.writeConstructors(simpleClassName, newInstanceName, builderSimpleClassName);
 
 
-            javaSrcFileCreator.writeBuildMethod(simpleClassName, newInstanceName);
+//            javaSrcFileCreator.writeBuildMethod(simpleClassName, newInstanceName);
 
             mapFieldName2Type.entrySet().forEach(fields -> {
                 final String fieldName = fields.getKey().toString();
-                final String setterName = "with" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-                final String argumentType = getFullQualifiedTypeSignature(fields.getValue());
+                final String getterName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+                final String returnType = getFullQualifiedTypeSignature(fields.getValue());
 
-                javaSrcFileCreator.writeSetterMethod(newInstanceName, builderSimpleClassName, fieldName, setterName, argumentType);
+                javaSrcFileCreator.writeGetterMethod(newInstanceName, fieldName, getterName, returnType);
             });
 
             javaSrcFileCreator.writeClassFinal();
@@ -174,38 +178,38 @@ public class RadesAccessorProcessor extends AbstractProcessor {
         if (specifiedBuilderClassName != null) {
             return specifiedBuilderClassName;
         } else {
-            return simpleClassName + "Builder";
+            return simpleClassName + "Accessor";
         }
     }
 
     protected String getBuilderClassName(final String specifiedBuilderClassName, final String packageName, final String className) {
-        if(specifiedBuilderClassName!=null){
+        if (specifiedBuilderClassName != null) {
             return packageName + "." + specifiedBuilderClassName;
-        }else{
-            return className + "Builder";
+        } else {
+            return className + "Accessor";
         }
     }
 
     protected String getRadesAddBuilderSimpleClassName(final TypeElement typeElement, final String specifiedBuilderClassName) {
-        final RadesAddBuilder radesAddBuilder = typeElement.getAnnotation(RadesAddBuilder.class);
+        final RadesAddAccessor radesAddBuilder = typeElement.getAnnotation(RadesAddAccessor.class);
         if (specifiedBuilderClassName == null && radesAddBuilder != null) {
-            final String tmp = radesAddBuilder.simpleBuilderClassName().trim();
+            final String tmp = radesAddBuilder.simpleAccessorClassName().trim();
             if (tmp.length() > 0) {
                 return tmp;
             }
-            logger.debug("###1|SimpleBuilderClassName: " + specifiedBuilderClassName);
+            logger.debug("###1|SimpleAccessorClassName: " + specifiedBuilderClassName);
         }
         return specifiedBuilderClassName;
     }
 
     protected String getAddBuilderSimpleClassName(final TypeElement typeElement, final String specifiedBuilderClassName) {
-        final AddBuilder addBuilder = typeElement.getAnnotation(AddBuilder.class);
+        final AddAccessor addBuilder = typeElement.getAnnotation(AddAccessor.class);
         if (specifiedBuilderClassName == null && addBuilder != null) {
-            final String tmp = addBuilder.simpleBuilderClassName().trim();
+            final String tmp = addBuilder.simpleAccessorClassName().trim();
             if (tmp.length() > 0) {
                 return tmp;
             }
-            logger.debug("###2|SimpleBuilderClassName: " + specifiedBuilderClassName);
+            logger.debug("###2|SimpleAccessorClassName: " + specifiedBuilderClassName);
         }
         return specifiedBuilderClassName;
     }
