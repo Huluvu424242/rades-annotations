@@ -1,4 +1,4 @@
-package com.github.funthomas424242.rades.annotations.accessors;
+package com.github.funthomas424242.rades.annotations.accessors.processors;
 
 import com.github.funthomas424242.rades.annotations.accessors.model.java.AccessorInjectionServiceProvider;
 import com.github.funthomas424242.rades.annotations.accessors.model.java.AccessorSrcFileCreator;
