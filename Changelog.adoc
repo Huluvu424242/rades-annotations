@@ -6,6 +6,14 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 
 ## [Unreleased]
 ### Added
+- n/a
+### Changed
+- n/a
+### Removed
+- n/a
+
+## [2.0.0] ertiggestellt 2018-04-16
+### Added
 - https://github.com/FunThomas424242/rades-annotations/issues/43[issue #43] Compatibillity Tests erstellt
 - https://github.com/FunThomas424242/rades-annotations/issues/16[issue #16] @RadesAddAccessor und @AddAccessor bereitgestellt
 
