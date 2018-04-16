@@ -7,8 +7,10 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 ## [Unreleased]
 ### Added
 - n/a
+
 ### Changed
 - n/a
+
 ### Removed
 - n/a
 
