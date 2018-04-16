@@ -8,6 +8,7 @@
     <version>2.0.0</version>
     <packaging>jar</packaging>
     <description>Rades Annotationen zur Automatisierung</description>
+    <url>https://github.com/FunThomas424242/rades-annotations</url>
     <licenses>
         <license>
             <url>./LICENSE</url>

@@ -10,12 +10,12 @@
 
     <custom>
         <fluidoSkin>
-            <topBarEnabled>false</topBarEnabled>
-            <topBarContainerStyle>width: 90%;</topBarContainerStyle>
-            <sideBarEnabled>true</sideBarEnabled>
+            <topBarEnabled>true</topBarEnabled>
+            <topBarContainerStyle>width: 80%;</topBarContainerStyle>
+            <sideBarEnabled>false</sideBarEnabled>
             <gitHub>
                 <projectId>FunThomas424242/rades-annotations</projectId>
-                <ribbonOrientation>right</ribbonOrientation>
+                <ribbonOrientation>left</ribbonOrientation>
                 <ribbonColor>gray</ribbonColor>
             </gitHub>
             <ohloh>
@@ -25,7 +25,7 @@
             </ohloh>
             <googlePlusOne/>
             <facebookLike/>
-            <googleSearch/>
+            <googleSearch />
             <sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
         </fluidoSkin>
     </custom>
