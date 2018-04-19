@@ -174,9 +174,9 @@
                 </configuration>
                 <dependencies>
                     <!--<dependency>-->
-                        <!--<groupId>org.apache.maven.skins</groupId>-->
-                        <!--<artifactId>maven-fluido-skin</artifactId>-->
-                        <!--<version>1.7</version>-->
+                    <!--<groupId>org.apache.maven.skins</groupId>-->
+                    <!--<artifactId>maven-fluido-skin</artifactId>-->
+                    <!--<version>1.7</version>-->
                     <!--</dependency>-->
                     <dependency><!-- add Asciidoctor Doxia Parser Module -->
                         <groupId>org.asciidoctor</groupId>
@@ -275,5 +275,16 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <developers>
+        <developer>
+            <name>FunThomas424242 (Thomas Schubert)</name>
+            <email>funthomas424242@gmail.com</email>
+            <roles>
+                <role>project owner</role>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
 
 </project>
