@@ -8,6 +8,7 @@ else
     git pull
     git push origin :refs/tags/$1
     git tag -f $1
+    git pull
     git push origin master --tags
 fi
 
