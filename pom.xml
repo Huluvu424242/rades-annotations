@@ -51,17 +51,18 @@
             <scope>provided</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+        <!-- APIs von denen die Generate abhängen -->
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
             <version>2.0.1.Final</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.7</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.google.auto.service</groupId>
