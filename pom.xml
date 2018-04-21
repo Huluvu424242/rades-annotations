@@ -5,8 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.funthomas424242</groupId>
     <artifactId>rades-annotations</artifactId>
-    <version>2.0.1-SNAPSHOT</version>
+    <version>2.0.1</version>
     <packaging>jar</packaging>
+    <name>rades-annotations</name>
     <description>Rades Annotationen zur Automatisierung</description>
     <url>https://github.com/FunThomas424242/rades-annotations</url>
     <licenses>
