@@ -165,7 +165,9 @@ public class RadesAccessorProcessor extends AbstractProcessor {
                 javaSrcFileCreator.writeGetterMethod(newInstanceName, fieldName, getterName, returnType);
             });
 
+            javaSrcFileCreator.writeToStringMethod(newInstanceName);
             javaSrcFileCreator.writeClassFinal();
+
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage());
         } catch (Exception e) {

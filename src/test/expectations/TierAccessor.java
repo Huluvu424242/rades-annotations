@@ -16,4 +16,8 @@ public class TierAccessor {
         return this.tier;
     }
 
+    public String toString(){
+        return this.tier.toString();
+    }
+
 }

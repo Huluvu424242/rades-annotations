@@ -28,4 +28,8 @@ public class CarAccessor {
         return this.auto.motor;
     }
 
+    public String toString(){
+        return this.auto.toString();
+    }
+
 }
