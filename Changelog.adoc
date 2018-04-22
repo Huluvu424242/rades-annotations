@@ -14,6 +14,18 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 ### Removed
 - n/a
 
+## [2.1.0] fertiggestellt 2018-xx-xx
+### Added
+- https://github.com/FunThomas424242/rades-annotations/issues/56[issue #56] Abhängigkeit der Generate auf compile gesetzt
+- https://github.com/FunThomas424242/rades-annotations/issues/57[issue #57] Sources.jar wird vom Build bereitgestellt.
+- https://github.com/FunThomas424242/rades-annotations/issues/62[issue #62] Accessor um toString Delegation erweitert.
+
+### Changed
+- n/a
+
+### Removed
+- n/a
+
 ## [2.0.1] fertiggestellt 2018-04-21
 (Wartungsrelease für Endnutzer nicht relevant)
 ### Added
