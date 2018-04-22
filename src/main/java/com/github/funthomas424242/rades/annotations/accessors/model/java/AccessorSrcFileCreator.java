@@ -44,6 +44,13 @@ public class AccessorSrcFileCreator implements AutoCloseable {
         writer.println();
     }
 
+    public void writeToStringMethod(final String objectName) {
+        writer.println("    public String toString(){");
+        writer.println("        return this." +objectName +".toString();");
+        writer.println("    }");
+        writer.println();
+    }
+
     public void writeGetOriginalObject(final String simpleClassName,final String objectName){
         writer.println("    public "+simpleClassName+" to"+simpleClassName+"(){\n" +
                 "        return this."+objectName+";\n" +
