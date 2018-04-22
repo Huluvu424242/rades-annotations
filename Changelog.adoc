@@ -14,7 +14,7 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 ### Removed
 - n/a
 
-## [2.1.0] fertiggestellt 2018-xx-xx
+## [2.1.0] fertiggestellt 2018-04-22
 ### Added
 - https://github.com/FunThomas424242/rades-annotations/issues/56[issue #56] Abhängigkeit der Generate auf compile gesetzt
 - https://github.com/FunThomas424242/rades-annotations/issues/57[issue #57] Sources.jar wird vom Build bereitgestellt.
@@ -29,6 +29,7 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 ## [2.0.1] fertiggestellt 2018-04-21
 (Wartungsrelease für Endnutzer nicht relevant)
 ### Added
+
 - https://github.com/FunThomas424242/rades-annotations/issues/53[issue #53] Publizierung ins Maven Central
 
 ### Changed
