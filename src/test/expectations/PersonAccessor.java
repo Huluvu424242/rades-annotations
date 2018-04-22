@@ -40,4 +40,8 @@ public class PersonAccessor {
         return this.person.name;
     }
 
+    public String toString(){
+        return this.person.toString();
+    }
+
 }
