@@ -23,5 +23,18 @@ public class RadesAccessorCompatibillityTests {
         assertEquals("com.github.funthomas424242.rades.annotations.accessor", RadesAddAccessor.class.getPackage().getName());
     }
 
+    @Test
+    @DisplayName("Prüfe korrektes Package für @RadesNoAccessor")
+    @Tags({@Tag("compatibillity"), @Tag("accessor")})
+    public void testRadesNoAccessorPackageName() {
+        assertEquals("com.github.funthomas424242.rades.annotations.accessor", RadesNoAccessor.class.getPackage().getName());
+    }
+
+    @Test
+    @DisplayName("Prüfe korrektes Package für @NoAccessor")
+    @Tags({@Tag("compatibillity"), @Tag("accessor")})
+    public void testNoAccessorPackageName() {
+        assertEquals("com.github.funthomas424242.rades.annotations.accessor", NoAccessor.class.getPackage().getName());
+    }
 
 }

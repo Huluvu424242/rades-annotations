@@ -23,5 +23,19 @@ public class RadesBuilderCompatibillityTests {
         assertEquals("com.github.funthomas424242.rades.annotations.builder", RadesAddBuilder.class.getPackage().getName());
     }
 
+    @Test
+    @DisplayName("Prüfe korrektes Package für @RadesNoBuilder")
+    @Tags({@Tag("compatibillity"), @Tag("builder")})
+    public void testRadesNoBuilderPackageName() {
+        assertEquals("com.github.funthomas424242.rades.annotations.builder", RadesNoBuilder.class.getPackage().getName());
+    }
+
+    @Test
+    @DisplayName("Prüfe korrektes Package für @NoBuilder")
+    @Tags({@Tag("compatibillity"), @Tag("builder")})
+    public void testNoBuilderPackageName() {
+        assertEquals("com.github.funthomas424242.rades.annotations.builder", NoBuilder.class.getPackage().getName());
+    }
+
 
 }
