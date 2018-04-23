@@ -6,6 +6,8 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 @Generated(value="RadesBuilderProcessor"
         , date="2018-04-06T20:36:46.750"
@@ -38,6 +40,19 @@ public class FirmaAGErbauer {
         final Firma value = this.firma;
         this.firma = null;
         return value;
+    }
+
+    public <A> A build(Class<A> accessorClass) {
+        final Firma firma = this.build();
+        this.firma=firma;
+        try {
+            final Constructor<A> constructor=accessorClass.getDeclaredConstructor(Firma.class);
+            final A accessor = constructor.newInstance(firma);
+            this.firma=null;
+            return accessor;
+        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public FirmaAGErbauer withGruendungstag( final java.util.Date gruendungstag ) {

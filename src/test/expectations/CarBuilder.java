@@ -6,6 +6,8 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 @Generated(value="RadesBuilderProcessor"
         , date="2018-04-06T20:36:46.750"
@@ -38,6 +40,19 @@ public class CarBuilder {
         final Auto value = this.auto;
         this.auto = null;
         return value;
+    }
+
+    public <A> A build(Class<A> accessorClass) {
+        final Auto auto = this.build();
+        this.auto=auto;
+        try {
+            final Constructor<A> constructor=accessorClass.getDeclaredConstructor(Auto.class);
+            final A accessor = constructor.newInstance(auto);
+            this.auto=null;
+            return accessor;
+        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public CarBuilder withHersteller( final java.lang.String hersteller ) {
