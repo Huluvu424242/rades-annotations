@@ -21,12 +21,6 @@ public class BuilderSrcFileCreator implements AutoCloseable {
 
     }
 
-// Add if needed
-//    public JavaSrcFileCreator(final Filer filer, final Element packageElement, final CharSequence className) throws IOException {
-//        this.writer = new PrintWriter(filer.createSourceFile(className, packageElement).openWriter());
-//    }
-
-
     public void init() throws IOException {
         this.writer = new PrintWriter(filer.createSourceFile(className).openWriter());
     }
@@ -93,6 +87,15 @@ public class BuilderSrcFileCreator implements AutoCloseable {
         writer.println("        return value;");
         writer.println("    }");
         writer.println();
+        writer.println("    public <A> A build(Class<A> accessorClass) \n" +
+                "            throws NoSuchMethodException,  IllegalAccessException,  InstantiationException,  InvocationTargetException{\n" +
+                "        final "+simpleClassName+" "+objectName+" = this.build();\n" +
+                "        this."+objectName+"="+objectName+";\n" +
+                "        final Constructor<A> constructor=accessorClass.getDeclaredConstructor("+simpleClassName+".class);\n" +
+                "        final A accessor = constructor.newInstance("+objectName+");\n" +
+                "        this."+objectName+"=null;\n" +
+                "        return accessor;\n" +
+                "    }\n");
     }
 
     public void writeClassAnnotations(String className) {
@@ -114,6 +117,9 @@ public class BuilderSrcFileCreator implements AutoCloseable {
         writer.println("import javax.validation.Validation;");
         writer.println("import javax.validation.ValidationException;");
         writer.println("import javax.validation.Validator;");
+        writer.println("import java.lang.reflect.Constructor;");
+        writer.println("import java.lang.reflect.InvocationTargetException;");
+
         writer.println();
     }
 

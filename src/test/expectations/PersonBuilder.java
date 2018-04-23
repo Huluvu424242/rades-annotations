@@ -6,10 +6,12 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 @Generated(value="RadesBuilderProcessor"
-        , date="2018-04-06T20:36:46.750"
-        , comments="com.github.funthomas424242.domain.Person")
+, date="2018-04-06T20:36:46.750"
+, comments="com.github.funthomas424242.domain.Person")
 public class PersonBuilder {
 
     private Person person;
@@ -38,6 +40,16 @@ public class PersonBuilder {
         final Person value = this.person;
         this.person = null;
         return value;
+    }
+
+    public <A> A build(Class<A> accessorClass)
+            throws NoSuchMethodException,  IllegalAccessException,  InstantiationException,  InvocationTargetException{
+        final Person person = this.build();
+        this.person=person;
+        final Constructor<A> constructor=accessorClass.getDeclaredConstructor(Person.class);
+        final A accessor = constructor.newInstance(person);
+        this.person=null;
+        return accessor;
     }
 
     public PersonBuilder withGroesse( final int groesse ) {

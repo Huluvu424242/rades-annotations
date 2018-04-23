@@ -6,10 +6,12 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 @Generated(value="RadesBuilderProcessor"
-        , date="2018-04-06T20:36:46.750"
-        , comments="com.github.funthomas424242.domain.Firma")
+, date="2018-04-06T20:36:46.750"
+, comments="com.github.funthomas424242.domain.Firma")
 public class FirmaAGErbauer {
 
     private Firma firma;
@@ -38,6 +40,16 @@ public class FirmaAGErbauer {
         final Firma value = this.firma;
         this.firma = null;
         return value;
+    }
+
+    public <A> A build(Class<A> accessorClass)
+            throws NoSuchMethodException,  IllegalAccessException,  InstantiationException,  InvocationTargetException{
+        final Firma firma = this.build();
+        this.firma=firma;
+        final Constructor<A> constructor=accessorClass.getDeclaredConstructor(Firma.class);
+        final A accessor = constructor.newInstance(firma);
+        this.firma=null;
+        return accessor;
     }
 
     public FirmaAGErbauer withGruendungstag( final java.util.Date gruendungstag ) {
