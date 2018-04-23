@@ -21,12 +21,6 @@ public class BuilderSrcFileCreator implements AutoCloseable {
 
     }
 
-// Add if needed
-//    public JavaSrcFileCreator(final Filer filer, final Element packageElement, final CharSequence className) throws IOException {
-//        this.writer = new PrintWriter(filer.createSourceFile(className, packageElement).openWriter());
-//    }
-
-
     public void init() throws IOException {
         this.writer = new PrintWriter(filer.createSourceFile(className).openWriter());
     }
