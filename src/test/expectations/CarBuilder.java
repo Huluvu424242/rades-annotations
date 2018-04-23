@@ -10,8 +10,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 @Generated(value="RadesBuilderProcessor"
-        , date="2018-04-06T20:36:46.750"
-        , comments="com.github.funthomas424242.domain.Auto")
+, date="2018-04-06T20:36:46.750"
+, comments="com.github.funthomas424242.domain.Auto")
 public class CarBuilder {
 
     private Auto auto;
@@ -42,17 +42,14 @@ public class CarBuilder {
         return value;
     }
 
-    public <A> A build(Class<A> accessorClass) {
+    public <A> A build(Class<A> accessorClass)
+            throws NoSuchMethodException,  IllegalAccessException,  InstantiationException,  InvocationTargetException{
         final Auto auto = this.build();
         this.auto=auto;
-        try {
-            final Constructor<A> constructor=accessorClass.getDeclaredConstructor(Auto.class);
-            final A accessor = constructor.newInstance(auto);
-            this.auto=null;
-            return accessor;
-        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
+        final Constructor<A> constructor=accessorClass.getDeclaredConstructor(Auto.class);
+        final A accessor = constructor.newInstance(auto);
+        this.auto=null;
+        return accessor;
     }
 
     public CarBuilder withHersteller( final java.lang.String hersteller ) {

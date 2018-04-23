@@ -87,17 +87,14 @@ public class BuilderSrcFileCreator implements AutoCloseable {
         writer.println("        return value;");
         writer.println("    }");
         writer.println();
-        writer.println("    public <A> A build(Class<A> accessorClass) {\n" +
+        writer.println("    public <A> A build(Class<A> accessorClass) \n" +
+                "            throws NoSuchMethodException,  IllegalAccessException,  InstantiationException,  InvocationTargetException{\n" +
                 "        final "+simpleClassName+" "+objectName+" = this.build();\n" +
                 "        this."+objectName+"="+objectName+";\n" +
-                "        try {\n" +
-                "            final Constructor<A> constructor=accessorClass.getDeclaredConstructor("+simpleClassName+".class);\n" +
-                "            final A accessor = constructor.newInstance("+objectName+");\n" +
-                "            this."+objectName+"=null;\n" +
-                "            return accessor;\n" +
-                "        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {\n" +
-                "            throw new RuntimeException(e);\n" +
-                "        }\n" +
+                "        final Constructor<A> constructor=accessorClass.getDeclaredConstructor("+simpleClassName+".class);\n" +
+                "        final A accessor = constructor.newInstance("+objectName+");\n" +
+                "        this."+objectName+"=null;\n" +
+                "        return accessor;\n" +
                 "    }\n");
     }
 

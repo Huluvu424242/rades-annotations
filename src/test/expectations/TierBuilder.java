@@ -10,8 +10,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 @Generated(value="RadesBuilderProcessor"
-        , date="2018-04-06T20:36:46.750"
-        , comments="com.github.funthomas424242.domain.Tier")
+, date="2018-04-06T20:36:46.750"
+, comments="com.github.funthomas424242.domain.Tier")
 public class TierBuilder {
 
     private Tier tier;
@@ -42,16 +42,14 @@ public class TierBuilder {
         return value;
     }
 
-    public <A> A build(Class<A> accessorClass) {
+    public <A> A build(Class<A> accessorClass)
+            throws NoSuchMethodException,  IllegalAccessException,  InstantiationException,  InvocationTargetException{
         final Tier tier = this.build();
         this.tier=tier;
-        try {
-            final Constructor<A> constructor=accessorClass.getDeclaredConstructor(Tier.class);
-            final A accessor = constructor.newInstance(tier);
-            this.tier=null;
-            return accessor;
-        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
+        final Constructor<A> constructor=accessorClass.getDeclaredConstructor(Tier.class);
+        final A accessor = constructor.newInstance(tier);
+        this.tier=null;
+        return accessor;
     }
+
 }

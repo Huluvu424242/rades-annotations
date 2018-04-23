@@ -10,8 +10,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 @Generated(value="RadesBuilderProcessor"
-        , date="2018-04-06T20:36:46.750"
-        , comments="com.github.funthomas424242.domain.Firma")
+, date="2018-04-06T20:36:46.750"
+, comments="com.github.funthomas424242.domain.Firma")
 public class FirmaAGErbauer {
 
     private Firma firma;
@@ -42,17 +42,14 @@ public class FirmaAGErbauer {
         return value;
     }
 
-    public <A> A build(Class<A> accessorClass) {
+    public <A> A build(Class<A> accessorClass)
+            throws NoSuchMethodException,  IllegalAccessException,  InstantiationException,  InvocationTargetException{
         final Firma firma = this.build();
         this.firma=firma;
-        try {
-            final Constructor<A> constructor=accessorClass.getDeclaredConstructor(Firma.class);
-            final A accessor = constructor.newInstance(firma);
-            this.firma=null;
-            return accessor;
-        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-            throw new RuntimeException(e);
-        }
+        final Constructor<A> constructor=accessorClass.getDeclaredConstructor(Firma.class);
+        final A accessor = constructor.newInstance(firma);
+        this.firma=null;
+        return accessor;
     }
 
     public FirmaAGErbauer withGruendungstag( final java.util.Date gruendungstag ) {
