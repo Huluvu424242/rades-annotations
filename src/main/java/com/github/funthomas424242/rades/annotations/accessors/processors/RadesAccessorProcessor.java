@@ -170,6 +170,7 @@ public class RadesAccessorProcessor extends AbstractProcessor {
                     javaSrcFileCreator.writeGetterMethod(newInstanceName, memberName, getterName, memberFullQualifiedTypName);
                 } else if (element.getKind() == ElementKind.METHOD) {
                     logger.debug("###Methode: " + memberName);
+                    // TODO
                 }
             });
 
