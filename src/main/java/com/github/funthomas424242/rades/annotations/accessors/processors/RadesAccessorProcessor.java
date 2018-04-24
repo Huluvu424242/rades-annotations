@@ -106,7 +106,7 @@ public class RadesAccessorProcessor extends AbstractProcessor {
     private void createAccessorSrcFile(final Element annotatedElement) {
         logger.debug("###WRITE ACCESSOR for: " + annotatedElement);
         final TypeElement typeElement = (TypeElement) annotatedElement;
-        final Map<Name, Element> mapName2Type = new HashMap<>();
+        final Map<Name, Element> mapName2Element = new HashMap<>();
         final List<? extends Element> classMembers = annotatedElement.getEnclosedElements();
         for (final Element classMember : classMembers) {
             if (classMember.getKind().isField() || classMember.getKind() == ElementKind.METHOD) {
@@ -115,16 +115,16 @@ public class RadesAccessorProcessor extends AbstractProcessor {
                 final Set<Modifier> fieldModifiers = classMember.getModifiers();
                 if (!fieldModifiers.contains(Modifier.PRIVATE)) {
                     final Name fieldName = classMember.getSimpleName();
-                    mapName2Type.put(fieldName, classMember);
+                    mapName2Element.put(fieldName, classMember);
                 }
 
             }
         }
 
-        writeAccessorFile(typeElement, mapName2Type);
+        writeAccessorFile(typeElement, mapName2Element);
     }
 
-    protected void writeAccessorFile(final TypeElement typeElement, Map<Name, Element> mapFieldName2Type) {
+    protected void writeAccessorFile(final TypeElement typeElement, Map<Name, Element> mapMemberName2Element) {
 
         String specifiedAccessorClassName = null;
         specifiedAccessorClassName = getRadesAddAccessorSimpleClassName(typeElement, specifiedAccessorClassName);
@@ -159,7 +159,7 @@ public class RadesAccessorProcessor extends AbstractProcessor {
 
             javaSrcFileCreator.writeGetOriginalObject(simpleClassName, newInstanceName);
 
-            mapFieldName2Type.entrySet().forEach(entry -> {
+            mapMemberName2Element.entrySet().forEach(entry -> {
                 final Element element = entry.getValue();
                 final TypeMirror memberType = element.asType();
                 final String memberName = entry.getKey().toString();
@@ -177,9 +177,7 @@ public class RadesAccessorProcessor extends AbstractProcessor {
             javaSrcFileCreator.writeToStringMethod(newInstanceName);
             javaSrcFileCreator.writeClassFinal();
 
-        } catch (IOException e) {
-            logger.error(e.getLocalizedMessage());
-        } catch (Exception e) {
+        } catch ( Exception e) {
             logger.error(e.getLocalizedMessage());
         }
     }
