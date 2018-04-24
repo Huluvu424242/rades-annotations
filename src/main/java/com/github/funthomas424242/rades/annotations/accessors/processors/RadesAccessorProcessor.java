@@ -106,23 +106,25 @@ public class RadesAccessorProcessor extends AbstractProcessor {
     private void createAccessorSrcFile(final Element annotatedElement) {
         logger.debug("###WRITE ACCESSOR for: " + annotatedElement);
         final TypeElement typeElement = (TypeElement) annotatedElement;
-        final Map<Name, TypeMirror> mapName2Type = new HashMap<>();
+        final Map<Name, Element> mapName2Type = new HashMap<>();
         final List<? extends Element> classMembers = annotatedElement.getEnclosedElements();
         for (final Element classMember : classMembers) {
-            if (classMember.getKind().isField()) {
+            if (classMember.getKind().isField() || classMember.getKind() == ElementKind.METHOD) {
+
+                // Felder und Methoden in Map merken
                 final Set<Modifier> fieldModifiers = classMember.getModifiers();
                 if (!fieldModifiers.contains(Modifier.PRIVATE)) {
                     final Name fieldName = classMember.getSimpleName();
-                    final TypeMirror fieldTypeMirror = classMember.asType();
-                    mapName2Type.put(fieldName, fieldTypeMirror);
+                    mapName2Type.put(fieldName, classMember);
                 }
+
             }
         }
 
         writeAccessorFile(typeElement, mapName2Type);
     }
 
-    protected void writeAccessorFile(final TypeElement typeElement, Map<Name, TypeMirror> mapFieldName2Type) {
+    protected void writeAccessorFile(final TypeElement typeElement, Map<Name, Element> mapFieldName2Type) {
 
         String specifiedAccessorClassName = null;
         specifiedAccessorClassName = getRadesAddAccessorSimpleClassName(typeElement, specifiedAccessorClassName);
@@ -155,14 +157,20 @@ public class RadesAccessorProcessor extends AbstractProcessor {
 
             javaSrcFileCreator.writeConstructors(simpleClassName, newInstanceName, accessorSimpleClassName);
 
-            javaSrcFileCreator.writeGetOriginalObject(simpleClassName,newInstanceName);
+            javaSrcFileCreator.writeGetOriginalObject(simpleClassName, newInstanceName);
 
-            mapFieldName2Type.entrySet().forEach(fields -> {
-                final String fieldName = fields.getKey().toString();
-                final String getterName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-                final String returnType = getFullQualifiedTypeSignature(fields.getValue());
+            mapFieldName2Type.entrySet().forEach(entry -> {
+                final Element element = entry.getValue();
+                final TypeMirror memberType = element.asType();
+                final String memberName = entry.getKey().toString();
+                final String memberFullQualifiedTypName = getFullQualifiedTypeSignature(memberType);
 
-                javaSrcFileCreator.writeGetterMethod(newInstanceName, fieldName, getterName, returnType);
+                if (element.getKind().isField()) {
+                    final String getterName = "get" + memberName.substring(0, 1).toUpperCase() + memberName.substring(1);
+                    javaSrcFileCreator.writeGetterMethod(newInstanceName, memberName, getterName, memberFullQualifiedTypName);
+                } else if (element.getKind() == ElementKind.METHOD) {
+                    logger.debug("###Methode: " + memberName);
+                }
             });
 
             javaSrcFileCreator.writeToStringMethod(newInstanceName);
