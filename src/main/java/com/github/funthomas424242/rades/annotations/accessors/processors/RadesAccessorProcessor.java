@@ -20,6 +20,7 @@ import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
@@ -169,7 +170,20 @@ public class RadesAccessorProcessor extends AbstractProcessor {
                     final String getterName = "get" + memberName.substring(0, 1).toUpperCase() + memberName.substring(1);
                     javaSrcFileCreator.writeGetterMethod(newInstanceName, memberName, getterName, memberFullQualifiedTypName);
                 } else if (element.getKind() == ElementKind.METHOD) {
-                    logger.debug("###Methode: " + memberName);
+                    logger.debug("###Methode: " + element.toString());
+                    if(element instanceof ExecutableElement){
+                        final ExecutableElement executableElement = (ExecutableElement) element;
+                        javaSrcFileCreator.writeGenerateMethod(newInstanceName,executableElement);
+
+//
+//                        logger.debug("###execElement: "+executableElement.toString());
+//                        logger.debug("###returnType: "+executableElement.getReturnType().toString());
+//                        executableElement.getParameters().forEach( parameter ->{
+//
+//                            logger.debug("###Parameter: "+parameter.asType().toString());
+//                            logger.debug("###Parameter: "+parameter.getSimpleName().toString());
+//                                });
+                    }
                     // TODO
                 }
             });

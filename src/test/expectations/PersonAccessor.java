@@ -2,8 +2,8 @@ package com.github.funthomas424242.domain;
 import javax.annotation.Generated;
 
 @Generated(value="RadesAccessorProcessor"
-        , date="2018-04-06T20:36:46.750"
-        , comments="com.github.funthomas424242.domain.Person")
+, date="2018-04-06T20:36:46.750"
+, comments="com.github.funthomas424242.domain.Person")
 public class PersonAccessor {
 
     protected final Person person;
@@ -16,12 +16,24 @@ public class PersonAccessor {
         return this.person;
     }
 
+    public int getId(){
+        return this.person.getId();
+    }
+
     public int getGroesse( ) {
         return this.person.groesse;
     }
 
     public java.lang.String getVorname( ) {
         return this.person.vorname;
+    }
+
+    public void setId(final int id){
+        this.person.setId(id);
+    }
+
+    public void removeLieblingsfarbe(final com.github.funthomas424242.domain.Person.Farbe farbe){
+        this.person.removeLieblingsfarbe(farbe);
     }
 
     public java.util.Map<java.lang.String,com.github.funthomas424242.domain.Person> getFreunde( ) {
@@ -32,6 +44,10 @@ public class PersonAccessor {
         return this.person.lieblingsfarben;
     }
 
+    public int computeAge(){
+        return this.person.computeAge();
+    }
+
     public java.time.LocalDate getBirthday( ) {
         return this.person.birthday;
     }
@@ -40,8 +56,16 @@ public class PersonAccessor {
         return this.person.name;
     }
 
+    public void addLieblingsfarbe(final com.github.funthomas424242.domain.Person.Farbe farbe){
+        this.person.addLieblingsfarbe(farbe);
+    }
+
     public String toString(){
         return this.person.toString();
+    }
+
+}
+return this.person.toString();
     }
 
 }

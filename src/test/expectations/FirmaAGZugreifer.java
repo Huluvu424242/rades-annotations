@@ -2,8 +2,8 @@ package com.github.funthomas424242.domain;
 import javax.annotation.Generated;
 
 @Generated(value="RadesAccessorProcessor"
-        , date="2018-04-06T20:36:46.750"
-        , comments="com.github.funthomas424242.domain.Firma")
+, date="2018-04-06T20:36:46.750"
+, comments="com.github.funthomas424242.domain.Firma")
 public class FirmaAGZugreifer {
 
     protected final Firma firma;
@@ -20,8 +20,16 @@ public class FirmaAGZugreifer {
         return this.firma.gruendungstag;
     }
 
+    public void setId(final int id){
+        this.firma.setId(id);
+    }
+
     public java.lang.String getBetriebeNr( ) {
         return this.firma.betriebeNr;
+    }
+
+    public int getId(){
+        return this.firma.getId();
     }
 
     public java.lang.String getName( ) {
