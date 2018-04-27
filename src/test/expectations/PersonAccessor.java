@@ -20,6 +20,10 @@ public class PersonAccessor {
         return this.person.getId();
     }
 
+    public void addFreund(final java.lang.String alias, final com.github.funthomas424242.domain.Person freund){
+        this.person.addFreund(alias, freund);
+    }
+
     public int getGroesse( ) {
         return this.person.groesse;
     }

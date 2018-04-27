@@ -71,4 +71,8 @@ public class Person {
     public void removeLieblingsfarbe(final Farbe farbe){
         this.lieblingsfarben.remove(farbe);
     }
+
+    public void addFreund(final String alias, final Person freund){
+        this.freunde.put(alias,freund);
+    }
 }
