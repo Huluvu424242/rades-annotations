@@ -102,7 +102,7 @@ public class RadesBuilderIntegrationTest {
     public void testPersonMitInvalidAccessor() {
         Executable closureContainingCodeToTest = () -> {
 
-            final TierAccessor person = new PersonBuilder()
+            new PersonBuilder()
                     .withName("Mustermann")
                     .withVorname("Max")
                     .withBirthday(LocalDate.of(1968, 12, 25))
