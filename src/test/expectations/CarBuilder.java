@@ -1,4 +1,5 @@
 package com.github.funthomas424242.domain;
+import com.github.funthomas424242.rades.annotations.accessors.InvalidAccessorException;
 import javax.annotation.Generated;
 import org.apache.commons.lang3.StringUtils;
 
@@ -42,14 +43,17 @@ public class CarBuilder {
         return value;
     }
 
-    public <A> A build(Class<A> accessorClass)
-            throws NoSuchMethodException,  IllegalAccessException,  InstantiationException,  InvocationTargetException{
+    public <A> A build(Class<A> accessorClass) {
         final Auto auto = this.build();
         this.auto=auto;
-        final Constructor<A> constructor=accessorClass.getDeclaredConstructor(Auto.class);
-        final A accessor = constructor.newInstance(auto);
-        this.auto=null;
-        return accessor;
+        try{
+            final Constructor<A> constructor=accessorClass.getDeclaredConstructor(Auto.class);
+            final A accessor = constructor.newInstance(auto);
+            this.auto=null;
+            return accessor;
+        }catch(NoSuchMethodException | IllegalAccessException|  InstantiationException|  InvocationTargetException ex){
+            throw new InvalidAccessorException("ungültige Accessorklasse übergeben",ex);
+        }
     }
 
     public CarBuilder withHersteller( final java.lang.String hersteller ) {

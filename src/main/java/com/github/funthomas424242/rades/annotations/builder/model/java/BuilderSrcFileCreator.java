@@ -87,14 +87,17 @@ public class BuilderSrcFileCreator implements AutoCloseable {
         writer.println("        return value;");
         writer.println("    }");
         writer.println();
-        writer.println("    public <A> A build(Class<A> accessorClass) \n" +
-                "            throws NoSuchMethodException,  IllegalAccessException,  InstantiationException,  InvocationTargetException{\n" +
+        writer.println("    public <A> A build(Class<A> accessorClass) {\n" +
                 "        final "+simpleClassName+" "+objectName+" = this.build();\n" +
                 "        this."+objectName+"="+objectName+";\n" +
-                "        final Constructor<A> constructor=accessorClass.getDeclaredConstructor("+simpleClassName+".class);\n" +
-                "        final A accessor = constructor.newInstance("+objectName+");\n" +
-                "        this."+objectName+"=null;\n" +
-                "        return accessor;\n" +
+                "        try{\n" +
+                "            final Constructor<A> constructor=accessorClass.getDeclaredConstructor("+simpleClassName+".class);\n" +
+                "            final A accessor = constructor.newInstance("+objectName+");\n" +
+                "            this."+objectName+"=null;\n" +
+                "            return accessor;\n" +
+                "        }catch(NoSuchMethodException | IllegalAccessException|  InstantiationException|  InvocationTargetException ex){\n" +
+                "            throw new InvalidAccessorException(\"ungültige Accessorklasse übergeben\",ex);\n" +
+                "        }\n" +
                 "    }\n");
     }
 
@@ -111,6 +114,7 @@ public class BuilderSrcFileCreator implements AutoCloseable {
     }
 
     public void writeImports() {
+        writer.println("import com.github.funthomas424242.rades.annotations.accessors.InvalidAccessorException;");
         writer.println("import javax.annotation.Generated;");
         writer.println("import org.apache.commons.lang3.StringUtils;\n");
         writer.println("import javax.validation.ConstraintViolation;");

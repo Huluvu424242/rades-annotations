@@ -1,6 +1,7 @@
 package com.github.funthomas424242.rades.annotations.accessors.model.java;
 
 import javax.annotation.processing.Filer;
+import javax.lang.model.element.ExecutableElement;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -39,21 +40,55 @@ public class AccessorSrcFileCreator implements AutoCloseable {
         writer.print(getterName);
 
         writer.println("( ) { ");
-        writer.println("        return this." +objectName +"."+ fieldName + ";");
+        writer.println("        return this." + objectName + "." + fieldName + ";");
+        writer.println("    }");
+        writer.println();
+    }
+
+    public void writeGenerateMethod(final String objectName, final ExecutableElement methode) {
+        final String methodName = methode.getSimpleName().toString();
+        final String returnType = methode.getReturnType().toString();
+        writer.print("    public " + returnType + " " + methodName + "(");
+        final int[] i = {1};
+        methode.getParameters().forEach(parameter -> {
+            if (i[0] != 1) {
+                writer.append(", ");
+            }
+            i[0]++;
+            final String parameterType = parameter.asType().toString();
+            final String parameterName = parameter.getSimpleName().toString();
+            writer.print("final " + parameterType + " " + parameterName);
+        });
+        writer.println("){");
+        writer.print("        ");
+        if (!"void".equals(returnType)) {
+            writer.print("return ");
+        }
+        writer.print("this." + objectName + "." + methodName + "(");
+        i[0] = 1;
+        methode.getParameters().forEach(parameter -> {
+            if (i[0] != 1) {
+                writer.append(", ");
+            }
+            i[0]++;
+            final String parameterName = parameter.getSimpleName().toString();
+            writer.print(parameterName);
+        });
+        writer.println(");");
         writer.println("    }");
         writer.println();
     }
 
     public void writeToStringMethod(final String objectName) {
         writer.println("    public String toString(){");
-        writer.println("        return this." +objectName +".toString();");
+        writer.println("        return this." + objectName + ".toString();");
         writer.println("    }");
         writer.println();
     }
 
-    public void writeGetOriginalObject(final String simpleClassName,final String objectName){
-        writer.println("    public "+simpleClassName+" to"+simpleClassName+"(){\n" +
-                "        return this."+objectName+";\n" +
+    public void writeGetOriginalObject(final String simpleClassName, final String objectName) {
+        writer.println("    public " + simpleClassName + " to" + simpleClassName + "(){\n" +
+                "        return this." + objectName + ";\n" +
                 "    }\n");
     }
 
@@ -74,7 +109,6 @@ public class AccessorSrcFileCreator implements AutoCloseable {
         writer.println("public class " + accessorSimpleClassName + " {");
         writer.println();
     }
-
 
 
     public void writeClassAnnotations(String className) {

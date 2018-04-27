@@ -1,6 +1,7 @@
 package com.github.funthomas424242.domain;
 
 import com.github.funthomas424242.rades.annotations.accessors.RadesAddAccessor;
+import com.github.funthomas424242.rades.annotations.accessors.RadesNoAccessor;
 import com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder;
 
 import javax.validation.constraints.NotNull;
@@ -37,6 +38,7 @@ public class Person {
 
     public int groesse;
 
+    @RadesNoAccessor
     protected Set<Farbe> lieblingsfarben;
 
     protected Map<String, Person> freunde;
@@ -58,4 +60,19 @@ public class Person {
         return period.getYears();
     }
 
+//    public Set<Farbe> getLieblingsfarben() {
+//        return lieblingsfarben;
+//    }
+
+    public void addLieblingsfarbe(final Farbe farbe){
+        this.lieblingsfarben.add(farbe);
+    }
+
+    public void removeLieblingsfarbe(final Farbe farbe){
+        this.lieblingsfarben.remove(farbe);
+    }
+
+    public void addFreund(final String alias, final Person freund){
+        this.freunde.put(alias,freund);
+    }
 }

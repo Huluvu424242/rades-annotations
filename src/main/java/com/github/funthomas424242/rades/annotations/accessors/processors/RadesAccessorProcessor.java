@@ -20,12 +20,12 @@ import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -106,23 +106,25 @@ public class RadesAccessorProcessor extends AbstractProcessor {
     private void createAccessorSrcFile(final Element annotatedElement) {
         logger.debug("###WRITE ACCESSOR for: " + annotatedElement);
         final TypeElement typeElement = (TypeElement) annotatedElement;
-        final Map<Name, TypeMirror> mapName2Type = new HashMap<>();
+        final Map<Name, Element> mapName2Element = new HashMap<>();
         final List<? extends Element> classMembers = annotatedElement.getEnclosedElements();
         for (final Element classMember : classMembers) {
-            if (classMember.getKind().isField()) {
+            if (classMember.getKind().isField() || classMember.getKind() == ElementKind.METHOD) {
+
+                // Felder und Methoden in Map merken
                 final Set<Modifier> fieldModifiers = classMember.getModifiers();
                 if (!fieldModifiers.contains(Modifier.PRIVATE)) {
                     final Name fieldName = classMember.getSimpleName();
-                    final TypeMirror fieldTypeMirror = classMember.asType();
-                    mapName2Type.put(fieldName, fieldTypeMirror);
+                    mapName2Element.put(fieldName, classMember);
                 }
+
             }
         }
 
-        writeAccessorFile(typeElement, mapName2Type);
+        writeAccessorFile(typeElement, mapName2Element);
     }
 
-    protected void writeAccessorFile(final TypeElement typeElement, Map<Name, TypeMirror> mapFieldName2Type) {
+    protected void writeAccessorFile(final TypeElement typeElement, Map<Name, Element> mapMemberName2Element) {
 
         String specifiedAccessorClassName = null;
         specifiedAccessorClassName = getRadesAddAccessorSimpleClassName(typeElement, specifiedAccessorClassName);
@@ -155,22 +157,40 @@ public class RadesAccessorProcessor extends AbstractProcessor {
 
             javaSrcFileCreator.writeConstructors(simpleClassName, newInstanceName, accessorSimpleClassName);
 
-            javaSrcFileCreator.writeGetOriginalObject(simpleClassName,newInstanceName);
+            javaSrcFileCreator.writeGetOriginalObject(simpleClassName, newInstanceName);
 
-            mapFieldName2Type.entrySet().forEach(fields -> {
-                final String fieldName = fields.getKey().toString();
-                final String getterName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-                final String returnType = getFullQualifiedTypeSignature(fields.getValue());
+            mapMemberName2Element.entrySet().forEach(entry -> {
+                final Element element = entry.getValue();
+                final TypeMirror memberType = element.asType();
+                final String memberName = entry.getKey().toString();
+                final String memberFullQualifiedTypName = getFullQualifiedTypeSignature(memberType);
 
-                javaSrcFileCreator.writeGetterMethod(newInstanceName, fieldName, getterName, returnType);
+                if (element.getKind().isField()) {
+                    final String getterName = "get" + memberName.substring(0, 1).toUpperCase() + memberName.substring(1);
+                    javaSrcFileCreator.writeGetterMethod(newInstanceName, memberName, getterName, memberFullQualifiedTypName);
+                } else if (element.getKind() == ElementKind.METHOD) {
+                    logger.debug("###Methode: " + element.toString());
+                    if(element instanceof ExecutableElement){
+                        final ExecutableElement executableElement = (ExecutableElement) element;
+                        javaSrcFileCreator.writeGenerateMethod(newInstanceName,executableElement);
+
+//
+//                        logger.debug("###execElement: "+executableElement.toString());
+//                        logger.debug("###returnType: "+executableElement.getReturnType().toString());
+//                        executableElement.getParameters().forEach( parameter ->{
+//
+//                            logger.debug("###Parameter: "+parameter.asType().toString());
+//                            logger.debug("###Parameter: "+parameter.getSimpleName().toString());
+//                                });
+                    }
+                    // TODO
+                }
             });
 
             javaSrcFileCreator.writeToStringMethod(newInstanceName);
             javaSrcFileCreator.writeClassFinal();
 
-        } catch (IOException e) {
-            logger.error(e.getLocalizedMessage());
-        } catch (Exception e) {
+        } catch ( Exception e) {
             logger.error(e.getLocalizedMessage());
         }
     }

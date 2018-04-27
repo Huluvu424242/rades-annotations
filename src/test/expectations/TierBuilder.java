@@ -1,4 +1,5 @@
 package com.github.funthomas424242.domain;
+import com.github.funthomas424242.rades.annotations.accessors.InvalidAccessorException;
 import javax.annotation.Generated;
 import org.apache.commons.lang3.StringUtils;
 
@@ -42,14 +43,17 @@ public class TierBuilder {
         return value;
     }
 
-    public <A> A build(Class<A> accessorClass)
-            throws NoSuchMethodException,  IllegalAccessException,  InstantiationException,  InvocationTargetException{
+    public <A> A build(Class<A> accessorClass) {
         final Tier tier = this.build();
         this.tier=tier;
-        final Constructor<A> constructor=accessorClass.getDeclaredConstructor(Tier.class);
-        final A accessor = constructor.newInstance(tier);
-        this.tier=null;
-        return accessor;
+        try{
+            final Constructor<A> constructor=accessorClass.getDeclaredConstructor(Tier.class);
+            final A accessor = constructor.newInstance(tier);
+            this.tier=null;
+            return accessor;
+        }catch(NoSuchMethodException | IllegalAccessException|  InstantiationException|  InvocationTargetException ex){
+            throw new InvalidAccessorException("ungültige Accessorklasse übergeben",ex);
+        }
     }
 
 }
