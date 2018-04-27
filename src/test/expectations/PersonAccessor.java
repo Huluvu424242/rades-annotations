@@ -65,7 +65,3 @@ public class PersonAccessor {
     }
 
 }
-return this.person.toString();
-    }
-
-}

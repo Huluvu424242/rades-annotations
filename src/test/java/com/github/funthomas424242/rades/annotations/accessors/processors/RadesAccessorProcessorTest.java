@@ -27,21 +27,24 @@ public class RadesAccessorProcessorTest {
     protected final String NONE_WRITEABLE_ACCESSOR_JAVA = "package com.github.funthomas424242.domain;\n" +
             "import javax.annotation.Generated;\n" +
             "\n" +
-            "\n" +
             "@Generated(value=\"RadesAccessorProcessor\"\n" +
+            ", date=\"2018-04-27T20:24:57.102\"\n" +
             ", comments=\"com.github.funthomas424242.domain.NoneWriteable\")\n" +
             "public class NoneWriteableAccessor {\n" +
             "\n" +
-            "    private NoneWriteable noneWriteable;\n" +
-            "\n" +
-            "    public NoneWriteableAccessor(){\n" +
-            "        this(new NoneWriteable());\n" +
-            "    }\n" +
+            "    protected final NoneWriteable noneWriteable;\n" +
             "\n" +
             "    public NoneWriteableAccessor( final NoneWriteable noneWriteable ){\n" +
             "        this.noneWriteable = noneWriteable;\n" +
             "    }\n" +
             "\n" +
+            "    public NoneWriteable toNoneWriteable(){\n" +
+            "        return this.noneWriteable;\n" +
+            "    }\n" +
+            "\n" +
+            "    public String toString(){\n" +
+            "        return this.noneWriteable.toString();\n" +
+            "    }\n" +
             "\n" +
             "}\n";
 
