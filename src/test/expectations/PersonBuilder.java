@@ -1,8 +1,9 @@
 package com.github.funthomas424242.domain;
+
 import com.github.funthomas424242.rades.annotations.accessors.InvalidAccessorException;
-import javax.annotation.Generated;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.annotation.Generated;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.ValidationException;
@@ -10,18 +11,18 @@ import javax.validation.Validator;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-@Generated(value="RadesBuilderProcessor"
-, date="2018-04-06T20:36:46.750"
-, comments="com.github.funthomas424242.domain.Person")
+@Generated(value = "RadesBuilderProcessor"
+        , date = "2018-04-06T20:36:46.750"
+        , comments = "com.github.funthomas424242.domain.Person")
 public class PersonBuilder {
 
     private Person person;
 
-    public PersonBuilder(){
+    public PersonBuilder() {
         this(new Person());
     }
 
-    public PersonBuilder( final Person person ){
+    public PersonBuilder(final Person person) {
         this.person = person;
     }
 
@@ -45,44 +46,39 @@ public class PersonBuilder {
 
     public <A> A build(Class<A> accessorClass) {
         final Person person = this.build();
-        this.person=person;
-        try{
-            final Constructor<A> constructor=accessorClass.getDeclaredConstructor(Person.class);
+        this.person = person;
+        try {
+            final Constructor<A> constructor = accessorClass.getDeclaredConstructor(Person.class);
             final A accessor = constructor.newInstance(person);
-            this.person=null;
+            this.person = null;
             return accessor;
-        }catch(NoSuchMethodException | IllegalAccessException|  InstantiationException|  InvocationTargetException ex){
-            throw new InvalidAccessorException("ungültige Accessorklasse übergeben",ex);
+        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException ex) {
+            throw new InvalidAccessorException("ungültige Accessorklasse übergeben", ex);
         }
     }
 
-    public PersonBuilder withVorname( final java.lang.String vorname ) {
+    public PersonBuilder withGroesse(final int groesse) {
+        this.person.groesse = groesse;
+        return this;
+    }
+
+    public PersonBuilder withVorname(final java.lang.String vorname) {
         this.person.vorname = vorname;
         return this;
     }
 
-    public PersonBuilder withFreunde( final java.util.Map<java.lang.String,com.github.funthomas424242.domain.Person> freunde ) {
-        this.person.freunde = freunde;
-        return this;
-    }
-
-    public PersonBuilder withLieblingsfarben( final java.util.Set<com.github.funthomas424242.domain.Person.Farbe> lieblingsfarben ) {
-        this.person.lieblingsfarben = lieblingsfarben;
-        return this;
-    }
-
-    public PersonBuilder withBirthday( final java.time.LocalDate birthday ) {
+    public PersonBuilder withBirthday(final java.time.LocalDate birthday) {
         this.person.birthday = birthday;
         return this;
     }
 
-    public PersonBuilder withName( final java.lang.String name ) {
-        this.person.name = name;
+    public PersonBuilder withFreunde(final java.util.Map<java.lang.String, com.github.funthomas424242.domain.Person> freunde) {
+        this.person.freunde = freunde;
         return this;
     }
 
-    public PersonBuilder withGroesse( final int groesse ) {
-        this.person.groesse = groesse;
+    public PersonBuilder withName(final java.lang.String name) {
+        this.person.name = name;
         return this;
     }
 

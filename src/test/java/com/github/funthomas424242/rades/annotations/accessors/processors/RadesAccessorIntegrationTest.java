@@ -23,7 +23,6 @@ import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
@@ -110,8 +109,8 @@ public class RadesAccessorIntegrationTest {
                 .withVorname("Max")
                 .withBirthday(LocalDate.of(1968, 12, 25))
                 .withGroesse(175)
-                .withLieblingsfarben((HashSet<Person.Farbe>) Sets.newHashSet(Person.Farbe.BLAU))
                 .build();
+        person.addLieblingsfarbe(Person.Farbe.BLAU);
         assertNotNull(person);
         final PersonAccessor accessor = new PersonAccessor(person);
         assertEquals("Mustermann", accessor.getName());
