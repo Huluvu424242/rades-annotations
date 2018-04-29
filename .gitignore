@@ -26,5 +26,6 @@ hs_err_pid*
 
 # IDEs
 /.idea
+/bintray
 *.iml
 

@@ -2,10 +2,11 @@ package com.github.funthomas424242.rades.annotations.builder.processors;
 
 import com.github.funthomas424242.rades.annotations.builder.AddBuilder;
 import com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder;
-import com.github.funthomas424242.rades.annotations.builder.model.java.BuilderSrcFileCreator;
-import com.github.funthomas424242.rades.annotations.lang.java.JavaModelHelper;
+import com.github.funthomas424242.rades.annotations.builder.RadesNoBuilder;
 import com.github.funthomas424242.rades.annotations.builder.model.java.BuilderInjectionService;
 import com.github.funthomas424242.rades.annotations.builder.model.java.BuilderInjectionServiceProvider;
+import com.github.funthomas424242.rades.annotations.builder.model.java.BuilderSrcFileCreator;
+import com.github.funthomas424242.rades.annotations.lang.java.JavaModelHelper;
 import com.google.auto.service.AutoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,23 +108,22 @@ public class RadesBuilderProcessor extends AbstractProcessor {
     private void createBuilderSrcFile(final Element annotatedElement) {
         logger.debug("###WRITE BUILDER for: " + annotatedElement);
         final TypeElement typeElement = (TypeElement) annotatedElement;
-        final Map<Name, TypeMirror> mapName2Type = new HashMap<>();
+        final Map<Name, Element> mapName2Element = new HashMap<>();
         final List<? extends Element> classMembers = annotatedElement.getEnclosedElements();
         for (final Element classMember : classMembers) {
             if (classMember.getKind().isField()) {
                 final Set<Modifier> fieldModifiers = classMember.getModifiers();
                 if (!fieldModifiers.contains(Modifier.PRIVATE)) {
                     final Name fieldName = classMember.getSimpleName();
-                    final TypeMirror fieldTypeMirror = classMember.asType();
-                    mapName2Type.put(fieldName, fieldTypeMirror);
+                    mapName2Element.put(fieldName, classMember);
                 }
             }
         }
 
-        writeBuilderFile(typeElement, mapName2Type);
+        writeBuilderFile(typeElement, mapName2Element);
     }
 
-    protected void writeBuilderFile(final TypeElement typeElement, Map<Name, TypeMirror> mapFieldName2Type) {
+    protected void writeBuilderFile(final TypeElement typeElement, Map<Name, Element> mapFieldName2Element) {
 
         String specifiedBuilderClassName = null;
         specifiedBuilderClassName = getRadesAddBuilderSimpleClassName(typeElement, specifiedBuilderClassName);
@@ -159,12 +159,14 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
             javaSrcFileCreator.writeBuildMethod(simpleClassName, newInstanceName);
 
-            mapFieldName2Type.entrySet().forEach(fields -> {
-                final String fieldName = fields.getKey().toString();
-                final String setterName = "with" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-                final String argumentType = getFullQualifiedTypeSignature(fields.getValue());
-
-                javaSrcFileCreator.writeSetterMethod(newInstanceName, builderSimpleClassName, fieldName, setterName, argumentType);
+            mapFieldName2Element.entrySet().forEach(entry -> {
+                final Element element = entry.getValue();
+                if (element.getAnnotation(RadesNoBuilder.class) == null) {
+                    final String fieldName = entry.getKey().toString();
+                    final String setterName = "with" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+                    final String argumentType = getFullQualifiedTypeSignature(element.asType());
+                    javaSrcFileCreator.writeSetterMethod(newInstanceName, builderSimpleClassName, fieldName, setterName, argumentType);
+                }
             });
 
             javaSrcFileCreator.writeClassFinal();
@@ -184,9 +186,9 @@ public class RadesBuilderProcessor extends AbstractProcessor {
     }
 
     protected String getBuilderClassName(final String specifiedBuilderClassName, final String packageName, final String className) {
-        if(specifiedBuilderClassName!=null){
+        if (specifiedBuilderClassName != null) {
             return packageName + "." + specifiedBuilderClassName;
-        }else{
+        } else {
             return className + "Builder";
         }
     }

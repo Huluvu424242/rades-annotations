@@ -66,18 +66,13 @@ public class PersonBuilder {
         return this;
     }
 
-    public PersonBuilder withFreunde( final java.util.Map<java.lang.String,com.github.funthomas424242.domain.Person> freunde ) {
-        this.person.freunde = freunde;
-        return this;
-    }
-
-    public PersonBuilder withLieblingsfarben( final java.util.Set<com.github.funthomas424242.domain.Person.Farbe> lieblingsfarben ) {
-        this.person.lieblingsfarben = lieblingsfarben;
-        return this;
-    }
-
     public PersonBuilder withBirthday( final java.time.LocalDate birthday ) {
         this.person.birthday = birthday;
+        return this;
+    }
+
+    public PersonBuilder withFreunde( final java.util.Map<java.lang.String,com.github.funthomas424242.domain.Person> freunde ) {
+        this.person.freunde = freunde;
         return this;
     }
 

@@ -16,6 +16,7 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 
 ## [2.2.0] in Arbeit
 ### Added
+- https://github.com/FunThomas424242/rades-annotations/issues/60[issue #60] @RadesNoAccessor und @RadesNoBuilder bereitgestellt
 - https://github.com/FunThomas424242/rades-annotations/issues/63[issue #63] Maven Deployment bereitgestellt
 - https://github.com/FunThomas424242/rades-annotations/issues/67[issue #67] build() Methode für Accessor bereitgestellt
 - https://github.com/FunThomas424242/rades-annotations/issues/71[issue #71] Methoden des Domainobjektes vom Accessor bereitstellen

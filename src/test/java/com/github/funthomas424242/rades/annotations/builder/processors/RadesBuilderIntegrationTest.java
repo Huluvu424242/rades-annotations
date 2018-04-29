@@ -12,7 +12,6 @@ import com.github.funthomas424242.domain.Person;
 import com.github.funthomas424242.domain.PersonBuilder;
 import com.github.funthomas424242.domain.TierAccessor;
 import com.github.funthomas424242.rades.annotations.accessors.InvalidAccessorException;
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -22,7 +21,6 @@ import org.junit.jupiter.api.function.Executable;
 
 import javax.validation.ValidationException;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -91,8 +89,8 @@ public class RadesBuilderIntegrationTest {
                 .withVorname("Max")
                 .withBirthday(LocalDate.of(1968, 12, 25))
                 .withGroesse(175)
-                .withLieblingsfarben((HashSet<Person.Farbe>) Sets.newHashSet(Person.Farbe.BLAU))
                 .build();
+        person.addLieblingsfarbe(Person.Farbe.BLAU);
         assertNotNull(person);
     }
 
@@ -107,7 +105,6 @@ public class RadesBuilderIntegrationTest {
                     .withVorname("Max")
                     .withBirthday(LocalDate.of(1968, 12, 25))
                     .withGroesse(175)
-                    .withLieblingsfarben((HashSet<Person.Farbe>) Sets.newHashSet(Person.Farbe.BLAU))
                     .build(TierAccessor.class);
         };
         assertThrows(InvalidAccessorException.class, closureContainingCodeToTest);
@@ -138,8 +135,8 @@ public class RadesBuilderIntegrationTest {
                 .withVorname("Max")
                 .withBirthday(LocalDate.of(1968, 12, 25))
                 .withGroesse(175)
-                .withLieblingsfarben((HashSet<Person.Farbe>) Sets.newHashSet(Person.Farbe.BLAU))
                 .build();
+        person.addLieblingsfarbe(Person.Farbe.BLAU);
         assertNotNull(person);
     }
 

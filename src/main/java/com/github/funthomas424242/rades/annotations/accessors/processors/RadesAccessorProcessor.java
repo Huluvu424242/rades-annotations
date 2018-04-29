@@ -2,6 +2,7 @@ package com.github.funthomas424242.rades.annotations.accessors.processors;
 
 import com.github.funthomas424242.rades.annotations.accessors.AddAccessor;
 import com.github.funthomas424242.rades.annotations.accessors.RadesAddAccessor;
+import com.github.funthomas424242.rades.annotations.accessors.RadesNoAccessor;
 import com.github.funthomas424242.rades.annotations.accessors.model.java.AccessorInjectionService;
 import com.github.funthomas424242.rades.annotations.accessors.model.java.AccessorInjectionServiceProvider;
 import com.github.funthomas424242.rades.annotations.accessors.model.java.AccessorSrcFileCreator;
@@ -166,24 +167,16 @@ public class RadesAccessorProcessor extends AbstractProcessor {
                 final String memberFullQualifiedTypName = getFullQualifiedTypeSignature(memberType);
 
                 if (element.getKind().isField()) {
-                    final String getterName = "get" + memberName.substring(0, 1).toUpperCase() + memberName.substring(1);
-                    javaSrcFileCreator.writeGetterMethod(newInstanceName, memberName, getterName, memberFullQualifiedTypName);
+                    if( element.getAnnotation(RadesNoAccessor.class) == null) {
+                        final String getterName = "get" + memberName.substring(0, 1).toUpperCase() + memberName.substring(1);
+                        javaSrcFileCreator.writeGetterMethod(newInstanceName, memberName, getterName, memberFullQualifiedTypName);
+                    }
                 } else if (element.getKind() == ElementKind.METHOD) {
                     logger.debug("###Methode: " + element.toString());
                     if(element instanceof ExecutableElement){
                         final ExecutableElement executableElement = (ExecutableElement) element;
                         javaSrcFileCreator.writeGenerateMethod(newInstanceName,executableElement);
-
-//
-//                        logger.debug("###execElement: "+executableElement.toString());
-//                        logger.debug("###returnType: "+executableElement.getReturnType().toString());
-//                        executableElement.getParameters().forEach( parameter ->{
-//
-//                            logger.debug("###Parameter: "+parameter.asType().toString());
-//                            logger.debug("###Parameter: "+parameter.getSimpleName().toString());
-//                                });
                     }
-                    // TODO
                 }
             });
 

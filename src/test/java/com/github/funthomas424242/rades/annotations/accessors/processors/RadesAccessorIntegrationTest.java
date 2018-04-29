@@ -23,8 +23,8 @@ import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -53,7 +53,7 @@ public class RadesAccessorIntegrationTest {
         assertEquals("Opel", car.getHersteller());
         assertEquals("Viertakt Motor", car.getMotor());
         assertEquals("Corsa", car.getTyp());
-        assertSame(auto,car.toAuto());
+        assertSame(auto, car.toAuto());
     }
 
 
@@ -69,7 +69,7 @@ public class RadesAccessorIntegrationTest {
         final FirmaAGZugreifer firmaAccessor = new FirmaAGZugreifer(firma);
         assertEquals("Musterfirma", firmaAccessor.getName());
         assertEquals("AG-8788-S", firmaAccessor.getBetriebeNr());
-        assertSame(firma,firmaAccessor.toFirma());
+        assertSame(firma, firmaAccessor.toFirma());
     }
 
     @Test
@@ -84,7 +84,7 @@ public class RadesAccessorIntegrationTest {
         final AbteilungAccessor accessor = new AbteilungAccessor(abteilung);
         assertEquals("Musterabteilung", accessor.getName());
         assertEquals("IT-8788", accessor.getAbteilungsNr());
-        assertSame(abteilung,accessor.toAbteilung());
+        assertSame(abteilung, accessor.toAbteilung());
 
     }
 
@@ -97,7 +97,7 @@ public class RadesAccessorIntegrationTest {
         assertNotNull(familie);
         final FamilieAccessor accessor = new FamilieAccessor(familie);
         assertNotNull(accessor);
-        assertSame(familie,accessor.toFamilie());
+        assertSame(familie, accessor.toFamilie());
     }
 
     @Test
@@ -109,44 +109,17 @@ public class RadesAccessorIntegrationTest {
                 .withVorname("Max")
                 .withBirthday(LocalDate.of(1968, 12, 25))
                 .withGroesse(175)
-                .withLieblingsfarben((HashSet<Person.Farbe>) Sets.newHashSet(Person.Farbe.BLAU))
                 .build();
+        person.addLieblingsfarbe(Person.Farbe.BLAU);
         assertNotNull(person);
         final PersonAccessor accessor = new PersonAccessor(person);
         assertEquals("Mustermann", accessor.getName());
         assertEquals("Max", accessor.getVorname());
         assertEquals(LocalDate.of(1968, 12, 25), accessor.getBirthday());
         assertEquals(175, accessor.getGroesse());
-        assertEquals(Sets.newHashSet(Person.Farbe.BLAU), accessor.getLieblingsfarben());
-        assertSame(person,accessor.toPerson());
+        assertEquals(Sets.newHashSet(Person.Farbe.BLAU), accessor.getLieblingsfarben().collect(Collectors.toSet()));
+        assertSame(person, accessor.toPerson());
     }
-//
-//    @Test
-//    @DisplayName("Pflichtfelder von Person nicht befüllt.")
-//    @Tags({@Tag("integration"), @Tag("builder")})
-//    public void testPersonPflichtfeldFehler() {
-//
-//        Throwable exception = assertThrows(ValidationException.class, () -> {
-//            new PersonBuilder().build();
-//        });
-//        assertEquals("Person is not valid:\nname: darf nicht \"null\" sein", exception.getLocalizedMessage());
-//    }
-//
-//    @Test
-//    @DisplayName("Optionale Felder von Person später befüllen.")
-//    @Tags({@Tag("integration"), @Tag("builder")})
-//    public void testPersonOptionaleFelderSpaeterBefuellt() {
-//        final Person person1 = new PersonBuilder()
-//                .withName("Mustermann")
-//                .build();
-//        assertNotNull(person1);
-//        final Person person = new PersonBuilder(person1)
-//                .withVorname("Max")
-//                .withBirthday(LocalDate.of(1968, 12, 25))
-//                .withGroesse(175)
-//                .withLieblingsfarben((HashSet<Person.Farbe>) Sets.newHashSet(Person.Farbe.BLAU))
-//                .build();
-//        assertNotNull(person);
-//    }
+
 
 }

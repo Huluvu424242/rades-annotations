@@ -3,12 +3,15 @@ package com.github.funthomas424242.domain;
 import com.github.funthomas424242.rades.annotations.accessors.RadesAddAccessor;
 import com.github.funthomas424242.rades.annotations.accessors.RadesNoAccessor;
 import com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder;
+import com.github.funthomas424242.rades.annotations.builder.RadesNoBuilder;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 
 @RadesAddBuilder
@@ -39,7 +42,8 @@ public class Person {
     public int groesse;
 
     @RadesNoAccessor
-    protected Set<Farbe> lieblingsfarben;
+    @RadesNoBuilder
+    protected final Set<Farbe> lieblingsfarben = new HashSet<>();
 
     protected Map<String, Person> freunde;
 
@@ -60,19 +64,20 @@ public class Person {
         return period.getYears();
     }
 
-//    public Set<Farbe> getLieblingsfarben() {
-//        return lieblingsfarben;
-//    }
+    public Stream getLieblingsfarben() {
+        return this.lieblingsfarben.stream();
+    }
 
-    public void addLieblingsfarbe(final Farbe farbe){
+    public void addLieblingsfarbe(final Farbe farbe) {
+
         this.lieblingsfarben.add(farbe);
     }
 
-    public void removeLieblingsfarbe(final Farbe farbe){
+    public void removeLieblingsfarbe(final Farbe farbe) {
         this.lieblingsfarben.remove(farbe);
     }
 
-    public void addFreund(final String alias, final Person freund){
-        this.freunde.put(alias,freund);
+    public void addFreund(final String alias, final Person freund) {
+        this.freunde.put(alias, freund);
     }
 }
