@@ -56,11 +56,6 @@ public class PersonBuilder {
         }
     }
 
-    public PersonBuilder withGroesse( final int groesse ) {
-        this.person.groesse = groesse;
-        return this;
-    }
-
     public PersonBuilder withVorname( final java.lang.String vorname ) {
         this.person.vorname = vorname;
         return this;
@@ -83,6 +78,11 @@ public class PersonBuilder {
 
     public PersonBuilder withName( final java.lang.String name ) {
         this.person.name = name;
+        return this;
+    }
+
+    public PersonBuilder withGroesse( final int groesse ) {
+        this.person.groesse = groesse;
         return this;
     }
 

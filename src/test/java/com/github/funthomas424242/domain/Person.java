@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 
 @RadesAddBuilder
@@ -60,9 +61,9 @@ public class Person {
         return period.getYears();
     }
 
-//    public Set<Farbe> getLieblingsfarben() {
-//        return lieblingsfarben;
-//    }
+    public Stream getLieblingsfarben( ) {
+        return this.lieblingsfarben.stream();
+    }
 
     public void addLieblingsfarbe(final Farbe farbe){
         this.lieblingsfarben.add(farbe);
