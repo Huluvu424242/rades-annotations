@@ -14,6 +14,18 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 ### Removed
 - n/a
 
+## [2.2.1] fertiggestellt 2018-04-30
+(Bugfix Release: macht Feature aus 2.2.0 im maven build zugänglich)
+
+### Added
+- n/a
+
+### Changed
+- https://github.com/FunThomas424242/rades-annotations/issues/77[issue #77] Aufteilung der pom.xml zurückgenommen
+
+### Removed
+- n/a
+
 ## [2.2.0] fertiggestellt 2018-04-30
 ### Added
 - https://github.com/FunThomas424242/rades-annotations/issues/60[issue #60] @RadesNoAccessor und @RadesNoBuilder bereitgestellt
@@ -42,6 +54,7 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 
 ## [2.0.1] fertiggestellt 2018-04-21
 (Wartungsrelease für Endnutzer nicht relevant)
+
 ### Added
 
 - https://github.com/FunThomas424242/rades-annotations/issues/53[issue #53] Publizierung ins Maven Central
