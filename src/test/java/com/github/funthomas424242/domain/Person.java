@@ -80,4 +80,9 @@ public class Person {
     public void addFreund(final String alias, final Person freund) {
         this.freunde.put(alias, freund);
     }
+
+    @Override
+    public String toString() {
+        return name + ", " + vorname;
+    }
 }
