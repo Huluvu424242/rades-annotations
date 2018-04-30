@@ -36,8 +36,4 @@ public class FirmaAGZugreifer {
         return this.firma.name;
     }
 
-    public String toString(){
-        return this.firma.toString();
-    }
-
 }

@@ -26,6 +26,11 @@ public class PersonAccessor {
     public void setId(final int id){
         this.person.setId(id);
     }
+
+    public java.lang.String toString(){
+        return this.person.toString();
+    }
+
     public int computeAge(){
         return this.person.computeAge();
     }
@@ -46,8 +51,5 @@ public class PersonAccessor {
     }
     public java.lang.String getName( ) {
         return this.person.name;
-    }
-    public String toString(){
-        return this.person.toString();
     }
 }
