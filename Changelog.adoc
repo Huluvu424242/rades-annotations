@@ -14,12 +14,13 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 ### Removed
 - n/a
 
-## [2.2.0] in Arbeit
+## [2.2.0] fertiggestellt 2018-04-30
 ### Added
 - https://github.com/FunThomas424242/rades-annotations/issues/60[issue #60] @RadesNoAccessor und @RadesNoBuilder bereitgestellt
 - https://github.com/FunThomas424242/rades-annotations/issues/63[issue #63] Maven Deployment bereitgestellt
 - https://github.com/FunThomas424242/rades-annotations/issues/67[issue #67] build() Methode für Accessor bereitgestellt
 - https://github.com/FunThomas424242/rades-annotations/issues/71[issue #71] Methoden des Domainobjektes vom Accessor bereitstellen
+- https://github.com/FunThomas424242/rades-annotations/issues/73[issue #73] pom.xml für forge.addon aufsplitten
 
 ### Changed
 - n/a
