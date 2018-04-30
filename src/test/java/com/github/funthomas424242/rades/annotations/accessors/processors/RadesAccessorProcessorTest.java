@@ -2,7 +2,6 @@ package com.github.funthomas424242.rades.annotations.accessors.processors;
 
 import com.github.funthomas424242.rades.annotations.accessors.model.java.AccessorInjectionServiceProvider;
 import com.github.funthomas424242.rades.annotations.accessors.model.java.AccessorSrcFileCreator;
-import com.github.funthomas424242.rades.annotations.accessors.processors.RadesAccessorProcessor;
 import com.google.common.truth.ExpectFailure;
 import com.google.testing.compile.Compilation;
 import com.google.testing.compile.JavaFileObjects;
