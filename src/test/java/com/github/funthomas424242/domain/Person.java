@@ -64,7 +64,7 @@ public class Person {
         return period.getYears();
     }
 
-    public Stream getLieblingsfarben() {
+    public Stream<Farbe> getLieblingsfarben() {
         return this.lieblingsfarben.stream();
     }
 
