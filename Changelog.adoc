@@ -14,6 +14,17 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 ### Removed
 - n/a
 
+## [3.0.0] fertiggestellt 2018-05-01
+
+### Added
+- n/a
+
+### Changed
+- https://github.com/FunThomas424242/rades-annotations/issues/79[issue #79] Automatische Delegation toString() entfernt.
+
+### Removed
+- n/a
+
 ## [2.2.1] fertiggestellt 2018-04-30
 (Bugfix Release: macht Feature aus 2.2.0 im maven build zugänglich)
 
