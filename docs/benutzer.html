@@ -71,7 +71,7 @@
         <ul class="breadcrumb">
         <li id="publishDate">Zuletzt veröffentlicht: 2018-04-30<span class="divider">|</span>
 </li>
-          <li id="projectVersion">Version: 2.2.1</li>
+          <li id="projectVersion">Version: 3.0.0</li>
         </ul>
       </div>
         <div id="bodyColumn" >
@@ -295,6 +295,11 @@ private Attribute werden vom generierten Builder nicht unterstützt.
     <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> addFreund(<span style="color:#088;font-weight:bold">final</span> <span style="color:#0a8;font-weight:bold">String</span> alias, <span style="color:#088;font-weight:bold">final</span> Person freund) {
         <span style="color:#950">this</span>.freunde.put(alias, freund);
     }
+
+    <span style="color:#007">@Override</span>
+    <span style="color:#088;font-weight:bold">public</span> <span style="color:#0a8;font-weight:bold">String</span> toString() {
+        <span style="color:#080;font-weight:bold">return</span> name + <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">, </span><span style="color:#710">&quot;</span></span> + vorname;
+    }
 }</code></pre>
 </div>
 </div>
@@ -424,6 +429,11 @@ private Attribute werden vom generierten Builder nicht unterstützt.
     <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> setId(<span style="color:#088;font-weight:bold">final</span> <span style="color:#339;font-weight:bold">int</span> id){
         <span style="color:#950">this</span>.person.setId(id);
     }
+
+    <span style="color:#088;font-weight:bold">public</span> java.lang.String toString(){
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.toString();
+    }
+
     <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">int</span> computeAge(){
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.computeAge();
     }
@@ -444,9 +454,6 @@ private Attribute werden vom generierten Builder nicht unterstützt.
     }
     <span style="color:#088;font-weight:bold">public</span> java.lang.String getName( ) {
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.name;
-    }
-    <span style="color:#088;font-weight:bold">public</span> <span style="color:#0a8;font-weight:bold">String</span> toString(){
-        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.toString();
     }
 }</code></pre>
 </div>
@@ -611,10 +618,6 @@ private Attribute werden vom generierten Builder nicht unterstützt.
 
     <span style="color:#088;font-weight:bold">public</span> java.lang.String getName( ) {
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.firma.name;
-    }
-
-    <span style="color:#088;font-weight:bold">public</span> <span style="color:#0a8;font-weight:bold">String</span> toString(){
-        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.firma.toString();
     }
 
 }</code></pre>
