@@ -14,6 +14,16 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 ### Removed
 - n/a
 
+## [2.2.1] fertiggestellt 2018-04-30
+### Added
+- n/a
+
+### Changed
+- https://github.com/FunThomas424242/rades-annotations/issues/77[issue #77] Aufteilung der pom.xml zurückgenommen
+
+### Removed
+- n/a
+
 ## [2.2.0] fertiggestellt 2018-04-30
 ### Added
 - https://github.com/FunThomas424242/rades-annotations/issues/60[issue #60] @RadesNoAccessor und @RadesNoBuilder bereitgestellt
