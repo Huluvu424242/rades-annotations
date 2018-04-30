@@ -167,23 +167,22 @@ public class RadesAccessorProcessor extends AbstractProcessor {
                 final String memberFullQualifiedTypName = getFullQualifiedTypeSignature(memberType);
 
                 if (element.getKind().isField()) {
-                    if( element.getAnnotation(RadesNoAccessor.class) == null) {
+                    if (element.getAnnotation(RadesNoAccessor.class) == null) {
                         final String getterName = "get" + memberName.substring(0, 1).toUpperCase() + memberName.substring(1);
                         javaSrcFileCreator.writeGetterMethod(newInstanceName, memberName, getterName, memberFullQualifiedTypName);
                     }
                 } else if (element.getKind() == ElementKind.METHOD) {
                     logger.debug("###Methode: " + element.toString());
-                    if(element instanceof ExecutableElement){
+                    if (element instanceof ExecutableElement) {
                         final ExecutableElement executableElement = (ExecutableElement) element;
-                        javaSrcFileCreator.writeGenerateMethod(newInstanceName,executableElement);
+                        javaSrcFileCreator.writeGenerateMethod(newInstanceName, executableElement);
                     }
                 }
             });
 
-            javaSrcFileCreator.writeToStringMethod(newInstanceName);
             javaSrcFileCreator.writeClassFinal();
 
-        } catch ( Exception e) {
+        } catch (Exception e) {
             logger.error(e.getLocalizedMessage());
         }
     }
