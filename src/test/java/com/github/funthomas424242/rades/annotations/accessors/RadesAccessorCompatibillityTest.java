@@ -17,9 +17,9 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 @DisplayName("Kompatibilität für Accessors")
 public class RadesAccessorCompatibillityTest {
 
+    @Test
     @DisplayName("Prüfe korrektes Package für @AddAccessor")
     @Tags({@Tag("compatibillity"), @Tag("accessor")})
-    @Test
     void testAddAccesoorPackageName() {
         assertEquals("com.github.funthomas424242.rades.annotations.accessors", AddAccessor.class.getPackage().getName());
     }
