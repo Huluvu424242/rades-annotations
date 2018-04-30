@@ -21,8 +21,8 @@
 * Codecoverage > 95%
 * Codacy Gate A erreicht
 . Erstellung eines Release Branches: <version>.RELEASE z.B. 1.1.0.RELEASE
-. Aktualisierung der Changelogeinträge
 . Setzen der Release Version in der pom.xml (semantische Versionierung beachten)
+. Aktualisierung der Changelogeinträge
 . Aktualisierung der Dokumentation mittels mvn site und git push
 . Release Tag im Format *X.X.X* lokal setzen
 . Alle Artifakte lokal bauen mittels mvn clean install
