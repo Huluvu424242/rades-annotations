@@ -279,7 +279,7 @@ private Attribute werden vom generierten Builder nicht unterstützt.
         <span style="color:#080;font-weight:bold">return</span> period.getYears();
     }
 
-    <span style="color:#088;font-weight:bold">public</span> Stream getLieblingsfarben() {
+    <span style="color:#088;font-weight:bold">public</span> Stream&lt;Farbe&gt; getLieblingsfarben() {
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.lieblingsfarben.stream();
     }
 
@@ -397,76 +397,57 @@ private Attribute werden vom generierten Builder nicht unterstützt.
 <div class="title">PersonAccessor.java</div>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span style="color:#080;font-weight:bold">package</span> <span style="color:#707;font-weight:bold">com.github.funthomas424242.domain</span>;
-
 <span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">javax.annotation.Generated</span>;
-
-<span style="color:#007">@Generated</span>(value = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">RadesAccessorProcessor</span><span style="color:#710">&quot;</span></span>
-        , date = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">2018-04-06T20:36:46.750</span><span style="color:#710">&quot;</span></span>
-        , comments = <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">com.github.funthomas424242.domain.Person</span><span style="color:#710">&quot;</span></span>)
+<span style="color:#007">@Generated</span>(value=<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">RadesAccessorProcessor</span><span style="color:#710">&quot;</span></span>
+, date=<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">2018-04-06T20:36:46.750</span><span style="color:#710">&quot;</span></span>
+, comments=<span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">&quot;</span><span style="color:#D20">com.github.funthomas424242.domain.Person</span><span style="color:#710">&quot;</span></span>)
 <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">class</span> <span style="color:#B06;font-weight:bold">PersonAccessor</span> {
-
     <span style="color:#088;font-weight:bold">protected</span> <span style="color:#088;font-weight:bold">final</span> Person person;
-
-    <span style="color:#088;font-weight:bold">public</span> PersonAccessor(<span style="color:#088;font-weight:bold">final</span> Person person) {
+    <span style="color:#088;font-weight:bold">public</span> PersonAccessor( <span style="color:#088;font-weight:bold">final</span> Person person ){
         <span style="color:#950">this</span>.person = person;
     }
-
-    <span style="color:#088;font-weight:bold">public</span> Person toPerson() {
+    <span style="color:#088;font-weight:bold">public</span> Person toPerson(){
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person;
     }
-
-    <span style="color:#088;font-weight:bold">public</span> java.util.stream.Stream getLieblingsfarben() {
+    <span style="color:#088;font-weight:bold">public</span> java.util.stream.Stream&lt;com.github.funthomas424242.domain.Person.Farbe&gt; getLieblingsfarben(){
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.getLieblingsfarben();
     }
-
-    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">int</span> getId() {
+    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">int</span> getId(){
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.getId();
     }
-
-    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">int</span> getGroesse() {
+    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">int</span> getGroesse( ) {
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.groesse;
     }
-
-    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> addFreund(<span style="color:#088;font-weight:bold">final</span> java.lang.String alias, <span style="color:#088;font-weight:bold">final</span> com.github.funthomas424242.domain.Person freund) {
+    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> addFreund(<span style="color:#088;font-weight:bold">final</span> java.lang.String alias, <span style="color:#088;font-weight:bold">final</span> com.github.funthomas424242.domain.Person freund){
         <span style="color:#950">this</span>.person.addFreund(alias, freund);
     }
-
-    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> setId(<span style="color:#088;font-weight:bold">final</span> <span style="color:#339;font-weight:bold">int</span> id) {
+    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> setId(<span style="color:#088;font-weight:bold">final</span> <span style="color:#339;font-weight:bold">int</span> id){
         <span style="color:#950">this</span>.person.setId(id);
     }
-
-    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">int</span> computeAge() {
+    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">int</span> computeAge(){
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.computeAge();
     }
-
-    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> removeLieblingsfarbe(<span style="color:#088;font-weight:bold">final</span> com.github.funthomas424242.domain.Person.Farbe farbe) {
+    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> removeLieblingsfarbe(<span style="color:#088;font-weight:bold">final</span> com.github.funthomas424242.domain.Person.Farbe farbe){
         <span style="color:#950">this</span>.person.removeLieblingsfarbe(farbe);
     }
-
-    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> addLieblingsfarbe(<span style="color:#088;font-weight:bold">final</span> com.github.funthomas424242.domain.Person.Farbe farbe) {
+    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> addLieblingsfarbe(<span style="color:#088;font-weight:bold">final</span> com.github.funthomas424242.domain.Person.Farbe farbe){
         <span style="color:#950">this</span>.person.addLieblingsfarbe(farbe);
     }
-
-    <span style="color:#088;font-weight:bold">public</span> java.lang.String getVorname() {
+    <span style="color:#088;font-weight:bold">public</span> java.lang.String getVorname( ) {
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.vorname;
     }
-
-    <span style="color:#088;font-weight:bold">public</span> java.time.LocalDate getBirthday() {
+    <span style="color:#088;font-weight:bold">public</span> java.time.LocalDate getBirthday( ) {
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.birthday;
     }
-
-    <span style="color:#088;font-weight:bold">public</span> java.util.Map&lt;java.lang.String, com.github.funthomas424242.domain.Person&gt; getFreunde() {
+    <span style="color:#088;font-weight:bold">public</span> java.util.Map&lt;java.lang.String,com.github.funthomas424242.domain.Person&gt; getFreunde( ) {
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.freunde;
     }
-
-    <span style="color:#088;font-weight:bold">public</span> java.lang.String getName() {
+    <span style="color:#088;font-weight:bold">public</span> java.lang.String getName( ) {
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.name;
     }
-
-    <span style="color:#088;font-weight:bold">public</span> <span style="color:#0a8;font-weight:bold">String</span> toString() {
+    <span style="color:#088;font-weight:bold">public</span> <span style="color:#0a8;font-weight:bold">String</span> toString(){
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.toString();
     }
-
 }</code></pre>
 </div>
 </div>
