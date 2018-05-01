@@ -150,8 +150,12 @@
                         <include>**/*.xml</include>
                     </includes>
                     <excludes>
-                        <exclude>*.png</exclude>
-                        <exclude>*.json</exclude>
+                        <exclude>**/*.png</exclude>
+                        <exclude>**/*.json</exclude>
+                        <exclude>**/*Builder.java</exclude>
+                        <exclude>**/*Accessor.java</exclude>
+                        <exclude>**/*Erbauer.java</exclude>
+                        <exclude>**/*Zugreifer.java</exclude>
                     </excludes>
                 </configuration>
                 <executions>
