@@ -20,6 +20,17 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 - n/a
 
 ### Changed
+- https://github.com/FunThomas424242/rades-annotations/issues/83[issue #83] Nur Release Abhängigkeiten genutzt.
+
+### Removed
+- n/a
+
+## [3.0.0] fertiggestellt 2018-05-01
+
+### Added
+- n/a
+
+### Changed
 - https://github.com/FunThomas424242/rades-annotations/issues/79[issue #79] Automatische Delegation toString() entfernt.
 
 ### Removed
