@@ -10,10 +10,14 @@
     <packaging>jar</packaging>
     <name>rades-annotations</name>
     <description>Rades Annotationen zur Automatisierung</description>
+    <inceptionYear>2018</inceptionYear>
     <url>https://github.com/FunThomas424242/rades-annotations</url>
     <licenses>
         <license>
             <url>./LICENSE</url>
+            <name>GNU LESSER GENERAL PUBLIC LICENSE
+                Version 3, 29 June 2007</name>
+            <distribution>repo</distribution>
         </license>
     </licenses>
     <scm>
@@ -49,7 +53,6 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <auto-service.version>1.0-rc4</auto-service.version>
-        <guava-version>23.5-jre</guava-version>
     </properties>
 
     <prerequisites>
@@ -126,6 +129,42 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>1.16</version>
+                <configuration>
+                    <licenseFile>LICENSE</licenseFile>
+                    <licenseName>lgpl_v3</licenseName>
+                    <useMissingFile>true</useMissingFile>
+                    <excludedLicenses>
+                        <excludedLicense>GNU General Public License (GPL) 1.0</excludedLicense>
+                        <excludedLicense>GNU General Public License (GPL) 2.0</excludedLicense>
+                        <excludedLicense>GNU General Public License (GPL) 3.0</excludedLicense>
+                    </excludedLicenses>
+                    <failIfWarning>true</failIfWarning>
+                    <includes>
+                        <include>*.java</include>
+                        <include>*.properties</include>
+                        <include>*.xml</include>
+                    </includes>
+                    <excludes>
+                        <exclude>*.png</exclude>
+                        <exclude>*.json</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>update-header</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>update-file-header</goal>
+                            <goal>update-project-license</goal>
+                            <goal>add-third-party</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
@@ -306,6 +345,11 @@
             </plugin>
         </plugins>
     </build>
+
+    <organization>
+        <name>PIUG</name>
+        <url>https://piug.slack.com</url>
+    </organization>
 
     <developers>
         <developer>
