@@ -14,13 +14,14 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 ### Removed
 - n/a
 
-## [3.0.0] fertiggestellt 2018-05-01
+## [3.0.0] fertiggestellt 2018-05-xx
 
 ### Added
 - n/a
 
 ### Changed
 - https://github.com/FunThomas424242/rades-annotations/issues/83[issue #83] Nur Release Abhängigkeiten genutzt.
+- https://github.com/FunThomas424242/rades-annotations/issues/85[issue #85] Automatische Lizenzprüfung aufgenommen
 
 ### Removed
 - n/a
