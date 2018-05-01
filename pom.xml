@@ -144,9 +144,9 @@
                     </excludedLicenses>
                     <failIfWarning>true</failIfWarning>
                     <includes>
-                        <include>*.java</include>
-                        <include>*.properties</include>
-                        <include>*.xml</include>
+                        <include>**/*.java</include>
+                        <include>**/*.properties</include>
+                        <include>**/*.xml</include>
                     </includes>
                     <excludes>
                         <exclude>*.png</exclude>
