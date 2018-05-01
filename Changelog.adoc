@@ -14,7 +14,7 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 ### Removed
 - n/a
 
-## [3.0.0] fertiggestellt 2018-05-xx
+## [3.0.1] fertiggestellt 2018-05-xx
 
 ### Added
 - n/a
