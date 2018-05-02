@@ -1,26 +1,5 @@
 package com.github.funthomas424242.domain;
 
-/*-
- * #%L
- * rades-annotations
- * %%
- * Copyright (C) 2018 PIUG
- * %%
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Lesser Public License for more details.
- * 
- * You should have received a copy of the GNU General Lesser Public
- * License along with this program.  If not, see
- * <http://www.gnu.org/licenses/lgpl-3.0.html>.
- * #L%
- */
 import com.github.funthomas424242.rades.annotations.accessors.InvalidAccessorException;
 import javax.annotation.Generated;
 import org.apache.commons.lang3.StringUtils;
@@ -78,28 +57,28 @@ public class PersonBuilder {
         }
     }
 
-    public PersonBuilder withGroesse( final int groesse ) {
-        this.person.groesse = groesse;
-        return this;
-    }
-
-    public PersonBuilder withVorname( final java.lang.String vorname ) {
-        this.person.vorname = vorname;
-        return this;
-    }
-
     public PersonBuilder withBirthday( final java.time.LocalDate birthday ) {
         this.person.birthday = birthday;
         return this;
     }
 
-    public PersonBuilder withFreunde( final java.util.Map<java.lang.String,com.github.funthomas424242.domain.Person> freunde ) {
-        this.person.freunde = freunde;
+    public PersonBuilder withVisitedPlaces( final java.util.Map<java.lang.String,java.time.LocalDate> visitedPlaces ) {
+        this.person.visitedPlaces = visitedPlaces;
+        return this;
+    }
+
+    public PersonBuilder withGroesse( final int groesse ) {
+        this.person.groesse = groesse;
         return this;
     }
 
     public PersonBuilder withName( final java.lang.String name ) {
         this.person.name = name;
+        return this;
+    }
+
+    public PersonBuilder withVorname( final java.lang.String vorname ) {
+        this.person.vorname = vorname;
         return this;
     }
 

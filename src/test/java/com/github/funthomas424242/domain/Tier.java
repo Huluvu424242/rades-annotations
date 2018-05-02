@@ -28,4 +28,6 @@ import com.github.funthomas424242.rades.annotations.builder.AddBuilder;
 @AddBuilder
 @AddAccessor
 public class Tier {
+
+    // KEINE toString() Implementierung -> für korrekten Kompatibilitätstest so lassen!!!
 }
