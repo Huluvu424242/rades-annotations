@@ -71,7 +71,7 @@
         <ul class="breadcrumb">
         <li id="publishDate">Zuletzt veröffentlicht: 2018-05-02<span class="divider">|</span>
 </li>
-          <li id="projectVersion">Version: 3.0.1-SNAPSHOT</li>
+          <li id="projectVersion">Version: 3.1.0-SNAPSHOT</li>
         </ul>
       </div>
         <div id="bodyColumn" >
@@ -237,14 +237,17 @@ private Attribute werden vom generierten Builder nicht unterstützt.
  * #L%
  */</span>
 
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">com.github.funthomas424242.rades.annotations.accessors.NoAccessor</span>;
 <span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">com.github.funthomas424242.rades.annotations.accessors.RadesAddAccessor</span>;
 <span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">com.github.funthomas424242.rades.annotations.accessors.RadesNoAccessor</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">com.github.funthomas424242.rades.annotations.builder.NoBuilder</span>;
 <span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder</span>;
 <span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">com.github.funthomas424242.rades.annotations.builder.RadesNoBuilder</span>;
 
 <span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">javax.validation.constraints.NotNull</span>;
 <span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">java.time.LocalDate</span>;
 <span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">java.time.Period</span>;
+<span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">java.util.HashMap</span>;
 <span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">java.util.HashSet</span>;
 <span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">java.util.Map</span>;
 <span style="color:#080;font-weight:bold">import</span> <span style="color:#B44;font-weight:bold">java.util.Set</span>;
@@ -280,9 +283,16 @@ private Attribute werden vom generierten Builder nicht unterstützt.
 
     <span style="color:#007">@RadesNoAccessor</span>
     <span style="color:#007">@RadesNoBuilder</span>
+    <span style="color:#007">@NotNull</span>
     <span style="color:#088;font-weight:bold">protected</span> <span style="color:#088;font-weight:bold">final</span> <span style="color:#0a8;font-weight:bold">Set</span>&lt;Farbe&gt; lieblingsfarben = <span style="color:#080;font-weight:bold">new</span> <span style="color:#0a8;font-weight:bold">HashSet</span>&lt;&gt;();
 
-    <span style="color:#088;font-weight:bold">protected</span> <span style="color:#0a8;font-weight:bold">Map</span>&lt;<span style="color:#0a8;font-weight:bold">String</span>, Person&gt; freunde;
+    <span style="color:#007">@NoAccessor</span>
+    <span style="color:#007">@NoBuilder</span>
+    <span style="color:#007">@NotNull</span>
+    <span style="color:#088;font-weight:bold">protected</span> <span style="color:#0a8;font-weight:bold">Map</span>&lt;<span style="color:#0a8;font-weight:bold">String</span>, Person&gt; freunde = <span style="color:#080;font-weight:bold">new</span> <span style="color:#0a8;font-weight:bold">HashMap</span>&lt;&gt;();
+
+
+    <span style="color:#088;font-weight:bold">protected</span> <span style="color:#0a8;font-weight:bold">Map</span>&lt;<span style="color:#0a8;font-weight:bold">String</span>, LocalDate&gt; visitedPlaces = <span style="color:#080;font-weight:bold">new</span> <span style="color:#0a8;font-weight:bold">HashMap</span>&lt;&gt;();
 
 
     <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">int</span> getId() {
@@ -390,28 +400,28 @@ private Attribute werden vom generierten Builder nicht unterstützt.
         }
     }
 
-    <span style="color:#088;font-weight:bold">public</span> PersonBuilder withGroesse( <span style="color:#088;font-weight:bold">final</span> <span style="color:#339;font-weight:bold">int</span> groesse ) {
-        <span style="color:#950">this</span>.person.groesse = groesse;
-        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>;
-    }
-
-    <span style="color:#088;font-weight:bold">public</span> PersonBuilder withVorname( <span style="color:#088;font-weight:bold">final</span> java.lang.String vorname ) {
-        <span style="color:#950">this</span>.person.vorname = vorname;
-        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>;
-    }
-
     <span style="color:#088;font-weight:bold">public</span> PersonBuilder withBirthday( <span style="color:#088;font-weight:bold">final</span> java.time.LocalDate birthday ) {
         <span style="color:#950">this</span>.person.birthday = birthday;
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>;
     }
 
-    <span style="color:#088;font-weight:bold">public</span> PersonBuilder withFreunde( <span style="color:#088;font-weight:bold">final</span> java.util.Map&lt;java.lang.String,com.github.funthomas424242.domain.Person&gt; freunde ) {
-        <span style="color:#950">this</span>.person.freunde = freunde;
+    <span style="color:#088;font-weight:bold">public</span> PersonBuilder withVisitedPlaces( <span style="color:#088;font-weight:bold">final</span> java.util.Map&lt;java.lang.String,java.time.LocalDate&gt; visitedPlaces ) {
+        <span style="color:#950">this</span>.person.visitedPlaces = visitedPlaces;
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>;
+    }
+
+    <span style="color:#088;font-weight:bold">public</span> PersonBuilder withGroesse( <span style="color:#088;font-weight:bold">final</span> <span style="color:#339;font-weight:bold">int</span> groesse ) {
+        <span style="color:#950">this</span>.person.groesse = groesse;
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>;
     }
 
     <span style="color:#088;font-weight:bold">public</span> PersonBuilder withName( <span style="color:#088;font-weight:bold">final</span> java.lang.String name ) {
         <span style="color:#950">this</span>.person.name = name;
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>;
+    }
+
+    <span style="color:#088;font-weight:bold">public</span> PersonBuilder withVorname( <span style="color:#088;font-weight:bold">final</span> java.lang.String vorname ) {
+        <span style="color:#950">this</span>.person.vorname = vorname;
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>;
     }
 
@@ -438,24 +448,29 @@ private Attribute werden vom generierten Builder nicht unterstützt.
     <span style="color:#088;font-weight:bold">public</span> Person toPerson(){
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person;
     }
+
     <span style="color:#088;font-weight:bold">public</span> java.util.stream.Stream&lt;com.github.funthomas424242.domain.Person.Farbe&gt; getLieblingsfarben(){
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.getLieblingsfarben();
-    }
-    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">int</span> getId(){
-        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.getId();
-    }
-    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">int</span> getGroesse( ) {
-        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.groesse;
-    }
-    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> addFreund(<span style="color:#088;font-weight:bold">final</span> java.lang.String alias, <span style="color:#088;font-weight:bold">final</span> com.github.funthomas424242.domain.Person freund){
-        <span style="color:#950">this</span>.person.addFreund(alias, freund);
-    }
-    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> setId(<span style="color:#088;font-weight:bold">final</span> <span style="color:#339;font-weight:bold">int</span> id){
-        <span style="color:#950">this</span>.person.setId(id);
     }
 
     <span style="color:#088;font-weight:bold">public</span> java.lang.String toString(){
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.toString();
+    }
+
+    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">int</span> getId(){
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.getId();
+    }
+
+    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> addFreund(<span style="color:#088;font-weight:bold">final</span> java.lang.String alias, <span style="color:#088;font-weight:bold">final</span> com.github.funthomas424242.domain.Person freund){
+        <span style="color:#950">this</span>.person.addFreund(alias, freund);
+    }
+
+    <span style="color:#088;font-weight:bold">public</span> java.lang.String getVorname( ) {
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.vorname;
+    }
+
+    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> setId(<span style="color:#088;font-weight:bold">final</span> <span style="color:#339;font-weight:bold">int</span> id){
+        <span style="color:#950">this</span>.person.setId(id);
     }
 
     <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">int</span> computeAge(){
@@ -464,18 +479,23 @@ private Attribute werden vom generierten Builder nicht unterstützt.
     <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> removeLieblingsfarbe(<span style="color:#088;font-weight:bold">final</span> com.github.funthomas424242.domain.Person.Farbe farbe){
         <span style="color:#950">this</span>.person.removeLieblingsfarbe(farbe);
     }
-    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> addLieblingsfarbe(<span style="color:#088;font-weight:bold">final</span> com.github.funthomas424242.domain.Person.Farbe farbe){
-        <span style="color:#950">this</span>.person.addLieblingsfarbe(farbe);
-    }
-    <span style="color:#088;font-weight:bold">public</span> java.lang.String getVorname( ) {
-        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.vorname;
-    }
+
     <span style="color:#088;font-weight:bold">public</span> java.time.LocalDate getBirthday( ) {
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.birthday;
     }
-    <span style="color:#088;font-weight:bold">public</span> java.util.Map&lt;java.lang.String,com.github.funthomas424242.domain.Person&gt; getFreunde( ) {
-        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.freunde;
+
+    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">void</span> addLieblingsfarbe(<span style="color:#088;font-weight:bold">final</span> com.github.funthomas424242.domain.Person.Farbe farbe){
+        <span style="color:#950">this</span>.person.addLieblingsfarbe(farbe);
     }
+
+    <span style="color:#088;font-weight:bold">public</span> java.util.Map&lt;java.lang.String,java.time.LocalDate&gt; getVisitedPlaces( ) {
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.visitedPlaces;
+    }
+
+    <span style="color:#088;font-weight:bold">public</span> <span style="color:#339;font-weight:bold">int</span> getGroesse( ) {
+        <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.groesse;
+    }
+
     <span style="color:#088;font-weight:bold">public</span> java.lang.String getName( ) {
         <span style="color:#080;font-weight:bold">return</span> <span style="color:#950">this</span>.person.name;
     }
