@@ -77,6 +77,9 @@ public class Person {
     protected Map<String, Person> freunde = new HashMap<>();
 
 
+    protected Map<String, LocalDate> visitedPlaces = new HashMap<>();
+
+
     public int getId() {
         return id;
     }

@@ -62,6 +62,11 @@ public class PersonBuilder {
         return this;
     }
 
+    public PersonBuilder withVisitedPlaces( final java.util.Map<java.lang.String,java.time.LocalDate> visitedPlaces ) {
+        this.person.visitedPlaces = visitedPlaces;
+        return this;
+    }
+
     public PersonBuilder withGroesse( final int groesse ) {
         this.person.groesse = groesse;
         return this;

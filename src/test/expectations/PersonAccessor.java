@@ -13,9 +13,26 @@ public class PersonAccessor {
         return this.person;
     }
 
+    public java.util.stream.Stream<com.github.funthomas424242.domain.Person.Farbe> getLieblingsfarben(){
+        return this.person.getLieblingsfarben();
+    }
+
+    public java.lang.String toString(){
+        return this.person.toString();
+    }
+
+    public int getId(){
+        return this.person.getId();
+    }
+
     public void addFreund(final java.lang.String alias, final com.github.funthomas424242.domain.Person freund){
         this.person.addFreund(alias, freund);
     }
+
+    public java.lang.String getVorname( ) {
+        return this.person.vorname;
+    }
+
     public void setId(final int id){
         this.person.setId(id);
     }
@@ -27,26 +44,16 @@ public class PersonAccessor {
         this.person.removeLieblingsfarbe(farbe);
     }
 
-    public java.lang.String toString(){
-        return this.person.toString();
+    public java.time.LocalDate getBirthday( ) {
+        return this.person.birthday;
     }
 
     public void addLieblingsfarbe(final com.github.funthomas424242.domain.Person.Farbe farbe){
         this.person.addLieblingsfarbe(farbe);
     }
-    public java.lang.String getVorname( ) {
-        return this.person.vorname;
-    }
-    public java.time.LocalDate getBirthday( ) {
-        return this.person.birthday;
-    }
 
-    public java.util.stream.Stream<com.github.funthomas424242.domain.Person.Farbe> getLieblingsfarben(){
-        return this.person.getLieblingsfarben();
-    }
-
-    public int getId(){
-        return this.person.getId();
+    public java.util.Map<java.lang.String,java.time.LocalDate> getVisitedPlaces( ) {
+        return this.person.visitedPlaces;
     }
 
     public int getGroesse( ) {
