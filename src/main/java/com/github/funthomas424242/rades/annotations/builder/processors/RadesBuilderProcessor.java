@@ -10,12 +10,12 @@ package com.github.funthomas424242.rades.annotations.builder.processors;
  * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Lesser Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Lesser Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/lgpl-3.0.html>.
@@ -23,6 +23,7 @@ package com.github.funthomas424242.rades.annotations.builder.processors;
  */
 
 import com.github.funthomas424242.rades.annotations.builder.AddBuilder;
+import com.github.funthomas424242.rades.annotations.builder.NoBuilder;
 import com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder;
 import com.github.funthomas424242.rades.annotations.builder.RadesNoBuilder;
 import com.github.funthomas424242.rades.annotations.builder.model.java.BuilderInjectionService;
@@ -183,7 +184,8 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
             mapFieldName2Element.entrySet().forEach(entry -> {
                 final Element element = entry.getValue();
-                if (element.getAnnotation(RadesNoBuilder.class) == null) {
+                if (element.getAnnotation(RadesNoBuilder.class) == null
+                        && element.getAnnotation(NoBuilder.class) == null) {
                     final String fieldName = entry.getKey().toString();
                     final String setterName = "with" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
                     final String argumentType = getFullQualifiedTypeSignature(element.asType());
@@ -194,8 +196,10 @@ public class RadesBuilderProcessor extends AbstractProcessor {
             javaSrcFileCreator.writeClassFinal();
         } catch (IOException e) {
             logger.error(e.getLocalizedMessage());
+//            throw new BuildProcessorException(e);
         } catch (Exception e) {
             logger.error(e.getLocalizedMessage());
+//            throw new BuildProcessorException(e);
         }
     }
 
