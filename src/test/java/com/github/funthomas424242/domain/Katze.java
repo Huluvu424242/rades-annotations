@@ -27,5 +27,5 @@ import com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder;
 
 @RadesAddBuilder
 @RadesAddAccessor
-public class Katze {
+public interface Katze {
 }
