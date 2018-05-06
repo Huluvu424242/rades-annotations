@@ -23,11 +23,15 @@ package com.github.funthomas424242.domain;
  */
 
 import com.github.funthomas424242.rades.annotations.accessors.AddAccessor;
+import com.github.funthomas424242.rades.annotations.accessors.RadesAddAccessor;
 import com.github.funthomas424242.rades.annotations.builder.AddBuilder;
+import com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder;
 
 import java.util.Date;
 
+@RadesAddBuilder
 @AddBuilder(simpleBuilderClassName = "FirmaAGErbauer")
+@RadesAddAccessor
 @AddAccessor(simpleAccessorClassName =  "FirmaAGZugreifer")
 public class Firma {
 

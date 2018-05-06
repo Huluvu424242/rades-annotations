@@ -91,6 +91,7 @@ public class RadesBuilderProcessorTest {
 
     protected static final String TEST_SRC_FOLDER = "src/test/java/";
     protected static final String TEST_EXPECTATION_FOLDER = "src/test/expectations/";
+    protected static final String TEST_GENERATION_FOLDER = "target/generated-test-sources/test-annotations/";
 
     protected static URL urlPersonJava;
     protected static URL urlPersonBuilderJava;
@@ -100,6 +101,8 @@ public class RadesBuilderProcessorTest {
     protected static URL urlAutoBuilderJava;
     protected static URL urlTierJava;
     protected static URL urlTierBuilderJava;
+    protected static URL urlKatzeJava;
+    protected static URL urlKatzeBuilderJava;
     protected static URL urlMetaAnnotationJava;
     protected static URL urlNonePackageClassJava;
     protected static URL urlNoneWriteableBuilderJava;
@@ -160,6 +163,8 @@ public class RadesBuilderProcessorTest {
         urlAutoBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "CarBuilder.java");
         urlTierJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/domain/Tier.java");
         urlTierBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "TierBuilder.java");
+        urlKatzeJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/domain/Katze.java");
+        urlKatzeBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "KatzeBuilder.java");
         urlMetaAnnotationJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/rades/annotations/builder/BuilderMetaAnnotation.java");
         urlNonePackageClassJava = getResourceURL(TEST_EXPECTATION_FOLDER, "NonePackageClass.java");
         urlNoneWriteableBuilderJava = getResourceURL(TEST_EXPECTATION_FOLDER, "NoneWriteableBuilder.java");
@@ -317,5 +322,25 @@ public class RadesBuilderProcessorTest {
                 .compilesWithoutError()
                 .and()
                 .generatesSources(JavaFileObjects.forResource(urlPersonBuilderJava));
+    }
+
+    @Test
+    public void shouldCompileInterfaceKatzeWithoutErrors() {
+        final RadesBuilderProcessor processor = new RadesBuilderProcessor();
+        processor.setJavaModelService(new RadesBuilderProcessorTest.DefaultJavaModelProvider());
+
+        expectFailure
+                .whenTesting()
+                .about(javaSource())
+                .that(JavaFileObjects.forResource(urlKatzeJava))
+                .processedWith(processor)
+                .compilesWithoutError()
+                .and()
+                .generatesSources(JavaFileObjects.forResource(urlKatzeBuilderJava));
+
+        final AssertionError expected = expectFailure.getFailure();
+        assertThat(expected.getMessage())
+                .contains("Compilation generated no additional source files, though some were expected.");
+
     }
 }
