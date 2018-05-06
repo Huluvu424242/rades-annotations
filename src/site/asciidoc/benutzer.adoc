@@ -11,6 +11,9 @@ Sie können das Produkt über Ihren Webbroser manuell von der
 link:https://bintray.com/funthomas424242/funthomas424242-libs/rades-annotations[JFrog] Seite herunterladen.
 
 ### Download per Mavenintegration
+
+(Dieser Schritt ist optional seit das Projekt auch über Maven Central verfügbar ist)
+
 Da das Projekt dankenswerter Weise von JFrog ins JCenter aufgenommen wurde, wird kein spezieller Download Link benötigt,
 sondern es genügt die Integration des JCenters in Maven als Downloadquelle.
 
