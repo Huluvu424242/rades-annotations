@@ -18,6 +18,7 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 
 ### Added
 - https://github.com/FunThomas424242/rades-annotations/issues/87[issue #87] @NoBuilder und @NoAccessor Support bereitgestellt
+- https://github.com/FunThomas424242/rades-annotations/issues/88[issue #88] @AddBuilder und @AddAccessor className beachtet
 
 ### Changed
 - https://github.com/FunThomas424242/rades-annotations/issues/83[issue #83] Nur Release Abhängigkeiten genutzt.
