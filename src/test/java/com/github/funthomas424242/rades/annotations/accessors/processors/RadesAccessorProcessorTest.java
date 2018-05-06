@@ -10,12 +10,12 @@ package com.github.funthomas424242.rades.annotations.accessors.processors;
  * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Lesser Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Lesser Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/lgpl-3.0.html>.
@@ -72,6 +72,7 @@ public class RadesAccessorProcessorTest {
 
     protected static final String TEST_SRC_FOLDER = "src/test/java/";
     protected static final String TEST_EXPECTATION_FOLDER = "src/test/expectations/";
+    protected static final String TEST_GENERATION_FOLDER = "target/generated-test-sources/test-annotations/";
 
     protected static URL urlPersonJava;
     protected static URL urlPersonAccessorJava;
@@ -81,6 +82,8 @@ public class RadesAccessorProcessorTest {
     protected static URL urlAutoAccessorJava;
     protected static URL urlTierJava;
     protected static URL urlTierAccessorJava;
+    protected static URL urlKatzeJava;
+    protected static URL urlKatzeAccessorJava;
     protected static URL urlMetaAnnotationJava;
     protected static URL urlNonePackageClassJava;
     protected static URL urlNoneWriteableAccessorJava;
@@ -141,6 +144,8 @@ public class RadesAccessorProcessorTest {
         urlAutoAccessorJava = getResourceURL(TEST_EXPECTATION_FOLDER, "CarAccessor.java");
         urlTierJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/domain/Tier.java");
         urlTierAccessorJava = getResourceURL(TEST_EXPECTATION_FOLDER, "TierAccessor.java");
+        urlKatzeJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/domain/Katze.java");
+        urlKatzeAccessorJava = getResourceURL(TEST_GENERATION_FOLDER, "KatzeAccessor.java");
         urlMetaAnnotationJava = getResourceURL(TEST_SRC_FOLDER, "com/github/funthomas424242/rades/annotations/accessors/AccessorMetaAnnotation.java");
         urlNonePackageClassJava = getResourceURL(TEST_EXPECTATION_FOLDER, "NonePackageClass.java");
         urlNoneWriteableAccessorJava = getResourceURL(TEST_EXPECTATION_FOLDER, "NoneWriteableAccessor.java");
@@ -299,4 +304,25 @@ public class RadesAccessorProcessorTest {
                 .and()
                 .generatesSources(JavaFileObjects.forResource(urlPersonAccessorJava));
     }
+
+    @Test
+    public void shouldCompileInterfaceKatzeWithoutErrors() {
+        final RadesAccessorProcessor processor = new RadesAccessorProcessor();
+        processor.setJavaModelService(new DefaultJavaModelProvider());
+
+        expectFailure
+                .whenTesting()
+                .about(javaSource())
+                .that(JavaFileObjects.forResource(urlKatzeJava))
+                .processedWith(processor)
+                .compilesWithoutError()
+                .and()
+                .generatesSources(JavaFileObjects.forResource(urlKatzeAccessorJava));
+
+        final AssertionError expected = expectFailure.getFailure();
+        assertThat(expected.getMessage())
+                .contains("Compilation generated no additional source files, though some were expected.");
+
+    }
+
 }
