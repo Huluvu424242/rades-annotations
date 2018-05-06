@@ -43,7 +43,7 @@
         <repository>
             <id>bintray-funthomas424242-funthomas424242-libs</id>
             <name>funthomas424242-funthomas424242-libs</name>
-            <url>https://api.bintray.com/maven/funthomas424242/funthomas424242-libs/${project.artifactId}/;publish=0
+            <url>https://api.bintray.com/maven/funthomas424242/funthomas424242-libs/${project.artifactId}/;publish=1
             </url>
         </repository>
     </distributionManagement>
