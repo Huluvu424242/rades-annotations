@@ -14,14 +14,14 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 ### Removed
 - n/a
 
-## [3.1.0] in Arbeit
+## [3.1.0] fertiggestellt 2018-05-06
 
 ### Added
 - https://github.com/FunThomas424242/rades-annotations/issues/87[issue #87] @NoBuilder und @NoAccessor Support bereitgestellt
 - https://github.com/FunThomas424242/rades-annotations/issues/88[issue #88] @AddBuilder und @AddAccessor className beachtet
 
 ### Changed
-- https://github.com/FunThomas424242/rades-annotations/issues/83[issue #83] Nur Release Abhängigkeiten genutzt.
+- https://github.com/FunThomas424242/rades-annotations/issues/83[issue #83] Nur Release Abhängigkeiten genutzt (keine beta oder alpha).
 - https://github.com/FunThomas424242/rades-annotations/issues/85[issue #85] Automatische Lizenzprüfung aufgenommen
 
 ### Removed
