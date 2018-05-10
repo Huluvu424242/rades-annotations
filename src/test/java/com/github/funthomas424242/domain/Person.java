@@ -32,6 +32,8 @@ import com.github.funthomas424242.rades.annotations.builder.RadesNoBuilder;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -71,12 +73,12 @@ public class Person {
     @NotNull
     protected final Set<Farbe> lieblingsfarben = new HashSet<>();
 
+    @NotNull
+    protected Collection<Person> freunde = new ArrayList<>();
+
     @NoAccessor
     @NoBuilder
     @NotNull
-    protected Map<String, Person> freunde = new HashMap<>();
-
-
     protected Map<String, LocalDate> visitedPlaces = new HashMap<>();
 
 
@@ -107,10 +109,6 @@ public class Person {
 
     public void removeLieblingsfarbe(final Farbe farbe) {
         this.lieblingsfarben.remove(farbe);
-    }
-
-    public void addFreund(final String alias, final Person freund) {
-        this.freunde.put(alias, freund);
     }
 
     @Override

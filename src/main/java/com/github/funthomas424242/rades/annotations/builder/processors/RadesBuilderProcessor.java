@@ -49,6 +49,8 @@ import javax.lang.model.element.Name;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
+import javax.lang.model.util.Elements;
+import javax.lang.model.util.Types;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -90,7 +92,7 @@ public class RadesBuilderProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(final Set<? extends TypeElement> annotations, final RoundEnvironment roundEnv) {
-//        final Types types = this.processingEnvironment.getTypeUtils();
+
 
         final Stack<TypeElement> allAnnotations = new Stack<>();
         annotations.stream().collect(Collectors.toList()).forEach(annotation -> {
@@ -187,9 +189,20 @@ public class RadesBuilderProcessor extends AbstractProcessor {
                 if (element.getAnnotation(RadesNoBuilder.class) == null
                         && element.getAnnotation(NoBuilder.class) == null) {
                     final String fieldName = entry.getKey().toString();
-                    final String setterName = "with" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
-                    final String argumentType = getFullQualifiedTypeSignature(element.asType());
-                    javaSrcFileCreator.writeSetterMethod(newInstanceName, builderSimpleClassName, fieldName, setterName, argumentType);
+
+                    final boolean isCollectionField = isCollectionField(element);
+                    if (isCollectionField) {
+                        // addEntry Methode
+                        final DeclaredType declaredType = (DeclaredType) element.asType();
+                        final String argumentType = getFullQualifiedTypeSignature(declaredType.getTypeArguments().get(0));
+                        final String addEntryMethodName = "add" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1) + "Entry";
+                        javaSrcFileCreator.writeAddCollectionEntryMethod(newInstanceName, builderSimpleClassName, fieldName, addEntryMethodName, argumentType);
+                    } else {
+                        // with Methode
+                        final String argumentType = getFullQualifiedTypeSignature(element.asType());
+                        final String setterName = "with" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+                        javaSrcFileCreator.writeSetterMethod(newInstanceName, builderSimpleClassName, fieldName, setterName, argumentType);
+                    }
                 }
             });
 
@@ -200,6 +213,32 @@ public class RadesBuilderProcessor extends AbstractProcessor {
         } catch (Exception e) {
             logger.error(e.getLocalizedMessage());
 //            throw new BuildProcessorException(e);
+        }
+    }
+
+    protected boolean isCollectionField(final Element element) {
+        final Types types = this.processingEnvironment.getTypeUtils();
+        final Elements elements = this.processingEnvironment.getElementUtils();
+        final TypeElement collection = elements.getTypeElement("java.util.Collection");
+        logger.debug("Collection: " + collection);
+        final TypeMirror typeMirror = element.asType();
+        logger.debug("TypeMirror: " + typeMirror);
+
+        if (typeMirror instanceof DeclaredType) {
+            final DeclaredType declaredType = (DeclaredType) typeMirror;
+            final List<? extends TypeMirror> parameterTypes = declaredType.getTypeArguments();
+            final TypeMirror collectionMirror = types.getDeclaredType(collection, parameterTypes.toArray(new TypeMirror[parameterTypes.size()]));
+            final boolean isAssignable = types.isAssignable(typeMirror, collectionMirror);
+            logger.debug("Zuweisbar: " + isAssignable);
+            final String simpleName = element.getSimpleName().toString();
+            if (isAssignable) {
+                logger.debug(simpleName + " ist eine Collection.");
+            } else {
+                logger.debug(simpleName + " ist KEINE Collection.");
+            }
+            return isAssignable;
+        } else {
+            return false;
         }
     }
 
