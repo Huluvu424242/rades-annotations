@@ -1,5 +1,4 @@
 package com.github.funthomas424242.domain;
-
 import com.github.funthomas424242.rades.annotations.accessors.InvalidAccessorException;
 import javax.annotation.Generated;
 import org.apache.commons.lang3.StringUtils;
@@ -12,8 +11,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 @Generated(value="RadesBuilderProcessor"
-, date="2018-04-06T20:36:46.750"
-, comments="com.github.funthomas424242.domain.Person")
+        , date="2018-04-06T20:36:46.750"
+        , comments="com.github.funthomas424242.domain.Person")
 public class PersonBuilder {
 
     private Person person;
@@ -62,9 +61,8 @@ public class PersonBuilder {
         return this;
     }
 
-    public PersonBuilder withVisitedPlaces( final java.util.Map<java.lang.String,java.time.LocalDate> visitedPlaces ) {
-        this.person.visitedPlaces = visitedPlaces;
-        return this;
+    public void addFreundeEntry(final com.github.funthomas424242.domain.Person freundeEntry ) {
+        this.person.freunde.add(freundeEntry );
     }
 
     public PersonBuilder withGroesse( final int groesse ) {
