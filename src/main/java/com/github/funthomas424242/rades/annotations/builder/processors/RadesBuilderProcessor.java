@@ -26,6 +26,8 @@ import com.github.funthomas424242.rades.annotations.builder.AddBuilder;
 import com.github.funthomas424242.rades.annotations.builder.NoBuilder;
 import com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder;
 import com.github.funthomas424242.rades.annotations.builder.RadesNoBuilder;
+import com.github.funthomas424242.rades.annotations.builder.RadesSingular;
+import com.github.funthomas424242.rades.annotations.builder.Singular;
 import com.github.funthomas424242.rades.annotations.builder.model.java.BuilderInjectionService;
 import com.github.funthomas424242.rades.annotations.builder.model.java.BuilderInjectionServiceProvider;
 import com.github.funthomas424242.rades.annotations.builder.model.java.BuilderSrcFileCreator;
@@ -188,10 +190,13 @@ public class RadesBuilderProcessor extends AbstractProcessor {
                 final Element element = entry.getValue();
                 if (element.getAnnotation(RadesNoBuilder.class) == null
                         && element.getAnnotation(NoBuilder.class) == null) {
-                    final String fieldName = entry.getKey().toString();
 
+                    final boolean isSingular = element.getAnnotation(RadesSingular.class) != null
+                            || element.getAnnotation(Singular.class) != null;
                     final boolean isCollectionField = isCollectionField(element);
-                    if (isCollectionField) {
+
+                    final String fieldName = entry.getKey().toString();
+                    if (isSingular && isCollectionField) {
                         // addEntry Methode
                         final DeclaredType declaredType = (DeclaredType) element.asType();
                         final String argumentType = getFullQualifiedTypeSignature(declaredType.getTypeArguments().get(0));

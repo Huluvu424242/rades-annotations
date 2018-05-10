@@ -28,6 +28,7 @@ import com.github.funthomas424242.rades.annotations.accessors.RadesNoAccessor;
 import com.github.funthomas424242.rades.annotations.builder.NoBuilder;
 import com.github.funthomas424242.rades.annotations.builder.RadesAddBuilder;
 import com.github.funthomas424242.rades.annotations.builder.RadesNoBuilder;
+import com.github.funthomas424242.rades.annotations.builder.RadesSingular;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -73,6 +74,7 @@ public class Person {
     @NotNull
     protected final Set<Farbe> lieblingsfarben = new HashSet<>();
 
+    @RadesSingular
     @NotNull
     protected Collection<Person> freunde = new ArrayList<>();
 
