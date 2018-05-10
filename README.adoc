@@ -16,9 +16,27 @@ Die angebotenen Annotationen können zur Generierung folgender Pattern genutzt w
 
 Hier finden Sie link:https://funthomas424242.github.io/rades-annotations/index.html[die Projektdokumentation, das Nutzerhandbuch].
 
+[#lombok]
+= Noch ein Lombok?
+
+Ja dieses Projekt erscheint wie eine Kopie von link://https://projectlombok.org/[Lombok], dennoch erhebt es weder den Anspruch so umfangreich zu sein
+noch will es mit lombok in Konkurrenz treten. Auch wird eine andere Technologie zur Umsetzung verwendet. link://https://projectlombok.org/[Lombok]
+modifiziert den AST (abstract syntax tree - abstrakten Syntaxbaum) des Java Compilers. Im Gegensatz dazu wird das vorliegende Projekt
+rein auf der Basis von Annotationsprozessoren realisiert, unter möglichst geringer Verwendung von Reflection
+(Ganz bin ich leider nicht dran vorbei gekommen.).
+
+Dieses Projekt besitzt nur ganz wenige Lösungen (aktuell Erstellung von Builder und Accessor einer Domainklasse). Wer mehr Funktionalität benötigt dem
+möchte ich tatsächlich die Nutzung von link://https://projectlombok.org/[Lombok] empfehlen.
+
+Generell besteht auf Grund der im vorliegenden Projekt gewählten Technologie die Einschränkung, dass nur neue Artifakte (z.B. Klassen) generiert werden können.
+Es besteht für Annotationsprozessoren leider keine saubere Möglichkeit bestehenden Kode zu modifizieren. Daher entfallen auch Builder in Form von inneren
+Klassen. Wer so etwas sucht, sollte link://https://projectlombok.org/[Lombok] nutzen. Dort können solche Anpassungen mit der verwendeten Technologie realisiert werden.
+
+
 [#quellen]
 = Quellen im Internet
 
+* Artikel: http://www.baeldung.com/java-annotation-processing-builder
 * Artikel: https://www.visma.com/blog/java-annotation-processing-tool-tips-writing-testing/
 * Reference Projek: https://github.com/tommy-bo/junit-ignore-processor
 
