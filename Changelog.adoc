@@ -14,6 +14,17 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 ### Removed
 - n/a
 
+## [3.2.0]
+
+### Added
+- n/a
+
+### Changed
+- https://github.com/FunThomas424242/rades-annotations/issues/93[issue #93] Logprovider als PROD Abhängigkeit entfernt
+
+### Removed
+- n/a
+
 ## [3.1.0] fertiggestellt 2018-05-06
 
 ### Added
