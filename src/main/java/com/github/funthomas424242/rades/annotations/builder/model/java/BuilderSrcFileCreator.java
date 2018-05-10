@@ -69,7 +69,7 @@ public class BuilderSrcFileCreator implements AutoCloseable {
     public void writeAddCollectionEntryMethod(String objectName, String builderSimpleClassName, String fieldName, String methodName, String argumentType) {
         writer.println("    public void " + methodName + "(final " + argumentType + " " + fieldName + "Entry ) {\n" +
                 "        this." + objectName + "." + fieldName + ".add(" + fieldName + "Entry );\n" +
-                "    }");
+                "    }\n");
     }
 
 
