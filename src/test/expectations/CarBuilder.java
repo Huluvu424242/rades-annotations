@@ -2,8 +2,6 @@ package com.github.funthomas424242.domain;
 
 import com.github.funthomas424242.rades.annotations.accessors.InvalidAccessorException;
 import javax.annotation.Generated;
-import org.apache.commons.lang3.StringUtils;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.ValidationException;
@@ -37,7 +35,10 @@ public class CarBuilder {
                 violationMessages.add(constraintViolation.getPropertyPath() + ": " + constraintViolation.getMessage());
             }
 
-            throw new ValidationException("Auto is not valid:\n" + StringUtils.join(violationMessages, "\n"));
+            final StringBuffer buf = new StringBuffer();
+            buf.append("Auto is not valid:\n");
+            violationMessages.forEach(message -> buf.append(message + "\n"));
+            throw new ValidationException(buf.toString());
         }
         final Auto value = this.auto;
         this.auto = null;
