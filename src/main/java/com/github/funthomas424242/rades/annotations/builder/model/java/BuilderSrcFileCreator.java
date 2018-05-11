@@ -10,12 +10,12 @@ package com.github.funthomas424242.rades.annotations.builder.model.java;
  * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Lesser Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Lesser Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/lgpl-3.0.html>.
@@ -39,7 +39,7 @@ public class BuilderSrcFileCreator implements AutoCloseable {
     public BuilderSrcFileCreator(final Filer filer, final String className, final BuilderInjectionService javaModelService) {
         this.filer = filer;
         this.className = className;
-        this.javaModelService=javaModelService;
+        this.javaModelService = javaModelService;
 
     }
 
@@ -102,7 +102,10 @@ public class BuilderSrcFileCreator implements AutoCloseable {
         writer.println("                violationMessages.add(constraintViolation.getPropertyPath() + \": \" + constraintViolation.getMessage());");
         writer.println("            }");
         writer.println();
-        writer.println("            throw new ValidationException(\"" + simpleClassName + " is not valid:\\n\" + StringUtils.join(violationMessages, \"\\n\"));");
+        writer.println("            final StringBuffer buf = new StringBuffer();");
+        writer.println("            buf.append(\""+simpleClassName+" is not valid:\\n\");");
+        writer.println("            violationMessages.forEach(message -> buf.append(message + \"\\n\"));");
+        writer.println("            throw new ValidationException(buf.toString());");
         writer.println("        }");
         writer.println("        final " + simpleClassName + " value = this." + objectName + ";");
         writer.println("        this." + objectName + " = null;");
@@ -110,12 +113,12 @@ public class BuilderSrcFileCreator implements AutoCloseable {
         writer.println("    }");
         writer.println();
         writer.println("    public <A> A build(Class<A> accessorClass) {\n" +
-                "        final "+simpleClassName+" "+objectName+" = this.build();\n" +
-                "        this."+objectName+"="+objectName+";\n" +
+                "        final " + simpleClassName + " " + objectName + " = this.build();\n" +
+                "        this." + objectName + "=" + objectName + ";\n" +
                 "        try{\n" +
-                "            final Constructor<A> constructor=accessorClass.getDeclaredConstructor("+simpleClassName+".class);\n" +
-                "            final A accessor = constructor.newInstance("+objectName+");\n" +
-                "            this."+objectName+"=null;\n" +
+                "            final Constructor<A> constructor=accessorClass.getDeclaredConstructor(" + simpleClassName + ".class);\n" +
+                "            final A accessor = constructor.newInstance(" + objectName + ");\n" +
+                "            this." + objectName + "=null;\n" +
                 "            return accessor;\n" +
                 "        }catch(NoSuchMethodException | IllegalAccessException|  InstantiationException|  InvocationTargetException ex){\n" +
                 "            throw new InvalidAccessorException(\"ungültige Accessorklasse übergeben\",ex);\n" +
@@ -138,7 +141,6 @@ public class BuilderSrcFileCreator implements AutoCloseable {
     public void writeImports() {
         writer.println("import com.github.funthomas424242.rades.annotations.accessors.InvalidAccessorException;");
         writer.println("import javax.annotation.Generated;");
-        writer.println("import org.apache.commons.lang3.StringUtils;\n");
         writer.println("import javax.validation.ConstraintViolation;");
         writer.println("import javax.validation.Validation;");
         writer.println("import javax.validation.ValidationException;");
