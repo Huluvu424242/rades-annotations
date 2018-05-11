@@ -83,12 +83,6 @@
             <version>2.0.1.Final</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.7</version>
-            <scope>compile</scope>
-        </dependency>
 
         <!-- Test Abhängigkeiten -->
         <dependency>

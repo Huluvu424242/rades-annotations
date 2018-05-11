@@ -22,6 +22,7 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 ### Changed
 - https://github.com/FunThomas424242/rades-annotations/issues/93[issue #93] Logprovider als PROD Abhängigkeit entfernt
 - https://github.com/FunThomas424242/rades-annotations/issues/96[issue #96] Abgrenzung zu Lombok in README aufgenommen
+- https://github.com/FunThomas424242/rades-annotations/issues/100[issue #100] Abhängigkeit zu apache commons entfernt
 
 ### Removed
 - n/a

@@ -142,7 +142,7 @@ public class RadesBuilderIntegrationTest {
         Throwable exception = assertThrows(ValidationException.class, () -> {
             new PersonBuilder().build();
         });
-        assertEquals("Person is not valid:\nname: darf nicht \"null\" sein", exception.getLocalizedMessage());
+        assertEquals("Person is not valid:\nname: darf nicht \"null\" sein\n", exception.getLocalizedMessage());
     }
 
     @Test
