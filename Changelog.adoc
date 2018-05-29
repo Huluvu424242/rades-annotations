@@ -6,7 +6,7 @@ Die Versionierung erfolgt nach http://semver.org/lang/de/[Semantic Versioning].
 
 ## [Unreleased]
 ### Added
-- n/a
+- https://github.com/FunThomas424242/rades-annotations/issues/104[issue #104] Maven Central Badged aufgenommen
 
 ### Changed
 - n/a
