@@ -1,4 +1,5 @@
 [#status]
+image:https://maven-badges.herokuapp.com/maven-central/com.github.funthomas424242/rades-annotations/badge.svg?style=flat["Maven Central", link="https://maven-badges.herokuapp.com/maven-central/com.github.funthomas424242/rades-annotations"]
 image:https://api.bintray.com/packages/funthomas424242/funthomas424242-libs/rades-annotations/images/download.svg[link="https://bintray.com/funthomas424242/funthomas424242-libs/rades-annotations/_latestVersion"]
 image:https://travis-ci.org/FunThomas424242/rades-annotations.svg?branch=master["Build Status", link="https://travis-ci.org/FunThomas424242/rades-annotations"]
 image:https://api.codacy.com/project/badge/Grade/88bf76546176437ea389629a2087d1b5["Codacy code quality", link="https://www.codacy.com/app/FunThomas424242/rades-annotations?utm_source=github.com&utm_medium=referral&utm_content=FunThomas424242/rades-annotations&utm_campaign=Badge_Grade"]
