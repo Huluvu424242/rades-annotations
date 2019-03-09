@@ -40,6 +40,7 @@ Klassen. Wer so etwas sucht, sollte link://https://projectlombok.org/[Lombok] nu
 * Artikel: http://www.baeldung.com/java-annotation-processing-builder
 * Artikel: https://www.visma.com/blog/java-annotation-processing-tool-tips-writing-testing/
 * Reference Projek: https://github.com/tommy-bo/junit-ignore-processor
+* Artikel: https://blog.oio.de/2019/02/18/bessere-builder-in-java-mit-manifold-self-type/#comment-75745
 
 # Danksagung
 Dieses Projekt wäre ohne die Dienste, welche Open-Source-Projekte großzügig unterstützen, nicht möglich gewesen:
